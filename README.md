@@ -1,63 +1,51 @@
 # Flood Mitigators — floodmitigators.com
 
-Website for **Flood Mitigators**, a family-owned Houston yard drainage and flood mitigation company founded after Hurricane Harvey and run by owner **Manny**.
+One-page website for **Flood Mitigators**, the family-owned Houston flood assessment and drainage company started by owner **Manny** after Hurricane Harvey.
 
-Built with [Astro](https://astro.build) as a fully static site: fast on phones, no database, deployable anywhere that serves files.
+The design is the “Flood Mitigators” page built in Claude (Plus Jakarta Sans, navy/blue/sky, the Flood Snapshot, report ladder, runoff calculator and booking dialog), moved here as a plain static site:
 
-## Pages
+- `site/index.html` — the whole page: markup, styles and script in one file
+- `site/assets/img/` — logo, hero, service, crew and truck photos
+- `site/assets/fonts/` — Plus Jakarta Sans, self-hosted (SIL Open Font License)
+- `site/assets/icons/`, `site/assets/og.jpg` — favicons and the link-preview image
+- `site/_redirects` — sends the current floodmitigators.com page URLs (French drains, sump pumps, about, contact…) to the matching section
+- `site/404.html`, `robots.txt`, `sitemap.xml`, `site.webmanifest`, `_headers`
 
-| Route | What it is |
-| --- | --- |
-| `/` | Home — hero with drainage diagram, signs, services, why Houston floods, process, Meet Manny, Drainage Checkup, areas, FAQ, quote form |
-| `/services/` | All eight services |
-| `/french-drain-installation-houston/` and 7 more | One page per service (signs, what’s included, diagram, process, FAQ, related) |
-| `/about-us/` | Story, Manny, values |
-| `/drainage-checkup/` | Interactive self-assessment that recommends services and pre-fills the quote form |
-| `/flood-tips/` | Hurricane-season checklist (saves checkmarks on the device, printable) |
-| `/service-areas/` | Greater Houston communities |
-| `/faq/` | All FAQs, grouped, with FAQ structured data |
-| `/contact-us/` | Contact options and the full quote form |
+No build step and no dependencies to run it.
 
-Service URLs match the existing floodmitigators.com URLs so search rankings carry over. Old URLs that moved (`/flood-tips-faq-2/`, `/rootrerouter/`) redirect via `astro.config.mjs` and `public/_redirects`.
-
-## Edit content
-
-Almost everything lives in `src/data/`:
-
-- `site.ts` — phone, email, address, hours, warranty, social links, **owner (Manny) name, title and photo**
-- `services.ts` — every service page’s copy, signs, process, inclusions and FAQs
-- `faqs.ts` — general FAQs
-- `areas.ts` — service-area communities
-- `symptoms.ts` — Drainage Checkup options and how they map to services
-
-**Add Manny’s photo:** put the image in `public/images/` (e.g. `manny.jpg`, portrait, at least 560×680) and set `owner.photo: '/images/manny.jpg'` in `src/data/site.ts`. Until then the site shows a branded monogram.
-
-After changing the phone number or tagline, run `npm run assets` to regenerate the social share image and icons in `public/`.
-
-## Quote form
-
-Set `PUBLIC_FORM_ENDPOINT` (see `.env.example`) to any service that accepts a form POST — Formspree, Web3Forms, or a Cloudflare Pages Function — and submissions go there, then to `/thank-you/`. Without it, the form opens the visitor’s email app with the request pre-filled to `info@floodmitigators.com`, so no lead is lost.
-
-## Develop
-
-Requires Node.js 22.12+.
+## Preview (including on your phone)
 
 ```sh
-npm ci
-npm run dev
+npm start
 ```
 
-## Verify
-
-```sh
-npm test
-```
-
-Runs the type check, a production build, and `scripts/qa.mjs`, which loads every page in Chromium and fails on broken internal links, missing/oversized titles and descriptions, invalid structured data, horizontal scrolling at 320–1440px, console errors and axe accessibility violations, then exercises the Drainage Checkup → quote form flow and the mobile menu. (Uses the Playwright install available on the machine.)
+It prints two addresses: one for this computer and one for a phone on the same Wi-Fi. Needs Node.js 20+.
 
 ## Deploy
 
-Static output goes to `dist/`.
+**Cloudflare Pages:** Workers & Pages → Create → Pages → Connect to Git → `acg-data/floodm`. Build command: *none*. Build output directory: `site`. `_redirects` and `_headers` are picked up automatically, and every branch gets its own preview link.
 
-- **Cloudflare Pages / Netlify:** build command `npm run build`, output directory `dist`. `public/_redirects` and `public/_headers` are picked up automatically.
-- Any other static host works too; redirects then fall back to the generated redirect pages.
+Or upload directly:
+
+```sh
+npx wrangler pages deploy site --project-name floodmitigators
+```
+
+Any static host works — just serve the `site/` folder.
+
+## Common edits (all in `site/index.html`)
+
+- **Form submissions.** Near the top of the `<script>` at the bottom, set `LEAD_ENDPOINT` to a URL that accepts a JSON POST (Formspree, a Supabase Edge Function, a Cloudflare Pages Function…). Until it’s set, the Snapshot and booking forms open the visitor’s email app addressed to `info@floodmitigators.com`, so no request is lost.
+- **Manny’s photo.** Put it at `site/assets/img/manny.jpg` and, inside `<div class="manny-card">`, swap the logo `<img>` for `<img class="manny-photo" src="assets/img/manny.jpg" alt="Manny, owner of Flood Mitigators">` (there’s a comment marking the spot).
+- **Phone, email, hours.** Search the file for `(281) 849-1082`, `tel:+12818491082` and `info@floodmitigators.com`; the structured data for Google is in the `application/ld+json` blocks in `<head>`.
+- **Service areas.** The `<ul class="area-list">` in the “Where we work” section.
+
+After changing the logo, hero photo or phone number, run `npm run og` to regenerate the link-preview image.
+
+## Check before you ship
+
+```sh
+npm ci && npm test
+```
+
+Loads the page in Chromium and fails on missing files, console errors, broken in-page links, sideways scrolling anywhere from 320px phones to 1440px desktops, and accessibility problems (axe). It also drives the mobile menu, the two-step Flood Snapshot, the booking dialog and the runoff calculator. Needs Playwright with Chromium on the machine.

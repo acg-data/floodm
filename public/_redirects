@@ -1,8 +1,0 @@
-# Old floodmitigators.com URLs → new pages (Cloudflare Pages / Netlify)
-/flood-tips-faq-2/  /faq/                              301
-/flood-tips-faq-2   /faq/                              301
-/rootrerouter/      /hydro-jetting-services-houston/   301
-/rootrerouter       /hydro-jetting-services-houston/   301
-/home/              /                                  301
-/contact/           /contact-us/                       301
-/about/             /about-us/                         301
