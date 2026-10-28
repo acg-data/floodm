@@ -1,0 +1,597 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Diagram from '../components/Diagram.astro';
+import TrustBar from '../components/TrustBar.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import OwnerSection from '../components/OwnerSection.astro';
+import DrainageCheckup from '../components/DrainageCheckup.astro';
+import FaqList from '../components/FaqList.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site } from '../data/site';
+import { installServices, maintainServices } from '../data/services';
+import { allAreas } from '../data/areas';
+import { generalFaqs } from '../data/faqs';
+import { symptoms } from '../data/symptoms';
+
+const homeFaqs = [generalFaqs[1].items[1], generalFaqs[0].items[0], generalFaqs[1].items[2], generalFaqs[2].items[0], generalFaqs[1].items[4], generalFaqs[0].items[1]];
+const signs = symptoms.filter((s) => ['standing-water', 'foundation', 'flowerbeds', 'downspouts', 'garage', 'ditch-backup'].includes(s.id));
+const featuredAreas = ['Memorial', 'Spring Branch', 'Bellaire', 'West University Place', 'Meyerland', 'The Heights', 'River Oaks', 'Energy Corridor', 'Katy', 'Cypress', 'Sugar Land', 'Pearland', 'Spring', 'The Woodlands', 'Kingwood', 'Missouri City'];
+---
+
+<Base
+  title="Houston's #1 Yard Drainage & Flood Mitigation | Flood Mitigators"
+  rawTitle
+  description="Houston yard drainage done right: French drains, sump pumps, culverts and hydro jetting. Family-owned since Harvey, 3-year warranty. Call (281) 849-1082."
+>
+  <!-- Hero -->
+  <section class="hero section-dark">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Houston’s #1 yard drainage &amp; flood mitigation team</p>
+        <h1>Your yard shouldn’t flood every time it rains.</h1>
+        <p class="lede">
+          We design and install French drains, sump pumps, culverts and complete yard drainage systems built for Houston
+          clay and Houston storms. Family-owned, born after Harvey, and backed by a {site.warranty.long}.
+        </p>
+        <div class="hero-actions on-dark">
+          <a href="/contact-us/#quote" class="btn btn-lg">Get my drainage plan <Icon name="arrow-right" /></a>
+          <a href="/drainage-checkup/" class="btn btn-lg btn-ghost">Take the 60-second checkup</a>
+        </div>
+        <ul role="list" class="hero-points">
+          <li><Icon name="check" size={18} strokeWidth={2.6} /> On-site or virtual evaluation</li>
+          <li><Icon name="check" size={18} strokeWidth={2.6} /> Itemized proposal &amp; timeline</li>
+          <li><Icon name="check" size={18} strokeWidth={2.6} /> 24/7 emergency response</li>
+        </ul>
+        <a href={site.phone.href} class="hero-phone">
+          <span class="hp-icon"><Icon name="phone" size={20} /></span>
+          <span><small>Call or text now</small><strong>{site.phone.display}</strong></span>
+        </a>
+      </div>
+      <div class="hero-art">
+        <Diagram name="yard" />
+        <span class="hero-chip"><Icon name="layers" size={18} /> Designed for Houston clay</span>
+      </div>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <!-- Signs -->
+  <section class="section">
+    <div class="container">
+      <div class="signs-head">
+        <div class="section-head">
+          <p class="eyebrow">Sound familiar?</p>
+          <h2>Six signs your yard is losing the fight with water.</h2>
+        </div>
+        <p class="lede">
+          Water that sits for a day after rain isn’t just annoying. It drowns lawns, rots beds, breeds mosquitoes and keeps
+          the soil around your slab swinging between soaked and dry.
+        </p>
+      </div>
+      <ul role="list" class="signs-grid">
+        {signs.map((s, i) => (
+          <li data-reveal style={`transition-delay:${i * 50}ms`}>
+            <span class="sign-icon"><Icon name={s.icon} size={26} /></span>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="signs-cta">
+        <p>Not sure what you need?</p>
+        <a href="/drainage-checkup/" class="link-arrow">Get a recommendation in 60 seconds <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section section-paper2" id="services">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we do</p>
+        <h2>Everything it takes to move water off your property.</h2>
+        <p class="lede">Eight services, one goal: water leaves your lot fast and never reaches your home.</p>
+      </div>
+
+      <div class="svc-group">
+        <div class="svc-label">
+          <h3>Build it right</h3>
+          <p class="muted">New drainage systems, designed for your lot.</p>
+        </div>
+        <div class="grid grid-4">
+          {installServices.map((s) => <ServiceCard service={s} headingLevel="h4" />)}
+        </div>
+      </div>
+
+      <div class="svc-group">
+        <div class="svc-label">
+          <h3>Keep it flowing</h3>
+          <p class="muted">Cleaning and maintenance for any system.</p>
+        </div>
+        <div class="grid grid-4">
+          {maintainServices.map((s) => <ServiceCard service={s} headingLevel="h4" />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Houston floods -->
+  <section class="section">
+    <div class="container">
+      <div class="split split-40">
+        <div class="section-head why-head">
+          <p class="eyebrow">Why Houston yards flood</p>
+          <h2>Houston stacks the deck against your yard.</h2>
+          <p class="lede">
+            That’s why a bag of gravel or a longer downspout rarely fixes it. Water needs a designed path off your property —
+            one that accounts for every gallon, from the surface and from below.
+          </p>
+          <a href="/french-drain-installation-houston/" class="link-arrow">How a French drain solves it <Icon name="arrow-right" /></a>
+        </div>
+        <ol role="list" class="why-list">
+          <li data-reveal>
+            <span class="why-icon"><Icon name="layers" size={26} /></span>
+            <div>
+              <h3>Clay that won’t drink</h3>
+              <p>Houston’s dense clay soils absorb water slowly, so rain sits on top instead of soaking in — and the clay swells and shrinks as it wets and dries.</p>
+            </div>
+          </li>
+          <li data-reveal>
+            <span class="why-icon"><Icon name="flat" size={26} /></span>
+            <div>
+              <h3>Ground that barely slopes</h3>
+              <p>Much of the city is close to flat. Without a deliberate slope or a pipe, water has nowhere to go.</p>
+            </div>
+          </li>
+          <li data-reveal>
+            <span class="why-icon"><Icon name="rain" size={26} /></span>
+            <div>
+              <h3>Rain that arrives all at once</h3>
+              <p>Gulf storms can drop inches of rain in a few hours — far more than any yard can absorb on its own.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section section-dark process">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>From soggy yard to solved, in four steps.</h2>
+        <p class="lede">No high-pressure sales visit and no one-size-fits-all kit. Just a plan built for your property.</p>
+      </div>
+      <ProcessSteps tone="dark" />
+    </div>
+  </section>
+
+  <!-- Manny -->
+  <section class="section" id="manny">
+    <div class="container">
+      <OwnerSection />
+    </div>
+  </section>
+
+  <!-- Checkup -->
+  <section class="section section-mist" id="checkup">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Drainage Checkup</p>
+        <h2>What does your yard need?</h2>
+        <p class="lede">Tap what you’re seeing. We’ll point you to the right fix — and you can send the results straight to our team.</p>
+      </div>
+      <DrainageCheckup />
+    </div>
+  </section>
+
+  <!-- Areas -->
+  <section class="section">
+    <div class="container areas">
+      <div class="section-head">
+        <p class="eyebrow">Service area</p>
+        <h2>Proudly Houston. All of it.</h2>
+        <p class="lede">From the Inner Loop to Katy, Cypress, The Woodlands, Kingwood and Pearland — if it’s Greater Houston, we’ll come take a look.</p>
+      </div>
+      <ul role="list" class="area-chips">
+        {featuredAreas.map((a) => <li class="chip"><Icon name="pin" size={15} /> {a}</li>)}
+        <li><a href="/service-areas/" class="chip chip-more">+ {allAreas.length - featuredAreas.length} more <Icon name="arrow-right" size={15} /></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-paper2">
+    <div class="container split split-40 faq-split">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Straight answers.</h2>
+        <p class="lede">The things Houston homeowners ask us most. Don’t see yours?</p>
+        <div class="faq-cta">
+          <a href="/faq/" class="link-arrow">Read all FAQs <Icon name="arrow-right" /></a>
+          <a href={site.phone.href} class="link-arrow">Call {site.phone.display} <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+      <FaqList items={homeFaqs} openFirst />
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="section quote-section" id="quote">
+    <div class="container quote-grid">
+      <div class="quote-aside">
+        <p class="eyebrow">Get started</p>
+        <h2>Tell us about your yard.</h2>
+        <p class="lede">We’ll get back to you to set up an on-site or virtual evaluation, then send a detailed design and itemized proposal.</p>
+        <ul role="list" class="contact-list">
+          <li>
+            <span class="cl-icon"><Icon name="phone" size={20} /></span>
+            <span><small>Call or text</small><a href={site.phone.href}>{site.phone.display}</a></span>
+          </li>
+          <li>
+            <span class="cl-icon"><Icon name="mail" size={20} /></span>
+            <span><small>Email</small><a href={`mailto:${site.email}`}>{site.email}</a></span>
+          </li>
+          <li>
+            <span class="cl-icon"><Icon name="clock" size={20} /></span>
+            <span><small>Hours</small>{site.hours.label}<br /><strong>{site.hours.emergency}</strong></span>
+          </li>
+        </ul>
+        <p class="tip"><Icon name="video" size={20} /> <span><strong>Tip:</strong> a short video of the problem area during or right after rain helps us more than anything.</span></p>
+      </div>
+      <div class="card quote-card">
+        <QuoteForm id="home-quote" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 70% at 85% 10%, rgba(29, 111, 168, 0.45), transparent 65%),
+      radial-gradient(50% 60% at 0% 100%, rgba(29, 111, 168, 0.25), transparent 70%),
+      repeating-linear-gradient(105deg, transparent 0 28px, rgba(255, 255, 255, 0.025) 28px 29px),
+      var(--deep);
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 1040px) {
+    .hero-grid {
+      grid-template-columns: 1.05fr 1fr;
+    }
+  }
+  .hero-copy {
+    display: grid;
+    gap: 1.4rem;
+    justify-items: start;
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: clamp(2.6rem, 1.6rem + 4.4vw, 5rem);
+    font-stretch: 112%;
+    max-width: 14ch;
+  }
+  .hero .lede {
+    font-size: clamp(1.08rem, 1rem + 0.4vw, 1.25rem);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+  }
+  .hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.93rem;
+    color: #c4d4df;
+    font-weight: 550;
+  }
+  .hero-points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hero-points :global(svg) {
+    color: var(--amber);
+  }
+  .hero-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.3rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  .hp-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(91, 178, 232, 0.16);
+    color: var(--water-bright);
+    box-shadow: 0 0 0 6px rgba(91, 178, 232, 0.07);
+  }
+  .hero-phone small {
+    display: block;
+    font-size: 0.8rem;
+    color: #a9bccb;
+  }
+  .hero-phone strong {
+    font-family: var(--font-display);
+    font-stretch: 108%;
+    font-size: 1.45rem;
+    font-weight: 850;
+    letter-spacing: 0.01em;
+  }
+  .hero-phone:hover strong {
+    color: var(--amber);
+  }
+  .hero-art {
+    position: relative;
+    color: var(--ink);
+  }
+  .hero-chip {
+    position: absolute;
+    top: -0.9rem;
+    left: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: var(--amber);
+    color: var(--amber-ink);
+    font-weight: 700;
+    font-size: 0.86rem;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) {
+    .hero-actions .btn {
+      width: 100%;
+    }
+  }
+
+  /* Signs */
+  .signs-head {
+    display: grid;
+    gap: 1rem 4rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  .signs-head .section-head {
+    margin-bottom: 0;
+  }
+  @media (min-width: 960px) {
+    .signs-head {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+  .signs-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  }
+  .signs-grid li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-weight: 650;
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+  .sign-icon {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    flex: none;
+    border-radius: 13px;
+    background: #fdf1dc;
+    color: #a4650a;
+  }
+  .signs-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-top: 1.75rem;
+    font-weight: 600;
+  }
+
+  /* Services */
+  .svc-group + .svc-group {
+    margin-top: 3rem;
+  }
+  .svc-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .svc-label h3 {
+    font-size: var(--step-2);
+  }
+
+  /* Why */
+  .why-head {
+    margin-bottom: 0;
+  }
+  .why-list {
+    display: grid;
+    gap: 1rem;
+  }
+  .why-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.1rem;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  .why-icon {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: var(--navy);
+    color: var(--water-bright);
+  }
+  .why-list h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.35rem;
+  }
+  .why-list p {
+    color: var(--muted);
+  }
+
+  /* Process */
+  .process {
+    background:
+      radial-gradient(60% 80% at 100% 100%, rgba(29, 111, 168, 0.3), transparent 60%),
+      var(--deep);
+  }
+
+  /* Areas */
+  .area-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .area-chips :global(svg) {
+    color: var(--water);
+  }
+  .chip-more {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    text-decoration: none;
+    font-weight: 650;
+  }
+  .chip-more:hover {
+    background: var(--navy-2);
+    color: #fff;
+  }
+  .chip-more :global(svg) {
+    color: var(--amber) !important;
+  }
+
+  /* FAQ */
+  .faq-split {
+    align-items: start;
+  }
+  .faq-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Quote */
+  .quote-section {
+    background: linear-gradient(180deg, var(--paper) 0%, var(--mist) 100%);
+  }
+  .quote-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .quote-grid {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+    .quote-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 60px);
+    }
+  }
+  .quote-aside {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .quote-card {
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.25rem);
+    box-shadow: var(--shadow);
+  }
+  .contact-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .contact-list li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  .cl-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 12px;
+    background: var(--navy);
+    color: var(--water-bright);
+  }
+  .contact-list small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 550;
+  }
+  .contact-list a {
+    font-family: var(--font-display);
+    font-stretch: 104%;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .contact-list a:hover {
+    color: var(--water-ink);
+  }
+  .tip {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px dashed var(--line-strong);
+    font-size: 0.92rem;
+    color: var(--ink-2);
+  }
+  .tip :global(svg) {
+    flex: none;
+    color: var(--water);
+  }
+</style>

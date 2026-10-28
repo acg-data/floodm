@@ -1,0 +1,245 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import { breadcrumbLd } from '../lib/schema';
+
+const crumbs = [{ name: 'Contact', href: '/contact-us/' }];
+const next = [
+  { icon: 'phone', title: 'We reach out', body: 'We’ll contact you the way you prefer — call, text or email — to learn more and set up a time.' },
+  { icon: 'video', title: 'We evaluate', body: 'A drainage specialist looks at your property on site, or virtually from your photos and video.' },
+  { icon: 'clipboard', title: 'You get a plan', body: 'A detailed design and itemized proposal with cost and timeline. You decide from there.' },
+];
+const contactLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact Flood Mitigators',
+  url: `${site.url}/contact-us/`,
+  about: { '@id': `${site.url}/#business` },
+};
+---
+
+<Base
+  title="Contact Us — Request a Drainage Evaluation"
+  description={`Request an on-site or virtual drainage evaluation in Houston. Call or text ${site.phone.display}, email ${site.email}, or send the form. 24/7 emergency response.`}
+  jsonLd={[contactLd, breadcrumbLd(crumbs)]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Contact"
+    title="Let’s get the water off your property."
+    lede="Send the form, call or text. If water is threatening your home right now, call — we offer 24/7 emergency response."
+  />
+
+  <section class="section contact">
+    <div class="container contact-grid">
+      <div class="contact-aside">
+        <a href={site.phone.href} class="big-card call">
+          <span class="bc-icon"><Icon name="phone" size={26} /></span>
+          <span>
+            <small>Call or text</small>
+            <strong>{site.phone.display}</strong>
+            <em>{site.hours.label} · {site.hours.emergency}</em>
+          </span>
+        </a>
+        <a href={site.sms} class="big-card">
+          <span class="bc-icon"><Icon name="sms" size={26} /></span>
+          <span>
+            <small>Text us photos or video</small>
+            <strong>Show us the problem</strong>
+            <em>The fastest way to a virtual evaluation</em>
+          </span>
+        </a>
+        <a href={`mailto:${site.email}`} class="big-card">
+          <span class="bc-icon"><Icon name="mail" size={26} /></span>
+          <span>
+            <small>Email</small>
+            <strong class="email">{site.email}</strong>
+          </span>
+        </a>
+        <a href={site.address.mapsUrl} class="big-card" target="_blank" rel="noopener">
+          <span class="bc-icon"><Icon name="pin" size={26} /></span>
+          <span>
+            <small>Headquarters</small>
+            <strong class="addr">{site.address.street}</strong>
+            <em>{site.address.city}, {site.address.region} {site.address.postalCode} · Serving {site.serviceAreaLabel}</em>
+          </span>
+        </a>
+      </div>
+
+      <div class="card form-card" id="quote">
+        <h2>Request an evaluation</h2>
+        <p class="muted">Takes about a minute. Fields marked <span class="req">*</span> are required.</p>
+        <QuoteForm id="contact-quote" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper2">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What happens next</p>
+        <h2>No pressure. Just a plan.</h2>
+      </div>
+      <ol role="list" class="next">
+        {next.map((n, i) => (
+          <li class="card">
+            <span class="n-num">{i + 1}</span>
+            <span class="n-icon"><Icon name={n.icon} size={22} /></span>
+            <h3>{n.title}</h3>
+            <p>{n.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact {
+    background: linear-gradient(180deg, var(--paper), var(--mist));
+  }
+  .contact-grid {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .contact-grid {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+    .contact-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 60px);
+    }
+  }
+  .contact-aside {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .big-card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.15rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .big-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    color: var(--ink);
+  }
+  .big-card > span:last-child {
+    display: grid;
+    min-width: 0;
+  }
+  .bc-icon {
+    display: grid;
+    place-items: center;
+    width: clamp(44px, 38px + 2vw, 54px);
+    height: clamp(44px, 38px + 2vw, 54px);
+    flex: none;
+    border-radius: 14px;
+    background: var(--mist);
+    color: var(--water-ink);
+  }
+  .big-card small {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .big-card strong {
+    font-family: var(--font-display);
+    font-stretch: 106%;
+    font-weight: 850;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+  .big-card .email,
+  .big-card .addr {
+    font-size: 1.08rem;
+    overflow-wrap: anywhere;
+  }
+  .big-card em {
+    font-style: normal;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+  .call {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .call:hover {
+    color: #fff;
+  }
+  .call .bc-icon {
+    background: var(--amber);
+    color: var(--amber-ink);
+  }
+  .call small,
+  .call em {
+    color: #b9c9d4;
+  }
+  .call strong {
+    font-size: clamp(1.25rem, 1rem + 1.6vw, 1.6rem);
+  }
+  .form-card {
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+    box-shadow: var(--shadow);
+  }
+  .form-card h2 {
+    font-size: var(--step-3);
+  }
+  .form-card > p {
+    margin: 0.4rem 0 1.5rem;
+  }
+  .req {
+    color: var(--danger);
+  }
+  .next {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+  .next li {
+    position: relative;
+    display: grid;
+    gap: 0.6rem;
+    padding: 1.6rem;
+  }
+  .n-num {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.4rem;
+    font-family: var(--font-display);
+    font-stretch: 120%;
+    font-weight: 900;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--mist);
+  }
+  .n-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--navy);
+    color: var(--water-bright);
+  }
+  .next h3 {
+    font-size: 1.25rem;
+    margin-top: 0.4rem;
+  }
+  .next p {
+    color: var(--muted);
+  }
+</style>

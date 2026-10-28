@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { areaGroups } from '../data/areas';
+import { services, servicePath } from '../data/services';
+import { site } from '../data/site';
+import { breadcrumbLd } from '../lib/schema';
+
+const crumbs = [{ name: 'Service Areas', href: '/service-areas/' }];
+---
+
+<Base
+  title="Service Areas Across Greater Houston"
+  description="Flood Mitigators serves Greater Houston: Memorial, Bellaire, West U, Meyerland, The Heights, Katy, Cypress, Sugar Land, Pearland, The Woodlands, Kingwood and more."
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Service areas"
+    title="Greater Houston drainage, neighborhood by neighborhood."
+    lede="Based in Houston and serving the surrounding communities. If you’re in the metro and your yard floods, we want to see it."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="areas-grid">
+        {areaGroups.map((g) => (
+          <section class="area-card card" data-reveal>
+            <h2><Icon name="pin" size={20} /> {g.region}</h2>
+            <ul role="list">
+              {g.places.map((p) => <li>{p}</li>)}
+            </ul>
+          </section>
+        ))}
+        <div class="area-card area-missing">
+          <h2>Don’t see your neighborhood?</h2>
+          <p>This list isn’t everything. Call or text and we’ll tell you right away if we cover your street.</p>
+          <a href={site.phone.href} class="btn"><Icon name="phone" /> {site.phone.display}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper2">
+    <div class="container split">
+      <div class="section-head">
+        <p class="eyebrow">Same problems, every side of town</p>
+        <h2>Different neighborhoods. The same clay.</h2>
+        <p class="lede">
+          From older lots inside the Loop to newer subdivisions in Katy and Cypress, Houston yards share the same slow-draining
+          soil and the same storms. Some neighborhoods drain to curb and gutter; others to open roadside ditches. We design for
+          whichever one your street has.
+        </p>
+      </div>
+      <ul role="list" class="svc-links">
+        {services.map((s) => (
+          <li>
+            <a href={servicePath(s)}>
+              <Icon name={s.icon} size={22} />
+              <span>{s.name} in Houston</span>
+              <Icon name="arrow-right" size={18} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .areas-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+  .area-card {
+    padding: 1.5rem;
+  }
+  .area-card h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .area-card h2 :global(svg) {
+    color: var(--water);
+  }
+  .area-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .area-card li {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    font-size: 0.9rem;
+    font-weight: 550;
+  }
+  .area-missing {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    justify-items: start;
+    border-radius: var(--radius);
+    background: var(--navy);
+    color: #c4d4df;
+  }
+  .area-missing h2 {
+    color: #fff;
+    margin-bottom: 0;
+  }
+  .svc-links {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .svc-links a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem 1.15rem;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 650;
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .svc-links a:hover {
+    border-color: var(--water);
+    transform: translateX(3px);
+  }
+  .svc-links a :global(svg:first-child) {
+    color: var(--water-ink);
+  }
+  .svc-links a :global(svg:last-child) {
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const items = [
+  { icon: 'family', title: 'Family-owned', body: '100% Houston-operated' },
+  { icon: 'shield', title: site.warranty.short, body: 'Parts & labor, limited' },
+  { icon: 'siren', title: '24/7 Emergency', body: 'When water won’t wait' },
+  { icon: 'video', title: 'On-site or virtual', body: 'Evaluations that fit you' },
+];
+---
+
+<div class="trust">
+  <ul role="list" class="container trust-list">
+    {items.map((it) => (
+      <li>
+        <span class="t-icon"><Icon name={it.icon} size={24} /></span>
+        <span class="t-text">
+          <strong>{it.title}</strong>
+          <small>{it.body}</small>
+        </span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .trust {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+  }
+  .trust-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 900px) {
+    .trust-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1.35rem 0.75rem;
+  }
+  @media (min-width: 900px) {
+    li + li {
+      border-left: 1px solid var(--line);
+      padding-left: 1.5rem;
+    }
+  }
+  @media (max-width: 899px) {
+    li:nth-child(even) {
+      border-left: 1px solid var(--line);
+      padding-left: 1rem;
+    }
+    li:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+  .t-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 14px;
+    background: var(--mist);
+    color: var(--water-ink);
+  }
+  .t-text {
+    display: grid;
+    line-height: 1.25;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-stretch: 106%;
+    font-weight: 800;
+    font-size: 1.02rem;
+  }
+  small {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media (max-width: 480px) {
+    li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 1.1rem 0.25rem;
+    }
+    li:nth-child(even) {
+      padding-left: 1rem;
+    }
+    .t-icon {
+      width: 42px;
+      height: 42px;
+    }
+  }
+</style>

@@ -1,0 +1,413 @@
+---
+// Two-question self-assessment that recommends services and hands the
+// answers to the quote form via the query string.
+import Icon from './Icon.astro';
+import { symptoms } from '../data/symptoms';
+import { services, servicePath } from '../data/services';
+
+const serviceData = Object.fromEntries(
+  services.map((s) => [s.slug, { name: s.name, summary: s.summary, href: servicePath(s), icon: s.icon }]),
+);
+const payload = JSON.stringify({
+  symptoms: symptoms.map(({ id, label, weights }) => ({ id, label, weights })),
+  services: serviceData,
+});
+---
+
+<div class="checkup" data-checkup>
+  <script type="application/json" data-checkup-data set:html={payload} />
+
+  <div class="cu-step">
+    <p class="cu-q"><span class="cu-n">1</span> What are you seeing? <span class="cu-hint">Pick everything that applies.</span></p>
+    <div class="cu-grid">
+      {symptoms.map((s) => (
+        <label class="cu-card">
+          <input type="checkbox" value={s.id} data-symptom />
+          <span class="cu-card-inner">
+            <span class="cu-icon"><Icon name={s.icon} size={24} /></span>
+            <span class="cu-label">{s.label}</span>
+            <span class="cu-tick" aria-hidden="true"><Icon name="check" size={16} strokeWidth={3} /></span>
+          </span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <fieldset class="cu-step">
+    <legend class="cu-q"><span class="cu-n">2</span> Is the wet area lower than the street or curb?</legend>
+    <div class="cu-seg">
+      <label><input type="radio" name="cu-low" value="yes" data-low /><span>Yes</span></label>
+      <label><input type="radio" name="cu-low" value="no" data-low /><span>No</span></label>
+      <label><input type="radio" name="cu-low" value="unsure" data-low checked /><span>Not sure</span></label>
+    </div>
+  </fieldset>
+
+  <div class="cu-result" data-result aria-live="polite">
+    <div class="cu-empty" data-empty>
+      <Icon name="droplet" size={28} />
+      <p>Choose what you’re seeing above and we’ll point you to the fix.</p>
+    </div>
+    <div class="cu-out" data-out hidden>
+      <p class="cu-out-title">Based on what you picked, start here:</p>
+      <ol class="cu-recs" data-recs role="list"></ol>
+      <p class="cu-alert" data-alert hidden>
+        <Icon name="foundation" size={20} />
+        <span>Water at the foundation is worth fixing before the next big storm — Houston clay moves as it wets and dries.</span>
+      </p>
+      <div class="cu-actions">
+        <a href="/contact-us/" class="btn btn-lg" data-cta>Send this to our team <Icon name="arrow-right" /></a>
+        <button type="button" class="btn btn-ghost" data-reset>Start over</button>
+      </div>
+      <p class="cu-fine">This is a starting point, not a diagnosis — every property drains differently. An evaluation confirms the right fix.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .checkup {
+    display: grid;
+    gap: 2rem;
+  }
+  .cu-step {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  .cu-q {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.7rem;
+    font-family: var(--font-display);
+    font-stretch: 106%;
+    font-weight: 800;
+    font-size: var(--step-1);
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+  .cu-n {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-size: 0.95rem;
+  }
+  .cu-hint {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .cu-grid {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+  .cu-card {
+    position: relative;
+    cursor: pointer;
+  }
+  .cu-card input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .cu-card-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 100%;
+    min-height: 68px;
+    padding: 0.8rem 2.4rem 0.8rem 0.8rem;
+    border-radius: 14px;
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    transition: all 0.18s var(--ease);
+  }
+  .cu-card:hover .cu-card-inner {
+    border-color: rgba(29, 111, 168, 0.5);
+  }
+  .cu-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    border-radius: 11px;
+    background: var(--mist);
+    color: var(--water-ink);
+    transition: all 0.18s var(--ease);
+  }
+  .cu-label {
+    font-weight: 600;
+    font-size: 0.93rem;
+    line-height: 1.3;
+  }
+  .cu-tick {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-strong);
+    color: transparent;
+    transition: all 0.18s var(--ease);
+  }
+  .cu-card input:checked + .cu-card-inner {
+    border-color: var(--navy);
+    background: #f2f7fb;
+    box-shadow: 0 0 0 1px var(--navy) inset;
+  }
+  .cu-card input:checked + .cu-card-inner .cu-icon {
+    background: var(--navy);
+    color: var(--water-bright);
+  }
+  .cu-card input:checked + .cu-card-inner .cu-tick {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--amber-ink);
+  }
+  .cu-card input:focus-visible + .cu-card-inner {
+    outline: 3px solid var(--water-bright);
+    outline-offset: 2px;
+  }
+
+  .cu-seg {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .cu-seg label {
+    position: relative;
+  }
+  .cu-seg input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .cu-seg span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 1.4rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--line-strong);
+    background: var(--card);
+    font-weight: 650;
+    transition: all 0.15s var(--ease);
+  }
+  .cu-seg input:checked + span {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .cu-seg input:focus-visible + span {
+    outline: 3px solid var(--water-bright);
+    outline-offset: 2px;
+  }
+
+  .cu-result {
+    border-radius: var(--radius-lg);
+    background: var(--deep);
+    color: #e9f1f6;
+    padding: clamp(1.4rem, 1rem + 2vw, 2.2rem);
+    box-shadow: var(--shadow-lg);
+  }
+  .cu-empty {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: #a9bccb;
+  }
+  .cu-empty :global(svg) {
+    color: var(--water-bright);
+    flex: none;
+  }
+  .cu-out-title {
+    font-family: var(--font-display);
+    font-stretch: 106%;
+    font-weight: 800;
+    font-size: var(--step-1);
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .cu-recs {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .cu-recs :global(a) {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line-dark);
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.15s var(--ease);
+  }
+  .cu-recs :global(a:hover) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .cu-recs :global(.rank) {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-weight: 850;
+    background: rgba(91, 178, 232, 0.16);
+    color: var(--water-bright);
+  }
+  .cu-recs :global(li:first-child .rank) {
+    background: var(--amber);
+    color: var(--amber-ink);
+  }
+  .cu-recs :global(strong) {
+    display: block;
+    font-family: var(--font-display);
+    font-stretch: 104%;
+    font-size: 1.08rem;
+  }
+  .cu-recs :global(small) {
+    display: block;
+    color: #a9bccb;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    margin-top: 0.15rem;
+  }
+  .cu-recs :global(.go) {
+    color: var(--water-bright);
+  }
+  .cu-alert {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: rgba(244, 166, 42, 0.12);
+    border: 1px solid rgba(244, 166, 42, 0.35);
+    color: #ffe2b0;
+    font-size: 0.92rem;
+  }
+  .cu-alert :global(svg) {
+    flex: none;
+    color: var(--amber);
+  }
+  .cu-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.4rem;
+  }
+  .cu-actions .btn-ghost {
+    --btn-fg: #fff;
+    --btn-bd: rgba(255, 255, 255, 0.3);
+  }
+  .cu-actions .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-color: #fff;
+  }
+  .cu-fine {
+    margin-top: 1rem;
+    font-size: 0.84rem;
+    color: #8da3b3;
+  }
+  @media (max-width: 520px) {
+    .cu-actions .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  type Data = {
+    symptoms: { id: string; label: string; weights: Record<string, number> }[];
+    services: Record<string, { name: string; summary: string; href: string }>;
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-checkup]').forEach((root) => {
+    const data: Data = JSON.parse(root.querySelector('[data-checkup-data]')!.textContent!);
+    const boxes = [...root.querySelectorAll<HTMLInputElement>('[data-symptom]')];
+    const lows = [...root.querySelectorAll<HTMLInputElement>('[data-low]')];
+    const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+    const out = root.querySelector<HTMLElement>('[data-out]')!;
+    const recs = root.querySelector<HTMLElement>('[data-recs]')!;
+    const alert = root.querySelector<HTMLElement>('[data-alert]')!;
+    const cta = root.querySelector<HTMLAnchorElement>('[data-cta]')!;
+    const reset = root.querySelector<HTMLButtonElement>('[data-reset]')!;
+
+    const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+    const render = () => {
+      const picked = boxes.filter((b) => b.checked).map((b) => b.value);
+      const low = lows.find((r) => r.checked)?.value ?? 'unsure';
+      const scores: Record<string, number> = {};
+      const reasons: Record<string, string[]> = {};
+
+      for (const sym of data.symptoms.filter((s) => picked.includes(s.id))) {
+        for (const [slug, w] of Object.entries(sym.weights)) {
+          scores[slug] = (scores[slug] ?? 0) + w;
+          (reasons[slug] ??= []).push(sym.label.toLowerCase());
+        }
+      }
+      if (picked.length && low !== 'no') {
+        const slug = 'sump-pump-installation-houston';
+        scores[slug] = (scores[slug] ?? 0) + (low === 'yes' ? 3 : 1);
+        if (low === 'yes') (reasons[slug] ??= []).push('the wet area sits below the street');
+      }
+
+      const ranked = Object.entries(scores)
+        .filter(([, v]) => v > 0)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+      if (!ranked.length) {
+        empty.hidden = false;
+        out.hidden = true;
+        return;
+      }
+      empty.hidden = true;
+      out.hidden = false;
+
+      recs.innerHTML = ranked
+        .map(([slug], i) => {
+          const s = data.services[slug];
+          const why = (reasons[slug] ?? []).slice(0, 2).join(' and ');
+          return `<li><a href="${s.href}"><span class="rank">${i + 1}</span><span><strong>${esc(s.name)}</strong><small>${
+            why ? `Because: ${esc(why)}` : esc(s.summary)
+          }</small></span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>`;
+        })
+        .join('');
+
+      alert.hidden = !picked.includes('foundation');
+      const params = new URLSearchParams({ service: ranked[0][0], issues: picked.join(',') });
+      cta.href = `/contact-us/?${params}#quote`;
+    };
+
+    root.addEventListener('change', render);
+    reset.addEventListener('click', () => {
+      boxes.forEach((b) => (b.checked = false));
+      lows.forEach((r) => (r.checked = r.value === 'unsure'));
+      render();
+      boxes[0]?.focus();
+    });
+    render();
+  });
+</script>

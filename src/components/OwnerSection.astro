@@ -1,0 +1,252 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** Show the link through to the full About page. */
+  showMore?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { showMore = true, headingLevel: H = 'h2' } = Astro.props;
+const { owner } = site;
+
+const commitments = [
+  { icon: 'family', text: '100% family-owned & Houston-operated' },
+  { icon: 'video', text: 'On-site or virtual evaluations' },
+  { icon: 'clipboard', text: 'Custom design + itemized proposal with a timeline' },
+  { icon: 'shield', text: site.warranty.long },
+  { icon: 'siren', text: site.hours.emergency },
+];
+---
+
+<div class="owner" data-reveal>
+  <div class="owner-portrait">
+    <div class="portrait-frame">
+      {owner.photo ? (
+        <img src={owner.photo} alt={`${owner.fullName}, ${owner.role} of ${site.name}`} width="560" height="680" loading="lazy" decoding="async" />
+      ) : (
+        <div class="monogram" role="img" aria-label={`${owner.fullName}, ${owner.role}`}>
+          <svg viewBox="0 0 280 340" aria-hidden="true">
+            <path d="M0 250c35-22 70-22 105 0s70 22 105 0 70-22 70-22V340H0Z" class="mw1" />
+            <path d="M0 282c35-22 70-22 105 0s70 22 105 0 70-22 70-22V340H0Z" class="mw2" />
+            <path d="M70 128 140 70l70 58" class="mroof" />
+          </svg>
+          <span class="mono-letter">{owner.name.charAt(0)}</span>
+        </div>
+      )}
+    </div>
+    <div class="owner-tag">
+      <strong>{owner.fullName}</strong>
+      <span>{owner.role}</span>
+    </div>
+    <div class="owner-badge">
+      <span class="badge-year">2017</span>
+      <span class="badge-text">Harvey hit.<br />We got to work.</span>
+    </div>
+  </div>
+
+  <div class="owner-copy">
+    <p class="eyebrow">Meet the owner</p>
+    <H class="owner-title">Built by a Houstonian who saw Harvey up close.</H>
+    <div class="owner-body">
+      <p>
+        In 2017, Hurricane Harvey put {owner.name}’s family and friends through what thousands of Houston households went
+        through: water where it never should have been, and no good answer for how to stop it from happening again.
+      </p>
+      <p>
+        The flood-prevention options on the market were ineffective, half-measures or priced out of reach.
+        So {owner.name} and the team designed and built their own drainage systems instead. That work became <strong>Flood Mitigators</strong>.
+      </p>
+      <p>
+        Today the company is still family-owned and Houston-operated, and every project starts the same way it did then: by
+        understanding exactly how water moves across your property before anything goes in the ground.
+      </p>
+    </div>
+    <ul role="list" class="owner-commit">
+      {commitments.map((c) => (
+        <li><span class="oc-icon"><Icon name={c.icon} size={20} /></span>{c.text}</li>
+      ))}
+    </ul>
+    <div class="owner-actions">
+      <a href={site.phone.href} class="btn"><Icon name="phone" /> Talk to {owner.name}’s team</a>
+      {showMore && (
+        <a href="/about-us/" class="link-arrow">Our story <Icon name="arrow-right" /></a>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .owner {
+    display: grid;
+    gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .owner {
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+  }
+
+  .owner-portrait {
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .portrait-frame {
+    position: relative;
+    aspect-ratio: 28 / 34;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--navy);
+    box-shadow: var(--shadow-lg);
+  }
+  .portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .monogram {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120% 80% at 80% 0%, rgba(91, 178, 232, 0.28), transparent 60%),
+      linear-gradient(160deg, var(--navy-2), var(--deep));
+  }
+  .monogram svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .mw1 {
+    fill: rgba(91, 178, 232, 0.22);
+  }
+  .mw2 {
+    fill: rgba(91, 178, 232, 0.35);
+  }
+  .mroof {
+    fill: none;
+    stroke: var(--amber);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .mono-letter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    text-align: center;
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 900;
+    font-size: clamp(6rem, 4rem + 8vw, 9rem);
+    line-height: 1;
+    color: #fff;
+    letter-spacing: -0.04em;
+  }
+  .owner-tag {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    display: grid;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow);
+    line-height: 1.25;
+  }
+  .owner-tag strong {
+    font-family: var(--font-display);
+    font-stretch: 110%;
+    font-size: 1.15rem;
+    font-weight: 850;
+  }
+  .owner-tag span {
+    font-size: 0.86rem;
+    color: var(--muted);
+    font-weight: 550;
+  }
+  .owner-badge {
+    position: absolute;
+    right: -0.75rem;
+    top: 1.5rem;
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
+    background: var(--amber);
+    color: var(--amber-ink);
+    box-shadow: var(--shadow);
+    transform: rotate(3deg);
+  }
+  .badge-year {
+    font-family: var(--font-display);
+    font-stretch: 120%;
+    font-weight: 900;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .badge-text {
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+  @media (max-width: 520px) {
+    .owner-badge {
+      right: 0.75rem;
+    }
+  }
+
+  .owner-copy {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .owner-title {
+    font-size: var(--step-4);
+  }
+  .owner-body {
+    display: grid;
+    gap: 1rem;
+    font-size: 1.06rem;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+  .owner-commit {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+  }
+  @media (min-width: 640px) {
+    .owner-commit {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .owner-commit li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+  .oc-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--mist);
+    color: var(--water-ink);
+  }
+  .owner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+</style>

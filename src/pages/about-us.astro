@@ -1,0 +1,228 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import OwnerSection from '../components/OwnerSection.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import { breadcrumbLd } from '../lib/schema';
+
+const crumbs = [{ name: 'About', href: '/about-us/' }];
+
+const story = [
+  {
+    mark: '2017',
+    title: 'Harvey hits home',
+    body: 'Hurricane Harvey floods Houston. Manny’s family and friends are among the households dealing with water where it never should have been.',
+  },
+  {
+    mark: 'Then',
+    title: 'Nothing on the market fits',
+    body: 'The available flood-prevention options are ineffective, half-measures or prohibitively expensive. None are built around how water actually moves on a Houston lot.',
+  },
+  {
+    mark: 'So',
+    title: 'We build our own',
+    body: 'Manny and the team design and install their own drainage systems — engineered for Houston clay, flat ground and Gulf storms.',
+  },
+  {
+    mark: 'Now',
+    title: 'Flood Mitigators',
+    body: 'Still family-owned and Houston-operated, now protecting homes across Greater Houston with eight drainage and flood mitigation services.',
+  },
+];
+
+const values = [
+  { icon: 'clipboard', title: 'Design before we dig', body: 'Every system is designed around your property’s landscape and how water accumulates on it — not pulled from a kit.' },
+  { icon: 'layers', title: 'Built for Houston', body: 'Clay that drains slowly, ground that barely slopes, storms that arrive all at once. We design for all three.' },
+  { icon: 'calendar', title: 'Upfront and itemized', body: 'You see the design, the itemized cost and the timeline before any work begins.' },
+  { icon: 'shield', title: 'We stand behind it', body: `Installations carry a ${site.warranty.long}. If water is threatening your home, we offer 24/7 emergency response.` },
+];
+
+const aboutLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Flood Mitigators',
+  url: `${site.url}/about-us/`,
+  about: { '@id': `${site.url}/#business` },
+};
+---
+
+<Base
+  title="About Flood Mitigators & Owner Manny"
+  description="Flood Mitigators is a family-owned Houston drainage company founded after Hurricane Harvey. Meet owner Manny and learn why we design every system around your property."
+  jsonLd={[aboutLd, breadcrumbLd(crumbs)]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="About us"
+    title="Family-owned. Houston-made. Born after Harvey."
+    lede="We started Flood Mitigators because we lived through the flood — and couldn’t find a fix worth trusting. So we built one."
+  />
+
+  <section class="section">
+    <div class="container">
+      <OwnerSection showMore={false} />
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Our story</p>
+        <h2>From one family’s flood to Houston’s drainage team.</h2>
+      </div>
+      <ol role="list" class="timeline">
+        {story.map((item, i) => (
+          <li data-reveal style={`transition-delay:${i * 80}ms`}>
+            <span class="tl-mark">{item.mark}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we stand for</p>
+        <h2>How we work on every property.</h2>
+      </div>
+      <div class="grid grid-4">
+        {values.map((v) => (
+          <div class="value card" data-reveal>
+            <span class="v-icon"><Icon name={v.icon} size={24} /></span>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper2">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>What working with us looks like.</h2>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container social">
+      <div>
+        <p class="eyebrow">Follow the work</p>
+        <h2>See our latest projects.</h2>
+        <p class="lede">Before-and-afters, installs in progress and storm-season tips on our socials.</p>
+      </div>
+      <div class="social-links">
+        <a href={site.social.instagram} class="btn btn-dark btn-lg" target="_blank" rel="noopener"><Icon name="instagram" /> Instagram</a>
+        <a href={site.social.facebook} class="btn btn-dark btn-lg" target="_blank" rel="noopener"><Icon name="facebook" /> Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={`Talk to ${site.owner.name}’s team.`} body="Tell us what’s happening in your yard. We’ll set up an on-site or virtual evaluation and send a detailed, itemized proposal." />
+</Base>
+
+<style>
+  .timeline {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    position: relative;
+  }
+  .timeline li {
+    position: relative;
+    padding: 1.6rem 1.5rem;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line-dark);
+  }
+  .tl-mark {
+    display: inline-flex;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--amber);
+    color: var(--amber-ink);
+    font-family: var(--font-display);
+    font-stretch: 115%;
+    font-weight: 850;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+  }
+  .timeline li:not(:first-child) .tl-mark {
+    background: rgba(91, 178, 232, 0.16);
+    color: var(--water-bright);
+  }
+  .timeline h3 {
+    color: #fff;
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
+  .timeline p {
+    color: #a9bccb;
+    font-size: 0.97rem;
+  }
+
+  .value {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: 1.5rem;
+  }
+  .value h3 {
+    font-size: 1.25rem;
+  }
+  .value p {
+    color: var(--muted);
+    font-size: 0.96rem;
+  }
+  .v-icon {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--mist);
+    color: var(--water-ink);
+  }
+
+  .social {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--radius-lg);
+    background: var(--mist);
+  }
+  .social h2 {
+    font-size: var(--step-3);
+    margin-top: 0.5rem;
+  }
+  .social .lede {
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 900px) {
+    .social {
+      grid-template-columns: 1.3fr 1fr;
+    }
+  }
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  @media (min-width: 900px) {
+    .social-links {
+      justify-content: flex-end;
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  steps?: { title: string; body: string; icon?: string }[];
+  tone?: 'light' | 'dark';
+}
+
+const defaults = [
+  { icon: 'video', title: 'Evaluate', body: 'A drainage specialist evaluates your property on site — or virtually from photos and video — to find where water pools, where it comes from and where it can go.' },
+  { icon: 'clipboard', title: 'Design & propose', body: 'You get a detailed design and an itemized proposal with cost and timeline before any work begins. No guesswork, no surprises.' },
+  { icon: 'hardhat', title: 'Install & test', body: 'We build to the design, flow-test the system with water and restore your yard — then walk you through how it all works.' },
+  { icon: 'shield', title: 'Protect', body: 'Installations are backed by a 3-year parts & labor limited warranty, with 24/7 emergency response when water won’t wait.' },
+];
+
+const { steps = defaults, tone = 'light' } = Astro.props;
+---
+
+<ol class:list={['steps', `steps-${tone}`]} role="list">
+  {steps.map((step, i) => (
+    <li class="step" data-reveal style={`transition-delay:${i * 80}ms`}>
+      <div class="step-top">
+        <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+        {step.icon && <span class="step-icon"><Icon name={step.icon} size={24} /></span>}
+      </div>
+      <h3>{step.title}</h3>
+      <p>{step.body}</p>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .steps {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    counter-reset: step;
+  }
+  .step {
+    position: relative;
+    padding: 1.6rem 1.5rem 1.7rem;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  .steps-dark .step {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--line-dark);
+  }
+  .step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.4rem;
+  }
+  .step-num {
+    font-family: var(--font-display);
+    font-stretch: 120%;
+    font-weight: 850;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--water);
+  }
+  .steps-dark .step-num {
+    -webkit-text-stroke-color: var(--water-bright);
+  }
+  .step-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--amber);
+    color: var(--amber-ink);
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+  .steps-dark p {
+    color: #a9bccb;
+  }
+  @media (min-width: 1000px) {
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 2.7rem;
+      right: -1.1rem;
+      width: 1rem;
+      height: 2px;
+      background: var(--line-strong);
+    }
+    .steps-dark .step:not(:last-child)::after {
+      background: var(--line-dark);
+    }
+  }
+</style>
