@@ -12,6 +12,9 @@ import Crew from '../components/Crew.astro';
 import Manny from '../components/Manny.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import Credentials from '../components/Credentials.astro';
+import Aftercare from '../components/Aftercare.astro';
 import { services } from '../data/services';
 import { areas, areaPath } from '../data/areas';
 import { guides, tools, guidePath } from '../data/resources';
@@ -24,7 +27,7 @@ const photoServices = services.filter((s) => s.photo);
 const otherServices = services.filter((s) => !s.photo);
 
 const faqs: FaqItem[] = [
-  { q: 'Can you assess my property remotely?', a: 'Yes. Every assessment we offer is remote. The Snapshot and Flood Intelligence report are built from your address, and the Expert Mitigation Plan is a 45-minute video call where you show us the problem areas on your phone.' },
+  { q: 'Can you assess my property remotely?', a: 'Yes. Our Snapshot and Flood Intelligence reports are built from your address, and the Expert Mitigation Plan is a video call. Virtual or onsite drainage assessments are also available; tell us what you need when you contact the team.' },
   { q: 'Is the Flood Snapshot really free?', a: 'Yes. Enter your address and email and we send it. No card and no obligation. If it raises questions, the Flood Intelligence report answers them in detail.' },
   { q: 'How is Flood Intelligence different from the Snapshot?', a: 'The Snapshot tells you whether you have a problem. Flood Intelligence tells you why, with flood and rainfall history near your block, how water moves across your lot, and a ranked list of fixes.' },
   { q: 'What drainage problems do you help with?', a: 'Standing water in the yard, water pooling at the foundation, soggy side yards, overflowing gutters and downspouts, water reaching the garage or patio, and runoff coming from a neighbor’s lot.' },
@@ -56,23 +59,19 @@ const faqs: FaqItem[] = [
       </div>
 
       <div class="hero-visual">
-        <div class="hero-photo"><img src="/assets/img/hero-house.jpg" width="449" height="507" fetchpriority="high" alt="Two-story stone house in a Houston neighborhood with a landscaped front yard"></div>
-        <aside class="snapshot houston-plan" aria-label="Examples of yard drainage solutions">
-          <div class="snap-top"><span class="snap-tag">Designed for your lot</span><svg aria-hidden="true"><use href="#i-house"/></svg></div>
-          <h2>Give the water<br>a better way out.</h2>
-          <dl class="snap-rows" style="margin:0">
-            <div><dt>Roof runoff</dt><dd>Downspout lines</dd></div>
-            <div><dt>Standing water</dt><dd>Drains &amp; catch basins</dd></div>
-            <div><dt>Low spots</dt><dd>Grading &amp; swales</dd></div>
-          </dl>
-          <p>Possible solutions. Your assessment determines what fits.</p>
-          <a class="link-arrow" href="/drainage-checkup/">Find your starting point <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="hero-photo"><img src="/assets/source/van-in-action.webp" width="1440" height="1080" fetchpriority="high" alt="The Flood Mitigators van at work beside a Houston-area home"></div>
+        <aside class="snapshot houston-plan" aria-label="Our Houston installation team">
+          <div class="snap-top"><span class="snap-tag">Houston-operated</span><svg aria-hidden="true"><use href="#i-house"/></svg></div>
+          <h2>Your local crew.<br>Every step of the way.</h2>
+          <p>From the first assessment to installation, testing and ongoing care.</p>
+          <a class="link-arrow" href="/our-work/">See our crew in action <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </aside>
       </div>
     </div>
   </section>
 
   <Trust />
+  <div class="certified-strip"><div class="wrap"><img src="/assets/source/nds-certified.webp" width="600" height="611" alt="NDS Professional Drainage Certified Contractor" /><p><strong>NDS Professional Drainage Certified Contractor</strong><span>Careful design. Proven components. A Houston team that stands behind the work.</span></p><a href="#credentials">Our credentials <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
 
   <section class="section services" id="services">
     <div class="wrap">
@@ -128,7 +127,10 @@ const faqs: FaqItem[] = [
   </section>
 
   <Crew />
+  <ProjectGallery />
   <Manny />
+  <Aftercare />
+  <div id="credentials"><Credentials /></div>
 
   <section class="section reports" id="reports">
     <div class="wrap">

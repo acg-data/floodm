@@ -23,6 +23,7 @@
 
 <script>
   import { sendLead, callLink } from '../scripts/lead';
+  import { tr } from '../scripts/locale';
   const sf = document.querySelector<HTMLFormElement>('#snapForm');
   if (sf) {
     const addr = sf.querySelector<HTMLInputElement>('#snapAddr')!;
@@ -38,45 +39,45 @@
       const v = addr.value.trim();
       if (stage === 'address') {
         if (v.length < 6 || !/\d/.test(v)) {
-          err.textContent = 'Enter a street address with a house number, like 4410 Westheimer Rd, Houston.';
+          err.textContent = tr('Enter a street address with a house number, like 4410 Westheimer Rd, Houston.', 'Escribe una dirección con número, por ejemplo: 4410 Westheimer Rd, Houston.');
           err.hidden = false;
           addr.focus();
           return;
         }
         saved.address = v;
         stage = 'email';
-        lab.textContent = `Where should we send the Snapshot for ${v}?`;
+        lab.textContent = tr(`Where should we send the Snapshot for ${v}?`, `¿A qué correo enviamos el Snapshot de ${v}?`);
         addr.value = '';
         addr.type = 'email';
         addr.autocomplete = 'email';
-        addr.placeholder = 'you@email.com';
+        addr.placeholder = tr('you@email.com', 'tu@correo.com');
         sf.querySelector('#snapIco')!.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
-        btn.innerHTML = 'Send my Snapshot <svg><use href="#i-arrow"/></svg>';
+        btn.innerHTML = tr('Send my Snapshot', 'Enviar mi Snapshot') + ' <svg><use href="#i-arrow"/></svg>';
         addr.focus();
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-        err.textContent = 'That email looks incomplete. Check for a typo and try again.';
+        err.textContent = tr('That email looks incomplete. Check for a typo and try again.', 'El correo parece incompleto. Revisa la dirección e inténtalo de nuevo.');
         err.hidden = false;
         addr.focus();
         return;
       }
       saved.email = v;
       btn.disabled = true;
-      const result = await sendLead('Flood Snapshot request', saved);
+      const result = await sendLead(tr('Flood Snapshot request', 'Solicitud de Flood Snapshot'), saved);
       btn.disabled = false;
       if (result === 'failed') {
-        err.innerHTML = `That didn’t go through. Call or text ${callLink()} and we’ll send your Snapshot.`;
+        err.innerHTML = tr(`That didn’t go through. Call or text ${callLink()} and we’ll send your Snapshot.`, `No se pudo enviar. Llama o envía un mensaje al ${callLink()} para solicitar tu Snapshot.`);
         err.hidden = false;
         return;
       }
       sf.hidden = true;
       const text = done.querySelector('#snapDoneText')!;
       if (result === 'mailto') {
-        done.querySelector('strong')!.textContent = 'One last step.';
-        text.textContent = `Your email app opened with the Snapshot request for ${saved.address}. Hit send and we’ll get it to ${saved.email}.`;
+        done.querySelector('strong')!.textContent = tr('One last step.', 'Un último paso.');
+        text.textContent = tr(`Your email app opened with the Snapshot request for ${saved.address}. Hit send and we’ll get it to ${saved.email}.`, `Tu aplicación de correo se abrió con la solicitud para ${saved.address}. Pulsa enviar y lo enviaremos a ${saved.email}.`);
       } else {
-        text.textContent = `We’re preparing the Flood Snapshot for ${saved.address}. It goes to ${saved.email}.`;
+        text.textContent = tr(`We’re preparing the Flood Snapshot for ${saved.address}. It goes to ${saved.email}.`, `Estamos preparando el Flood Snapshot de ${saved.address}. Lo enviaremos a ${saved.email}.`);
       }
       done.hidden = false;
     });

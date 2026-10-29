@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Aftercare from '../components/Aftercare.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site';
+import { breadcrumbLd, faqLd } from '../lib/schema';
+const crumbs = [{ name: 'Warranty & care', href: '/warranty-and-care/' }];
+const faqs = [
+  { q: 'What warranty comes with a new system?', a: 'New drainage systems include a 3-year parts and labor limited warranty. Your written installation agreement sets out the terms, exclusions and covered work.' },
+  { q: 'Are maintenance visits included?', a: 'New-system support includes two maintenance visits per year. Ask the team to confirm the schedule and the coverage that applies to your installation.' },
+  { q: 'What should I check between visits?', a: 'Keep grates and catch basins clear of leaves and mulch. Check that outlets are unobstructed and note any change in drainage after rain. Contact us if a line slows or a pump does not operate as expected.' },
+  { q: 'Do you maintain systems installed by someone else?', a: 'Yes. Ask us about drain cleaning, hydro jetting, culvert cleaning and pump service for an existing system. The new-installation warranty does not automatically apply to someone else’s work.' },
+];
+---
+<Base title="Drainage Warranty & Ongoing Care in Houston" description="Learn about Flood Mitigators’ 3-year parts and labor limited warranty, system testing, twice-yearly maintenance visits and care between service appointments." jsonLd={[breadcrumbLd(crumbs), faqLd(faqs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Warranty & care" headline={['The work continues', 'after installation.']} lede="System testing, a written warranty and a maintenance schedule help keep your drainage working. Keep your installation agreement for the coverage specific to your property." />
+  <Aftercare />
+  <section class="section band-ice"><div class="wrap faq-grid"><div class="section-head"><h2>Questions about<br>your system?</h2><p class="lede">Call or text <a href={site.phone.href}>{site.phone.display}</a> and tell us what has changed.</p></div><Faq items={faqs} /></div></section>
+  <FinalCta />
+</Base>

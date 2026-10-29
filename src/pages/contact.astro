@@ -17,6 +17,8 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
         <a class="ccard primary" href={site.phone.href}><svg aria-hidden="true"><use href="#i-phone"/></svg><span><small>Call or text</small><b>{site.phone.display}</b><small>{site.hours.label} · {site.emergency}</small></span></a>
         <a class="ccard" href={site.sms}><svg aria-hidden="true"><use href="#i-video"/></svg><span><b>Text us photos or video</b><small>The fastest way to show us the problem.</small></span></a>
         <a class="ccard" href={`mailto:${site.email}`}><svg aria-hidden="true"><use href="#i-mail"/></svg><span><b>{site.email}</b><small>We reply about your property only.</small></span></a>
+        <a class="ccard" href={site.booking} target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-list"/></svg><span><b>Book online</b><small>Open our appointment scheduler.</small></span></a>
+        <div class="ccard"><svg aria-hidden="true"><use href="#i-pin"/></svg><span><b>Write to our Houston headquarters</b><small>8614 Pagewood Ln<br />Houston, TX 77063</small></span></div>
         <a class="ccard" href="/emergency/"><svg aria-hidden="true"><use href="#i-siren"/></svg><span><b>Water coming in right now?</b><small>What to do, and how to reach us 24/7.</small></span></a>
         <div class="panel" style="margin-top:8px">
           <h2 style="font-size:1.2rem">Or start with a free Flood Snapshot</h2>
@@ -48,7 +50,7 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
         </form>
         <div class="dlg-done" id="cDone" hidden>
           <span class="ok"><svg><use href="#i-check"/></svg></span>
-          <h2>Request received.</h2>
+          <h2 id="contactDoneHeading">Request received.</h2>
           <p id="cDoneText"></p>
         </div>
       </div>
@@ -63,6 +65,7 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
 </Base>
 <script>
   import { sendLead, callLink } from '../scripts/lead';
+  import { tr } from '../scripts/locale';
   const f = document.querySelector<HTMLFormElement>('#contactForm');
   f?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -70,16 +73,17 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
     const err = document.querySelector<HTMLElement>('#cErr')!;
     const name = v('#cName'), email = v('#cEmail'), address = v('#cAddr');
     const miss: string[] = [];
-    if (!name) miss.push('your name');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) miss.push('a valid email');
-    if (address.length < 6) miss.push('the property address');
-    if (miss.length) { err.textContent = `Add ${miss.join(', ').replace(/, ([^,]*)$/, ' and $1')} so we can reply.`; err.hidden = false; return; }
+    if (!name) miss.push(tr('your name', 'tu nombre'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) miss.push(tr('a valid email', 'un correo electrónico válido'));
+    if (address.length < 6) miss.push(tr('the property address', 'la dirección de la propiedad'));
+    if (miss.length) { err.textContent = tr(`Add ${miss.join(', ').replace(/, ([^,]*)$/, ' and $1')} so we can reply.`, `Agrega ${miss.join(', ').replace(/, ([^,]*)$/, ' y $1')} para que podamos responderte.`); err.hidden = false; return; }
     const request = f.querySelector<HTMLInputElement>('input[name=cneed]:checked')?.value ?? 'Assessment';
-    const result = await sendLead('Assessment request', { name, email, phone: v('#cPhone'), address, request, service: v('#cService'), notes: v('#cNotes') });
-    if (result === 'failed') { err.innerHTML = `That didn’t go through. Call or text ${callLink()} and we’ll take it from there.`; err.hidden = false; return; }
+    const result = await sendLead(tr('Assessment request', 'Solicitud de evaluación'), { name, email, phone: v('#cPhone'), address, request, service: v('#cService'), notes: v('#cNotes') });
+    if (result === 'failed') { err.innerHTML = tr(`That didn’t go through. Call or text ${callLink()} and we’ll take it from there.`, `No se pudo enviar. Llama o envía un mensaje al ${callLink()} y te ayudaremos.`); err.hidden = false; return; }
+    document.querySelector('#contactDoneHeading')!.textContent = result === 'mailto' ? tr('One last step.', 'Un último paso.') : tr('Request received.', 'Solicitud recibida.');
     document.querySelector('#cDoneText')!.textContent = result === 'mailto'
-      ? `Thanks, ${name.split(' ')[0]}. Your email app opened with your request. Hit send and we reply to ${email}.`
-      : `Thanks, ${name.split(' ')[0]}. Your request is in. We reply to ${email}.`;
+      ? tr(`Thanks, ${name.split(' ')[0]}. Your email app opened with your request. Hit send and we reply to ${email}.`, `Gracias, ${name.split(' ')[0]}. Tu aplicación de correo se abrió con la solicitud. Pulsa enviar y te responderemos a ${email}.`)
+      : tr(`Thanks, ${name.split(' ')[0]}. Your request is in. We reply to ${email}.`, `Gracias, ${name.split(' ')[0]}. Recibimos tu solicitud. Te responderemos a ${email}.`);
     f.hidden = true;
     document.querySelector<HTMLElement>('#cDone')!.hidden = false;
   });

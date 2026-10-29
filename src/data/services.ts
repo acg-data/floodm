@@ -14,7 +14,7 @@ export const services: Service[] = [
     diagram: 'french-drain',
     metaTitle: 'French Drain Installation in Houston, TX',
     metaDescription:
-      'French drains designed for Houston clay. Remote assessment, a fixed install scope, our own crew, and a 3-year parts & labor limited warranty.',
+      'French drains designed for Houston clay. Virtual or onsite assessment, a clear install scope, our own crew, and a 3-year parts & labor limited warranty.',
     eyebrow: 'French drains · Houston, TX',
     headline: ['Water that sits in the yard', 'needs somewhere to go.'],
     lede: 'A French drain collects water from the surface and the soil around it, then carries it off your lot. We design each run around how water actually moves across your yard.',
@@ -126,7 +126,7 @@ export const services: Service[] = [
     diagram: 'grading',
     metaTitle: 'Yard Grading & Runoff Control in Houston',
     metaDescription:
-      'Regrading, swales and runoff control for Houston yards so water flows away from the foundation. Planned remotely, built by our own Houston crew.',
+      'Regrading, swales and runoff control for Houston yards so water flows away from the foundation. Planned for your property, built by our own Houston crew.',
     eyebrow: 'Grading & runoff · Houston, TX',
     headline: ['Shape the ground so water', 'runs away, not toward you.'],
     lede: 'The cheapest drain is a slope that works. We reshape the yard so rain moves away from the slab and toward a place it can leave.',
@@ -181,7 +181,7 @@ export const services: Service[] = [
     diagram: 'downspout',
     metaTitle: 'Downspout Drainage & Catch Basins in Houston',
     metaDescription:
-      'Buried downspout lines and catch basins that carry roof water away from your Houston home’s slab. Planned remotely, installed by our own crew.',
+      'Buried downspout lines and catch basins that carry roof water away from your Houston home’s slab. Planned for your property, installed by our own crew.',
     eyebrow: 'Downspouts & catch basins · Houston, TX',
     headline: ['Your roof sheds thousands', 'of gallons. Send them away.'],
     lede: 'Every inch of rain on every square foot of roof is 0.623 gallons, and all of it leaves through your downspouts. We pipe it underground and away from the slab.',
@@ -289,7 +289,7 @@ export const services: Service[] = [
     photo: 'dry-creek',
     metaTitle: 'Dry Creek Beds & Rock Swales in Houston',
     metaDescription:
-      'Dry creek beds and rock swales that carry runoff across Houston yards in a channel that looks designed. Planned remotely, built by our own crew.',
+      'Dry creek beds and rock swales that carry runoff across Houston yards in a channel that looks designed. Planned for your property, built by our own crew.',
     eyebrow: 'Dry creek beds & swales · Houston, TX',
     headline: ['Drainage you can see,', 'built to look designed.'],
     lede: 'A dry creek bed is a shallow, rock-lined channel that carries runoff across the yard. Dry most days, working hard in a storm.',
@@ -343,7 +343,7 @@ export const services: Service[] = [
     diagram: 'culvert',
     metaTitle: 'Driveway Culvert Installation in Houston',
     metaDescription:
-      'Driveway culverts sized and set to the ditch flow line for Houston open-ditch streets. Planned remotely, installed by our own Houston crew.',
+      'Driveway culverts sized and set to the ditch flow line for Houston open-ditch streets. Planned for your property, installed by our own Houston crew.',
     eyebrow: 'Culvert installation · Houston, TX',
     headline: ['Culverts that keep', 'the ditch moving.'],
     lede: 'On an open-ditch street, the pipe under your driveway is part of the street’s drainage. Set it wrong and water backs up into your yard.',
@@ -598,6 +598,97 @@ export const services: Service[] = [
     ],
     related: ['drain-cleaning-services-houston', 'stormwater-cleaning-houston', 'culvert-cleaning-houston'],
   },
+  {
+  "slug": "rootrerouter",
+  "name": "Root Re-Router",
+  "navName": "Root Re-Router",
+  "group": "maintain",
+  "icon": "i-ring",
+  "photo": "root-rerouter",
+  "metaTitle": "Root Re-Router Soil Treatment in Houston",
+  "metaDescription": "Root Re-Router from Flood Mitigators: soil and root-zone treatment for Houston landscapes. Learn where it fits alongside drainage and landscape care.",
+  "eyebrow": "Root Re-Router · Houston, TX",
+  "headline": [
+    "Healthier soil.",
+    "A better root zone."
+  ],
+  "lede": "Root Re-Router is our soil and root-zone treatment for trees, turf and ornamental plants. Talk with the team about whether it belongs in your landscape-care plan.",
+  "summary": "Soil and root-zone care for trees, turf and planted areas.",
+  "intro": [
+    "Healthy roots depend on the conditions around them: moisture, oxygen, soil structure and nutrients. Root Re-Router is a soil treatment offered by Flood Mitigators to support that root environment in Houston landscapes.",
+    "Our current product information describes beneficial soil biology and improved access to moisture and nutrients. We assess the planted area and discuss the treatment, application and care that suit it.",
+    "Root-zone care and drainage solve different problems. A treatment does not repair a broken pipe, remove a blockage or guarantee that roots will avoid a foundation. We look at drainage, soil moisture and the condition of the landscape together."
+  ],
+  "signs": [
+    "Trees or planted areas showing stress",
+    "Poor establishment of new turf or ornamental plants",
+    "Uneven moisture around the root zone",
+    "Questions about roots near drains or the foundation",
+    "A landscape-care plan that needs soil-specific advice"
+  ],
+  "howItWorks": [
+    {
+      "title": "Review the landscape",
+      "body": "Tell us about the trees, turf, soil conditions and problems you are seeing."
+    },
+    {
+      "title": "Check the moisture pattern",
+      "body": "Consider wet spots, dry areas and nearby drainage before choosing a treatment."
+    },
+    {
+      "title": "Plan the application",
+      "body": "The team explains where and how Root Re-Router would be applied."
+    },
+    {
+      "title": "Coordinate ongoing care",
+      "body": "Keep soil treatment, irrigation and drainage maintenance working together."
+    }
+  ],
+  "included": [
+    "A discussion of your landscape and root-zone concerns",
+    "Review of moisture and drainage conditions",
+    "Treatment recommendations appropriate to the planted area",
+    "An explanation of application and follow-up care",
+    "A separate scope for any drainage repair that is needed"
+  ],
+  "process": [
+    {
+      "title": "Describe the problem",
+      "body": "Share photos and your property address with our team."
+    },
+    {
+      "title": "Review the options",
+      "body": "Discuss whether soil treatment, drainage work or further specialist advice is appropriate."
+    },
+    {
+      "title": "Plan the work",
+      "body": "Agree on the application and care instructions before service begins."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Does Root Re-Router replace drainage work?",
+      "a": "No. Soil treatment and drainage do different jobs. A blocked or damaged drain needs the appropriate cleaning or repair."
+    },
+    {
+      "q": "Will it repair root damage to a pipe or foundation?",
+      "a": "No. Existing pipe damage or structural concerns need their own assessment. We can discuss drainage work, and a qualified structural professional should review foundation damage."
+    },
+    {
+      "q": "What plants is the service intended for?",
+      "a": "Our product information discusses trees, turf and ornamental plants. Ask the team about suitability for your particular landscape."
+    },
+    {
+      "q": "How do I get application and product details?",
+      "a": "Call or text Flood Mitigators with your address, photos and the plants you want to treat. Ask for the current product and application information before scheduling."
+    }
+  ],
+  "related": [
+    "french-drain-installation-houston",
+    "hydro-jetting-services-houston",
+    "grading-drainage-houston"
+  ]
+},
 ];
 
 export const serviceBySlug = (slug: string) => services.find((s) => s.slug === slug);

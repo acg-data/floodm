@@ -1,6 +1,7 @@
 // Site-wide behaviour from the original page: sticky header shadow, mobile
 // menu, booking dialog — plus the dropdown menus added for the full site.
 import { sendLead, callLink } from './lead';
+import { tr } from './locale';
 
 const $ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => r.querySelector<T>(s);
 const $$ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => [...r.querySelectorAll<T>(s)];
@@ -17,7 +18,7 @@ const mb = $<HTMLButtonElement>('#menuBtn');
 const setMenu = (open: boolean) => {
   nav?.classList.toggle('open', open);
   mb?.setAttribute('aria-expanded', String(open));
-  mb?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  mb?.setAttribute('aria-label', open ? tr('Close menu', 'Cerrar menú') : tr('Open menu', 'Abrir menú'));
 };
 mb?.addEventListener('click', () => setMenu(!nav?.classList.contains('open')));
 $$('#nav a, #nav button:not(.navtoggle)').forEach((a) => a.addEventListener('click', () => setMenu(false)));
@@ -84,7 +85,7 @@ function openBook(kind: string | null, svc: string | null) {
   $('#bookErr')!.hidden = true;
   const id = kind === 'intel' ? 'need-intel' : kind === 'install' ? 'need-install' : 'need-expert';
   $<HTMLInputElement>(`#${id}`)!.checked = true;
-  if (svcHint) svcHint.textContent = svc || 'Drainage work';
+  if (svcHint) svcHint.textContent = svc || tr('Drainage work', 'Trabajo de drenaje');
   bf.dataset.svc = svc || '';
   if (typeof dlg.showModal === 'function') dlg.showModal();
   else dlg.setAttribute('open', '');
@@ -114,17 +115,17 @@ bf?.addEventListener('submit', async (e) => {
   const a = val('#bAddr');
   const er = $('#bookErr')!;
   const miss: string[] = [];
-  if (!name) miss.push('your name');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) miss.push('a valid email');
-  if (a.length < 6) miss.push('the property address');
+  if (!name) miss.push(tr('your name', 'tu nombre'));
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) miss.push(tr('a valid email', 'un correo electrónico válido'));
+  if (a.length < 6) miss.push(tr('the property address', 'la dirección de la propiedad'));
   if (miss.length) {
-    er.textContent = `Add ${miss.join(', ').replace(/, ([^,]*)$/, ' and $1')} so we can reply.`;
+    er.textContent = tr(`Add ${miss.join(', ').replace(/, ([^,]*)$/, ' and $1')} so we can reply.`, `Agrega ${miss.join(', ').replace(/, ([^,]*)$/, ' y $1')} para que podamos responderte.`);
     er.hidden = false;
     return;
   }
   let need = bf.querySelector<HTMLInputElement>('input[name=need]:checked')?.value || 'Assessment';
   if (need === 'Drainage install quote' && bf.dataset.svc) need += ` (${bf.dataset.svc})`;
-  const result = await sendLead('Assessment request', {
+  const result = await sendLead(tr('Assessment request', 'Solicitud de evaluación'), {
     name,
     email,
     phone: val('#bPhone'),
@@ -134,16 +135,17 @@ bf?.addEventListener('submit', async (e) => {
     notes: ($<HTMLTextAreaElement>('#bNotes')?.value ?? '').trim(),
   });
   if (result === 'failed') {
-    er.innerHTML = `That didn’t go through. Call or text ${callLink()} and we’ll take it from there.`;
+    er.innerHTML = tr(`That didn’t go through. Call or text ${callLink()} and we’ll take it from there.`, `No se pudo enviar. Llama o envía un mensaje al ${callLink()} y te ayudaremos.`);
     er.hidden = false;
     return;
   }
   const first = name.split(' ')[0];
+  $('#bookDoneHeading')!.textContent = result === 'mailto' ? tr('One last step.', 'Un último paso.') : tr('Request received.', 'Solicitud recibida.');
   const what = need.charAt(0).toLowerCase() + need.slice(1);
   $('#bookDoneText')!.textContent =
     result === 'mailto'
-      ? `Thanks, ${first}. Your email app opened with your request for ${what} at ${a}. Hit send and we reply to ${email}.`
-      : `Thanks, ${first}. Your request for ${what} at ${a} is in. We reply to ${email}.`;
+      ? tr(`Thanks, ${first}. Your email app opened with your request for ${what} at ${a}. Hit send and we reply to ${email}.`, `Gracias, ${first}. Tu aplicación de correo se abrió con la solicitud para ${a}. Pulsa enviar y te responderemos a ${email}.`)
+      : tr(`Thanks, ${first}. Your request for ${what} at ${a} is in. We reply to ${email}.`, `Gracias, ${first}. Recibimos tu solicitud para ${a}. Te responderemos a ${email}.`);
   $('#bookBody')!.hidden = true;
   $('#bookDone')!.hidden = false;
   $<HTMLButtonElement>('#bookDoneClose')?.focus();

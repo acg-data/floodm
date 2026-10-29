@@ -9,12 +9,13 @@ import { createRequire } from 'node:module';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { startServer } from './serve.mjs';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const axeSource = await readFile(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-const root = new URL('../dist/', import.meta.url).pathname;
+const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const PORT = 4391;
 const SITE = `http://localhost:${PORT}`;
 const server = await startServer(PORT, '127.0.0.1');
@@ -28,7 +29,7 @@ const walk = async (dir) => {
   for (const e of await readdir(dir, { withFileTypes: true })) {
     const p = join(dir, e.name);
     if (e.isDirectory()) out.push(...(await walk(p)));
-    else if (e.name === 'index.html') out.push(`/${relative(root, dir)}/`.replace('//', '/'));
+    else if (e.name === 'index.html') out.push(`/${relative(root, dir).replaceAll('\\', '/')}/`.replace('//', '/'));
   }
   return out;
 };

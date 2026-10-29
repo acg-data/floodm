@@ -8,12 +8,11 @@ const { headingLevel: H = 'h2' } = Astro.props;
     <div class="wrap manny-grid">
       <div class="manny-visual">
         <div class="manny-card">
-          <!-- Owner photo: replace the logo image below with
-               <img class="manny-photo" src="/assets/img/manny.jpg" alt="Manny, owner of Flood Mitigators"> -->
-          <img src="/assets/img/logo-mark-white.png" width="296" height="100" alt="" loading="lazy" decoding="async">
+          <img class="manny-photo" src={site.owner.photo} width="800" height="1000" alt="Illustrative temporary portrait for Manny’s section; not a photograph of Manny" loading="lazy" decoding="async">
           <svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60c70-26 130-26 200 0s130 26 200 0v60H0z" fill="#167DC4" opacity=".55"/><path d="M0 84c70-22 130-22 200 0s130 22 200 0v36H0z" fill="#0B2335"/></svg>
           <div class="manny-name"><b>Manny</b><span>Owner &amp; Founder</span></div>
         </div>
+        <p class="portrait-caption">Temporary illustrative portrait — Manny&rsquo;s photo coming soon.</p>
         <div class="manny-badge"><span class="snap-tag">Since Harvey</span><b>2017</b><span>Family-owned &amp; Houston-operated</span></div>
       </div>
       <div class="manny-copy">

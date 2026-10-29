@@ -25,7 +25,7 @@ const nearby = a.nearby.map(areaBySlug).filter((n) => n !== undefined);
 const faqs: FaqItem[] = [
   { q: `Do you serve ${a.name}?`, a: `Yes. Assessments work for any ${a.name} address, and our own crew installs in ${a.name} and the surrounding area. Not sure about your street? Call or text ${site.phone.display}.` },
   { q: `Will a drainage system keep ${a.name} floodwater out?`, a: `Yard drainage handles the water that falls on and runs across your lot. It won’t hold back a bayou, creek or street that’s overtopped${a.waterways.length ? ` — and in ${a.name}, ${a.waterways[0]} matters` : ''}. Your Flood Snapshot shows that context for your address, and your plan covers what helps in that case and what won’t.` },
-  { q: 'How do I start?', a: 'Get a free Flood Snapshot of your address. If it raises questions, the Flood Intelligence report and the Expert Mitigation Plan turn them into a written fix — all done remotely before our crew comes out.' },
+  { q: 'How do I start?', a: 'Get a free Flood Snapshot of your address. If it raises questions, the Flood Intelligence report and the Expert Mitigation Plan turn them into a written fix — with virtual or onsite drainage assessment options before installation.' },
 ];
 const placeLd = {
   '@context': 'https://schema.org',

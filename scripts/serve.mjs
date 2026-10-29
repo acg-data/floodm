@@ -4,8 +4,9 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { networkInterfaces } from 'node:os';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('../dist/', import.meta.url).pathname;
+const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const portArg = process.argv.indexOf('--port');
 const port = Number(portArg > -1 ? process.argv[portArg + 1] : process.env.PORT || 8080);
 const types = {
@@ -31,7 +32,7 @@ export function startServer(p = port, host = '0.0.0.0') {
   return new Promise((resolve) => server.listen(p, host, () => resolve(server)));
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   await startServer();
   const lan = Object.values(networkInterfaces()).flat().find((n) => n && n.family === 'IPv4' && !n.internal);
   console.log(`Flood Mitigators preview:\n  this computer: http://localhost:${port}`);

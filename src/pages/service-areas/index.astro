@@ -5,6 +5,7 @@ import FinalCta from '../../components/FinalCta.astro';
 import { areas, areaPath, regions } from '../../data/areas';
 import { site } from '../../data/site';
 import { breadcrumbLd } from '../../lib/schema';
+import { additionalCoverage } from '../../data/houston';
 
 const crumbs = [{ name: 'Service areas', href: '/service-areas/' }];
 const order = ['Inner Loop', 'West Houston', 'Southwest', 'West & Fort Bend', 'North', 'Northeast', 'South & Bay Area'];
@@ -47,6 +48,8 @@ const sorted = [...regions].sort((a, b) => order.indexOf(a) - order.indexOf(b));
       </div>
     </div>
   </section>
+
+  <section class="section band-white"><div class="wrap"><div class="section-head"><h2>More Houston communities we serve.</h2><p class="lede">Our coverage also includes these neighborhoods and nearby communities. Call or text to confirm service for your address.</p></div><ul class="coverage-names">{additionalCoverage.map((name) => <li>{name}</li>)}</ul></div></section>
 
   <FinalCta />
 </Base>

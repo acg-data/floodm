@@ -41,6 +41,7 @@ const payload = JSON.stringify({
 </div>
 
 <script>
+  import { tr } from '../scripts/locale';
   type Data = { symptoms: { id: string; label: string; weights: Record<string, number> }[]; services: Record<string, { name: string; summary: string; href: string }> };
   document.querySelectorAll<HTMLElement>('[data-checkup]').forEach((root) => {
     const data: Data = JSON.parse(root.querySelector('[data-checkup-data]')!.textContent!);
@@ -66,7 +67,7 @@ const payload = JSON.stringify({
       if (picked.length && low !== 'no') {
         const slug = 'sump-pump-installation-houston';
         scores[slug] = (scores[slug] ?? 0) + (low === 'yes' ? 3 : 1);
-        if (low === 'yes') (why[slug] ??= []).push('the wet area sits below the street');
+        if (low === 'yes') (why[slug] ??= []).push(tr('the wet area sits below the street', 'la zona húmeda está más baja que la calle'));
       }
       const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 3);
       empty.hidden = ranked.length > 0;
@@ -76,8 +77,8 @@ const payload = JSON.stringify({
       recs.innerHTML = ranked
         .map(([slug], i) => {
           const s = data.services[slug];
-          const reason = (why[slug] ?? []).slice(0, 2).join(' and ');
-          return `<li><a href="${s.href}"><span class="rank">${i + 1}</span><span><b>${esc(s.name)}</b><small>${reason ? 'Because: ' + esc(reason) : esc(s.summary)}</small></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`;
+          const reason = (why[slug] ?? []).slice(0, 2).join(tr(' and ', ' y '));
+          return `<li><a href="${s.href}"><span class="rank">${i + 1}</span><span><b>${esc(s.name)}</b><small>${reason ? tr('Because: ', 'Porque: ') + esc(reason) : esc(s.summary)}</small></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`;
         })
         .join('');
     };
@@ -88,7 +89,7 @@ const payload = JSON.stringify({
       proxy.dataset.svc = top;
       proxy.click();
       const notes = document.querySelector<HTMLTextAreaElement>('#bNotes');
-      if (notes) notes.value = `Drainage Checkup: ${data.symptoms.filter((s) => picked.includes(s.id)).map((s) => s.label).join('; ')}`;
+      if (notes) notes.value = `${tr('Drainage Checkup', 'Diagnóstico de drenaje')}: ${data.symptoms.filter((s) => picked.includes(s.id)).map((s) => s.label).join('; ')}`;
     });
     render();
   });

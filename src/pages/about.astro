@@ -6,6 +6,8 @@ import Crew from '../components/Crew.astro';
 import Steps from '../components/Steps.astro';
 import Local from '../components/Local.astro';
 import FinalCta from '../components/FinalCta.astro';
+import Credentials from '../components/Credentials.astro';
+import Aftercare from '../components/Aftercare.astro';
 import { site } from '../data/site';
 import { breadcrumbLd } from '../lib/schema';
 
@@ -31,7 +33,7 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
       <a class="btn btn-primary" href={site.phone.href}><svg><use href="#i-phone"/></svg>Call {site.phone.display}</a>
       <button class="btn btn-ghost" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button>
     </div>
-    <Fragment slot="visual"><div class="visual-photo"><img src="/assets/img/truck.jpg" width="578" height="252" alt="White Flood Mitigators pickup truck with blue wave livery" fetchpriority="high" /></div></Fragment>
+    <Fragment slot="visual"><div class="visual-photo"><img src="/assets/source/van-in-action.webp" width="1440" height="1080" alt="Flood Mitigators service van at a residential property" fetchpriority="high" /></div></Fragment>
   </PageHero>
 
   <Manny headingLevel="h2" />
@@ -64,6 +66,8 @@ const aboutLd = { '@context': 'https://schema.org', '@type': 'AboutPage', name: 
   </section>
 
   <Local />
+  <Credentials />
+  <Aftercare />
 
   <section class="section band-white">
     <div class="wrap two-col">

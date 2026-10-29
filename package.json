@@ -6,11 +6,13 @@
   "description": "Flood Mitigators — Houston flood assessments & drainage. floodmitigators.com",
   "scripts": {
     "dev": "astro dev --host",
-    "build": "astro build",
-    "build:preview": "astro build --mode preview",
+    "build": "astro build && node scripts/build-locales.mjs",
+    "build:preview": "astro build --mode preview && node scripts/build-locales.mjs",
+    "translations:sync": "node scripts/sync-translations.mjs",
     "start": "node scripts/serve.mjs",
     "check": "astro check",
-    "test": "astro check && astro build && node scripts/qa.mjs",
+    "test": "astro check && npm run build && node scripts/qa.mjs && node scripts/qa-spanish.mjs",
+    "qa:spanish": "node scripts/qa-spanish.mjs",
     "og": "node scripts/make-og.mjs"
   },
   "engines": {
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "axe-core": "4.11.0",
+    "cheerio": "^1.2.0",
     "typescript": "5.9.3"
   }
 }

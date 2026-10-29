@@ -1,6 +1,7 @@
 ---
 import '../styles/fm.css';
 import '../styles/pages.css';
+import '../styles/media.css';
 import Sprite from '../components/Sprite.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -36,7 +37,7 @@ const business = {
   email: site.email,
   image: `${site.url}/assets/og.jpg`,
   logo: `${site.url}/assets/icons/icon-512.png`,
-  address: { '@type': 'PostalAddress', addressLocality: site.city, addressRegion: site.region, addressCountry: 'US' },
+  address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.city, addressRegion: site.region, postalCode: site.address.postalCode, addressCountry: 'US' },
   areaServed: [{ '@type': 'City', name: 'Houston' }, ...areas.map((a) => ({ '@type': 'Place', name: `${a.name}, TX` }))],
   openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes }],
   founder: { '@type': 'Person', name: site.owner.name, jobTitle: site.owner.role },

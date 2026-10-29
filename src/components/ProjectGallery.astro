@@ -1,0 +1,18 @@
+---
+import { projectPhotos } from '../data/media';
+interface Props { full?: boolean }
+const { full = false } = Astro.props;
+const featured = ['pump-excavation', 'van-in-action', 'deep-trenching', 'restored-lawn', 'discharge-outlet', 'pvc-installation'];
+const photos = full ? projectPhotos : featured.map((id) => projectPhotos.find((p) => p.id === id)!);
+---
+<section class="section project-gallery" aria-labelledby="workH">
+  <div class="wrap">
+    <div class="gallery-intro">
+      <div class="section-head"><h2 id="workH">Real work.<br>Right here in Houston.</h2><p class="lede">The trenches, the pipe, the pump basins and the lawn put back in place. A closer look at the work behind a drainage system.</p></div>
+      {!full && <a class="link-arrow" href="/our-work/">Explore our project gallery <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>}
+    </div>
+    <div class:list={['project-grid', { 'project-grid-full': full }]}>
+      {photos.map((photo) => <figure><a href={photo.file} target="_blank" rel="noopener" aria-label={`View photo: ${photo.caption}`}><img src={photo.file} width={photo.width} height={photo.height} alt={photo.alt} loading="lazy" decoding="async" /></a><figcaption>{photo.caption}</figcaption></figure>)}
+    </div>
+  </div>
+</section>

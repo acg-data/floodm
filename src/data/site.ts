@@ -10,6 +10,7 @@ export const site = {
   email: 'info@floodmitigators.com',
   city: 'Houston',
   region: 'TX',
+  address: { street: '8614 Pagewood Ln', city: 'Houston', region: 'TX', postalCode: '77063' },
   hours: { label: 'Mon–Fri, 6 am–6 pm CT', days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '06:00', closes: '18:00' },
   emergency: '24/7 emergency response',
   warranty: '3-year parts & labor limited warranty',
@@ -17,7 +18,9 @@ export const site = {
     facebook: 'https://www.facebook.com/floodmitigators/',
     instagram: 'https://www.instagram.com/floodmitigators/',
   },
-  owner: { name: 'Manny', role: 'Owner & Founder', photo: null as string | null },
+  owner: { name: 'Manny', role: 'Owner & Founder', photo: '/assets/source/manny-placeholder.webp', photoIsPlaceholder: true },
+  booking: 'https://schedule.floodmitigators.com',
+  maintenance: 'Two maintenance visits per year with new-system support',
   /**
    * Where form submissions go: any URL that accepts a JSON POST (Formspree,
    * a Supabase Edge Function, a Cloudflare Pages Function…). Leave empty and

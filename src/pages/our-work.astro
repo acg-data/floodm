@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { breadcrumbLd } from '../lib/schema';
+const crumbs = [{ name: 'Our work', href: '/our-work/' }];
+---
+<Base title="Houston Drainage Project Gallery" description="See Flood Mitigators at work: drainage trenching, pump basins, discharge lines, catch basins, channel drains and lawn restoration across the Houston area." jsonLd={[breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Our work" headline={['A closer look', 'at how we work.']} lede="Photos from the Flood Mitigators project library: careful digging, connected drainage systems and the crew behind the work." />
+  <ProjectGallery full />
+  <FinalCta />
+</Base>

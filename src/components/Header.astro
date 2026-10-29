@@ -10,15 +10,15 @@ const here = (href: string) => (path === href ? 'page' : undefined);
 
 <div class="topbar" role="region" aria-label="Contact and hours">
   <div class="wrap">
-    <span class="tb-left"><span>Houston yard drainage &amp; flood mitigation</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">Family-owned</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">3-year warranty</span><span class="tb-dot" aria-hidden="true"></span><a class="tb-hide-sm tb-em" href="/emergency/">24/7 emergency response</a></span>
-    <span class="tb-right"><a class="tb-phone" href={site.phone.href}>Call or text {site.phone.display}</a><a class="tb-snap" href="/reports/flood-snapshot/">Free Flood Snapshot →</a></span>
+    <span class="tb-left"><span>Houston yard drainage</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">Family-owned</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">3-year warranty</span><span class="tb-dot" aria-hidden="true"></span><a class="tb-hide-sm tb-em" href="/emergency/">24/7 emergency response</a></span>
+    <span class="tb-right"><a class="tb-phone" href={site.phone.href}>Call or text {site.phone.display}</a><span class="language-switch" role="group" aria-label="Website language"><a href={path} lang="en" hreflang="en-US" data-language="en" aria-current="page">EN</a><span aria-hidden="true">/</span><a href={`/es${path}`} lang="es" hreflang="es-US" data-language="es">Español</a></span></span>
   </div>
 </div>
 
 <header class="header" id="hdr">
   <div class="wrap" style="position:relative">
     <a class="brand" href="/" aria-label="Flood Mitigators home">
-      <img class="mark" src="/assets/img/logo-mark.png" width="292" height="100" alt="">
+      <img class="mark" src="/assets/source/brand-original.webp" width="600" height="600" alt="">
       <img class="word" src="/assets/img/logo-wordmark.png" width="364" height="100" alt="Flood Mitigators">
     </a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
@@ -81,6 +81,8 @@ const here = (href: string) => (path === href ? 'page' : undefined);
           </div>
           <div class="dd-col">
             <p class="dd-title">Tools</p>
+            <a href="/our-work/"><svg aria-hidden="true"><use href="#i-house"/></svg><span><b>Our project gallery</b><small>See our crew and drainage work.</small></span></a>
+            <a href="/warranty-and-care/"><svg aria-hidden="true"><use href="#i-shield"/></svg><span><b>Warranty &amp; care</b><small>Testing, maintenance and ongoing support.</small></span></a>
             {tools.map((t) => (
               <a href={t.href} aria-current={here(t.href)}>
                 <svg aria-hidden="true"><use href={`#${t.icon}`}/></svg>

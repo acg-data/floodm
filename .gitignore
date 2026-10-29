@@ -3,3 +3,6 @@ dist/
 .astro/
 .DS_Store
 *.log
+source-audit/
+translation-missing.json
+qa-bilingual/

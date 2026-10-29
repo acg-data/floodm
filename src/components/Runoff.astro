@@ -49,12 +49,13 @@ const { headingLevel: H = 'h2' } = Astro.props;
   </section>
 
 <script>
+  import { tr, isSpanish } from '../scripts/locale';
   // Runoff calculator from the original page.
   const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector<T>(s)!;
   const roofEl = document.querySelector<HTMLInputElement>('#roof');
   if (roofEl) {
     const roof = roofEl, rain = $<HTMLInputElement>('#rain'), spouts = $<HTMLInputElement>('#spouts'), drums = $('#drums');
-    const fmt = (n: number, d = 0) => n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const fmt = (n: number, d = 0) => n.toLocaleString(isSpanish() ? 'es-US' : 'en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
     let shown = 4486, raf = 0;
     const setP = (r: HTMLInputElement) => r.style.setProperty('--p', ((+r.value - +r.min) / (+r.max - +r.min)) * 100 + '%');
     const animate = (to: number) => {
@@ -67,17 +68,17 @@ const { headingLevel: H = 'h2' } = Astro.props;
     const calc = () => {
       const sq = Math.max(0, parseFloat(roof.value) || 0), inch = parseFloat(rain.value), n = parseInt(spouts.value, 10);
       const gal = sq * inch * 0.623, dr = gal / 55;
-      $('#rainOut').textContent = inch.toFixed(1) + ' in';
+      $('#rainOut').textContent = inch.toFixed(1) + tr(' in', ' pulg.');
       $('#spoutsOut').textContent = String(n);
       animate(Math.round(gal));
       $('#drumsN').textContent = dr < 100 ? fmt(dr, 1) : fmt(dr);
       $('#perSpout').textContent = fmt(gal / n) + ' gal';
-      $('#tons').textContent = fmt((gal * 8.34) / 2000, 1) + ' tons';
+      $('#tons').textContent = fmt((gal * 8.34) / 2000, 1) + tr(' tons', ' ton. cortas');
       const full = Math.floor(dr), cap = 60;
       let html = '';
       for (let i = 0; i < Math.min(full, cap); i++) html += '<span class="drum"></span>';
       if (full < cap && dr - full > 0.05) html += `<span class="drum part" style="--e:${Math.round((1 - (dr - full)) * 100)}%"></span>`;
-      if (full > cap) html += `<span class="drums-more">+${fmt(full - cap)} more</span>`;
+      if (full > cap) html += `<span class="drums-more">+${fmt(full - cap)} ${tr('more', 'más')}</span>`;
       drums.innerHTML = html;
       document.querySelectorAll<HTMLButtonElement>('.chip').forEach((c) => c.setAttribute('aria-pressed', String(parseFloat(c.dataset.rain!) === inch)));
       [rain, spouts].forEach(setP);

@@ -6,14 +6,15 @@ export type Step = { title: string; body: string };
 /** Photos in public/assets/img (width × height in px). */
 export const photos = {
   'hero-house': { src: '/assets/img/hero-house.jpg', w: 449, h: 507, alt: 'Two-story stone house in a Houston neighborhood with a landscaped front yard' },
-  'french-drain': { src: '/assets/img/service-french-drain.jpg', w: 292, h: 116, alt: 'Perforated drain pipe in a gravel-lined trench' },
-  'sump-pump': { src: '/assets/img/service-sump-pump.jpg', w: 291, h: 116, alt: 'Sump pump basin with discharge pipes' },
+  'french-drain': { src: '/assets/source/drainage-system.webp', w: 960, h: 960, alt: 'Catch basin, drain pipe and trench from the Flood Mitigators project library' },
+  'sump-pump': { src: '/assets/source/pump-excavation.webp', w: 680, h: 510, alt: 'Flood Mitigators crew excavating a pump basin' },
   grading: { src: '/assets/img/service-grading.jpg', w: 293, h: 116, alt: 'Regraded yard with a stone retaining edge and rock swale' },
   'downspout-catch-basin': { src: '/assets/img/service-downspout-catch-basin.jpg', w: 567, h: 338, alt: 'Downspout connected to a catch basin in a stone bed' },
   'surface-drain': { src: '/assets/img/service-surface-drain.jpg', w: 461, h: 217, alt: 'Square drain grate set into a lawn' },
   'dry-creek': { src: '/assets/img/service-dry-creek.jpg', w: 461, h: 217, alt: 'River-rock drainage channel beside a stone patio' },
   technician: { src: '/assets/img/technician.jpg', w: 444, h: 194, alt: 'Flood Mitigators technician inspecting a garden bed beside a stone house' },
-  truck: { src: '/assets/img/truck.jpg', w: 578, h: 252, alt: 'White Flood Mitigators pickup truck with blue wave livery' },
+  truck: { src: '/assets/source/van-in-action.webp', w: 1440, h: 1080, alt: 'Flood Mitigators service van at a residential property' },
+  'root-rerouter': { src: '/assets/source/restored-lawn.webp', w: 680, h: 510, alt: 'Crew members working with turf and soil in a residential yard' },
   polo: { src: '/assets/img/crew-polo.jpg', w: 304, h: 252, alt: 'Navy Flood Mitigators crew polo shirt' },
 } as const;
 export type PhotoName = keyof typeof photos;
