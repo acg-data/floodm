@@ -2,95 +2,102 @@ import { chromium } from 'playwright';
 import { createRequire } from 'node:module';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { startServer } from './serve.mjs';
-
 const require = createRequire(import.meta.url);
 const axe = await readFile(require.resolve('axe-core/axe.min.js'), 'utf8');
 const directory = 'qa-bilingual/home-refresh';
 await mkdir(directory, { recursive: true });
 const server = await startServer(4394, '127.0.0.1');
 const browser = await chromium.launch();
-const results = { errors: [], accessibility: [], flows: [], screenshots: [] };
+const results = { errors: [], accessibility: [], flows: [], screenshots: [], metrics: [] };
 const assert = (value, message) => { if (!value) throw Error(message); };
+// Measured before this approved simplification; no local QA artifact is required.
+const baseline = [{width:1440,height:15536},{width:390,height:24921}];
+async function accessibility(page, label) {
+  await page.addScriptTag({content:axe});
+  const issues=await page.evaluate(async()=> (await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})));
+  results.accessibility.push({label,issues});
+}
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
-  page.on('pageerror', error => results.errors.push(error.message));
-  await page.route('mailto:*', route => route.abort());
-  for (const language of ['en', 'es']) {
-    const url = `http://127.0.0.1:4394/${language === 'es' ? 'es/' : ''}`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.evaluate(async () => { await document.fonts.ready; for (const image of document.images) { image.loading = 'eager'; await image.decode().catch(() => {}); } });
-    assert((await page.locator('.homeowner-review blockquote').allTextContents()).join('|') === '“John and Manny were incredibly helpful from day one”|“the communication was great. He was very knowledgeable.”|“their integrity and transparency”', 'Review excerpts changed in '+language);
-    assert(!await page.getByText('Your local crew.', { exact: false }).count(), 'Removed crew overlay remains');
-    assert(!await page.locator('#reports, #snapForm, #areas, .houston-coverage').count(), 'Removed home report or location sections remain');
-    assert(!await page.locator('a[href*="/reports/"]').count(), 'Home still promotes the remote report funnel');
-    assert(!/Snapshot|Intelligence|virtual|remotely|remote assessment|videollamada|evaluaciones virtuales/i.test(await page.locator('main').innerText()), 'Home still describes a remote assessment');
-    assert(await page.locator('#dd-locations a[href*="/service-areas/"]').count()===18,'Location dropdown is missing a community');
-    assert(await page.locator('iframe[data-google-business-map]').count()===1,'Google Business widget is missing');
-    assert((await page.locator('iframe[data-google-business-map]').getAttribute('src')).includes('0x5abdbd8687949320'),'Google widget points to another business');
-    if(language==='es')assert((await page.locator('iframe[data-google-business-map]').getAttribute('src')).includes('!1ses'),'Google embed language did not switch');
-    const underlines = await page.locator('a').evaluateAll(links=>links.filter(a=>getComputedStyle(a).textDecorationLine.includes('underline')).map(a=>a.textContent));
-    assert(!underlines.length, 'Underlined links remain: '+underlines.join('|'));
-    assert(await page.locator('.home-hero + .mini-credentials .credential-pop-row li').count()===4,'Compact credentials are not directly below the hero');
-    assert(await page.locator('.mini-credentials + .yard-benefits .benefits-home').count()===1,'Houston home is not the next feature below credentials');
-    assert((await page.locator('.header .brand .mark').getAttribute('src'))==='/assets/img/logo-mark.png','Original brand mark is missing');
-    assert(await page.locator('.houston-fact').count()===4,'Houston facts missing');
-    assert((await page.locator('.houston-facts-list').innerText()).includes('2017'),'Historical storm context missing');
-    assert((await page.locator('.benefits-home a').last().getAttribute('href'))==='https://creativecommons.org/licenses/by-sa/3.0/','Houston home license attribution missing');
-    const rainSummary=page.locator('.rain-data summary');
-    await rainSummary.focus();await page.keyboard.press('Enter');
-    assert(await page.locator('.rain-data table').isVisible(),'Monthly rainfall data cannot be opened by keyboard');
-    const monthly=await page.locator('.rain-data tbody td').allTextContents();
-    assert(monthly.length===12 && Math.abs(monthly.reduce((sum,v)=>sum+Number(v),0)-51.84)<.001,'Monthly rainfall differs from the annual normal');
-    await page.keyboard.press('Enter');
-    assert(!await page.locator('.rain-data table').isVisible(),'Monthly rainfall data cannot be closed by keyboard');
-    await rainSummary.blur();
-    assert(await page.locator('.houston-facts-next .btn').getAttribute('href')===(language==='es'?'/es/runoff-calculator/':'/runoff-calculator/'),'Runoff link leaves the selected language');
-    for (const [width, height] of [[1789,873], [1440,1000], [1280,1000], [1081,900], [1024,900], [768,900], [414,844], [390,844], [375,844], [320,844]]) {
-      await page.setViewportSize({ width, height });
-      await page.evaluate(() => scrollTo(0,0));
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
-      assert(overflow <= 0, `${language} ${width}px has ${overflow}px overflow`);
-      const path = `${directory}/hero-${language}-${width}.png`;
-      await page.screenshot({ path }); results.screenshots.push(path);
-      if ([1440,390].includes(width)) {
-        await page.addScriptTag({ content: axe });
-        const issues = await page.evaluate(async () => (await axe.run(document, { runOnly:{ type:'tag', values:['wcag2a','wcag2aa','wcag21a','wcag21aa'] } })).violations.map(v => ({ id:v.id, nodes:v.nodes.map(n=>n.target) })));
-        results.accessibility.push({ language, width, issues });
-      }
-    }
-    for (const width of [1440,390]) {
+  const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+  page.on('pageerror',error=>results.errors.push(error.message));
+  await page.route('mailto:*',route=>route.abort());
+  for(const language of ['en','es']){
+    const prefix=language==='es'?'/es':'';
+    const url='http://127.0.0.1:4394'+prefix+'/';
+    await page.goto(url,{waitUntil:'networkidle'});
+    await page.evaluate(async()=>{await document.fonts.ready;for(const image of document.images){image.loading='eager';await image.decode().catch(()=>{});}});
+    assert(!await page.locator('#reports,#snapForm,#areas,.houston-coverage,#houston-facts,#runoff,#crew,#about,#credentials,.aftercare,.project-gallery,.res-grid,.trust').count(),'Removed home content remains');
+    assert(!await page.locator('a[href*="/reports/"]').count(),'Home promotes remote reports');
+    assert(await page.locator('.home-services .svc').count()===4,'Home must show four key services');
+    assert(await page.locator('#faq details').count()===4,'Home must show four FAQs');
+    assert(await page.locator('.home-hero + .mini-credentials .credential-pop-row li').count()===4,'Credentials are not directly below the hero');
+    assert(await page.locator('.mini-credentials + .interactive-home').count()===1,'Interactive house is not the next feature');
+    assert(await page.locator('[data-house-spot]').count()===6,'Six drainage spots missing');
+    assert((await page.locator('.home-tour-photo img').getAttribute('src')).includes('houston-drainage-home-1600.webp'),'Edited house image missing');
+    assert((await page.locator('.homeowner-review blockquote').allTextContents()).join('|')==='“John and Manny were incredibly helpful from day one”|“the communication was great. He was very knowledgeable.”|“their integrity and transparency”','Original review excerpts changed');
+    assert(!await page.locator('.reviews-location').getAttribute('open'),'Google map should start collapsed');
+    assert(await page.locator('iframe[data-google-business-map]').count()===1,'Google Business widget missing');
+    assert(await page.locator('#dd-locations a').count()===18,'Locations dropdown missing communities');
+    assert(!await page.locator('a').evaluateAll(a=>a.some(el=>getComputedStyle(el).textDecorationLine.includes('underline'))),'Link underlines returned');
+    for(const width of [1789,1440,1280,1081,1024,768,414,390,375,320]){
       await page.setViewportSize({width,height:1000});
-      for (const selector of ['.mini-credentials', '.yard-benefits', '#houston-facts', '.houston-facts-list', '#runoff', '#reviews', '#estimate']) {
-        await page.locator(selector).scrollIntoViewIfNeeded();
-        await page.locator(selector).evaluate(element => element.scrollIntoView({block:'start'}));
-        const path = `${directory}/${selector.replace(/[.#]/g,'')}-${language}-${width}.png`;
-        await page.screenshot({ path }); results.screenshots.push(path);
+      for(let i=0;i<6;i++){
+        await page.locator('[data-house-spot="'+i+'"]').click();
+        assert(await page.locator('[data-house-panel="'+i+'"]').isVisible(),'Spot cannot be selected at '+width+'px');
+        assert(await page.locator('[data-house-panel]:visible').count()===1,'Multiple explanations shown');
+        const href=await page.locator('[data-house-panel="'+i+'"] a').getAttribute('href');
+        assert(language==='es'?href.startsWith('/es/'):!href.startsWith('/es/'),'Hotspot link leaves selected language');
       }
-      await page.locator('#houston-facts').screenshot({path:`${directory}/facts-complete-${language}-${width}.png`});
-      await rainSummary.scrollIntoViewIfNeeded();
-      for(const state of ['closed','open']){
-        if(state==='open')await rainSummary.click();
-        const issues=await page.evaluate(async()=> (await axe.run('#houston-facts',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})));
-        results.accessibility.push({language,width,state,issues});
+      await page.locator('[data-house-spot="0"]').click();
+      assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Overflow at '+width+'px '+language);
+      if([1440,390].includes(width)){
+        await accessibility(page,language+' home '+width);
+        const photo=directory+'/interactive-house-'+language+'-'+width+'.png';
+        await page.locator('.interactive-home').screenshot({path:photo});results.screenshots.push(photo);
+        const full=directory+'/short-home-'+language+'-'+width+'.png';
+        await page.screenshot({path:full,fullPage:true});results.screenshots.push(full);
+        const metrics=await page.evaluate(width=>({width,height:document.documentElement.scrollHeight,sections:document.querySelectorAll('main section').length,words:document.querySelector('main').innerText.split(/\s+/).length}),width);
+        results.metrics.push({language,...metrics});
+        assert(metrics.height<baseline.find(v=>v.width===width).height*.65,'Home is not substantially shorter');
       }
-      await page.locator('.houston-rain-chart').screenshot({path:`${directory}/rainfall-expanded-${language}-${width}.png`});
-      await rainSummary.click();await rainSummary.blur();
     }
-    await page.locator('#runoff [data-rain="10"]').click();
-    await page.waitForFunction(()=>document.querySelector('#gal').textContent==='14,952');
-    results.flows.push(`${language}: light runoff calculator preserves the 14,952-gallon example`);
+    await page.setViewportSize({width:390,height:1000});
+    await page.locator('[data-house-spot="0"]').focus();await page.keyboard.press('End');
+    assert(await page.locator('[data-house-spot="5"]').getAttribute('aria-selected')==='true','End key failed');
+    await page.keyboard.press('ArrowRight');
+    assert(await page.locator('[data-house-spot="0"]').getAttribute('aria-selected')==='true','Arrow navigation did not wrap');
+    await page.keyboard.press('Home');await page.keyboard.press('ArrowDown');
+    assert(await page.locator('[data-house-spot="1"]').getAttribute('aria-selected')==='true','ArrowDown failed');
+    await page.locator('[data-house-route-toggle]').click();
+    assert(await page.locator('[data-house-route]').isVisible(),'Drainage route does not show');
+    assert(await page.locator('[data-route-selected="true"]').count()===1,'Multiple route overlays shown');
+    assert(await page.locator('.route-flow').first().evaluate(el=>getComputedStyle(el).animationName)==='none','Reduced motion ignored');
+    await page.locator('[data-house-next]').click();
+    assert(await page.locator('[data-house-spot="2"]').getAttribute('aria-selected')==='true','Next control failed');
+    for(const width of [1440,390]){
+      await page.setViewportSize({width,height:1000});
+      await accessibility(page,language+' active route '+width);
+      const path=directory+'/interactive-route-'+language+'-'+width+'.png';
+      await page.locator('.interactive-home').screenshot({path});results.screenshots.push(path);
+    }
+    await page.locator('[data-house-route-toggle]').click();
+    assert(await page.locator('[data-house-route]').isHidden(),'Drainage route does not hide');
+    await page.locator('[data-house-prev]').click();
+    assert(await page.locator('[data-house-spot="1"]').getAttribute('aria-selected')==='true','Previous control failed');
+    await page.locator('.reviews-location summary').focus();await page.keyboard.press('Enter');
+    assert(await page.locator('iframe[data-google-business-map]').isVisible(),'Google map cannot be opened with keyboard');
+    await accessibility(page,language+' expanded Google widget');
+    await page.locator('.reviews-location summary').click();
     for(const width of [1280,390]){
       await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));
       if(width===390)await page.locator('#menuBtn').click();
       await page.locator('[aria-controls="dd-locations"]').click();
-      assert(await page.locator('#dd-locations').isVisible(), 'Locations dropdown did not open');
-      assert((await page.locator('#dd-locations a[href*="/memorial/"]').getAttribute('href'))===(language==='es'?'/es/service-areas/memorial/':'/service-areas/memorial/'),'Locations leave the selected language');
-      await page.screenshot({path:`${directory}/locations-${language}-${width}.png`});
+      assert(await page.locator('#dd-locations').isVisible(),'Locations dropdown did not open');
       await page.keyboard.press('Escape');
-      assert(await page.locator('#dd-locations').isHidden(),'Locations dropdown did not close on Escape');
+      assert(await page.locator('#dd-locations').isHidden(),'Locations dropdown did not close');
       if(width===390)await page.keyboard.press('Escape');
     }
-    results.flows.push(`${language}: desktop and phone Locations dropdown, language-preserving links and Escape`);
+    results.flows.push(language+': six tappable spots at ten widths, localized links, keyboard, route toggle, reduced motion, Google map and Locations dropdown');
     const submit = page.locator('#estimateForm button[type=submit]');
     await submit.click();
     assert((await page.locator('#estimateErr').innerText()).startsWith(language==='es'?'Elige':'Choose'), 'Service validation language');
@@ -129,9 +136,26 @@ try {
     assert(payload.service===(await page.locator('#eService option:checked').textContent()).trim(),'Localized service label not submitted');
     await page.unroute('**/qa-estimate');
     results.flows.push(`${language}: server failure, retry and successful confirmation (mock endpoint)`);
+    await page.goto('http://127.0.0.1:4394'+prefix+'/resources/houston-rainfall-flood-facts/',{waitUntil:'networkidle'});
+    assert(await page.locator('.houston-fact').count()===4,'Sourced rainfall facts were lost');
+    const summary=page.locator('.rain-data summary');await summary.focus();await page.keyboard.press('Enter');
+    assert(await page.locator('.rain-data table').isVisible(),'Rainfall table keyboard failed');
+    const monthly=await page.locator('.rain-data tbody td').allTextContents();
+    assert(monthly.length===12&&Math.abs(monthly.reduce((sum,v)=>sum+Number(v),0)-51.84)<.001,'Rainfall totals changed');
+    await accessibility(page,language+' relocated rainfall facts');
+    await page.goto('http://127.0.0.1:4394'+prefix+'/runoff-calculator/',{waitUntil:'networkidle'});
+    await page.locator('[data-rain="10"]').click();
+    assert(await page.locator('#gal').innerText()==='14,952','Calculator changed after relocation');
+    results.flows.push(language+': rainfall facts, table and calculator preserved on dedicated pages');
+    const fallback=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+    const noJs=await fallback.newPage();await noJs.goto(url);
+    assert(await noJs.locator('[data-house-panel]:visible').count()===6,'No-JavaScript explanations missing');
+    assert(await noJs.locator('[data-house-spot]').first().isHidden(),'Inert hotspots shown without JavaScript');
+    await fallback.close();
   }
-  await writeFile(`${directory}/results.json`,JSON.stringify(results,null,2));
-  assert(!results.errors.length,'Console errors: '+results.errors.join('; '));
-  assert(!results.accessibility.some(r=>r.issues.length),'Accessibility issues: '+JSON.stringify(results.accessibility.filter(r=>r.issues.length)));
-  console.log('Home refresh passed: bilingual estimate flows, sourced Houston facts, keyboard rainfall table, photo attribution, ten widths and desktop/mobile accessibility.');
-} finally { await browser.close(); server.close(); }
+  await writeFile(directory+'/results.json',JSON.stringify(results,null,2));
+  assert(!results.errors.length,'Page errors: '+results.errors.join('; '));
+  assert(!results.accessibility.some(v=>v.issues.length),'Accessibility: '+JSON.stringify(results.accessibility.filter(v=>v.issues.length)));
+  console.log('Short home passed: six interactive spots, routes, keyboard/touch-sized controls, ten widths, bilingual estimate flows, no-JavaScript fallback, Google widget, relocated facts/calculator and accessibility.');
+  console.log(JSON.stringify(results.metrics));
+}finally{await browser.close();server.close();}

@@ -23,12 +23,12 @@
 .houston-fact dt strong{font-size:2.1rem;line-height:1.15;letter-spacing:-.035em;color:var(--blue);font-weight:750;white-space:nowrap}
 .houston-fact dt > span{color:var(--muted);font-size:.71rem;line-height:1.6;max-width:19ch}
 .houston-fact dd{margin:0;min-width:0}
-.houston-fact h3{font-size:1.02rem;line-height:1.4;letter-spacing:-.015em}
+.houston-fact :is(h2,h3){font-size:1.02rem;line-height:1.4;letter-spacing:-.015em}
 .houston-fact p{color:var(--muted);font-size:.84rem;line-height:1.7;margin-top:9px;max-width:48ch}
 .houston-fact dd > a{display:inline-flex;gap:7px;align-items:center;color:var(--blue);font-size:.69rem;line-height:1.6;margin-top:10px;text-underline-offset:4px}
 .houston-fact dd > a svg{width:13px;height:13px;flex-shrink:0}
 .houston-rain-chart{margin:0;position:relative}
-.houston-rain-chart h3{font-size:1.1rem;line-height:1.4}
+.houston-rain-chart :is(h2,h3){font-size:1.1rem;line-height:1.4}
 .houston-rain-chart figcaption p{font-size:.75rem;color:var(--muted);line-height:1.7;margin-top:8px;max-width:55ch}
 .rain-plot{display:grid;grid-template-columns:17px minmax(0,1fr);gap:6px;margin:27px 0 16px}
 .rain-bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:7px;padding:0;margin:0;list-style:none}
@@ -49,7 +49,7 @@
 .rain-chart-source{display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-size:.69rem;margin-top:15px;text-underline-offset:4px}
 .rain-chart-source svg{width:13px;height:13px;flex-shrink:0}
 .houston-facts-next{display:flex;align-items:center;justify-content:space-between;gap:50px;border-top:1px solid var(--line-strong);padding-top:28px;margin-top:33px}
-.houston-facts-next h3{font-size:1.12rem;line-height:1.4}
+.houston-facts-next :is(h2,h3){font-size:1.12rem;line-height:1.4}
 .houston-facts-next p{color:var(--muted);font-size:.86rem;line-height:1.7;margin-top:10px;max-width:71ch}
 .houston-facts-next .btn{background:var(--home-blue);box-shadow:none;font-size:.85rem;flex-shrink:0;line-height:1.4}
 .houston-facts-next .btn:hover{background:var(--home-blue-hover)}

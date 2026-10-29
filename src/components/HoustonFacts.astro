@@ -1,10 +1,13 @@
 ---
 import { houstonFacts, monthlyRainfall, houstonClimateSource } from '../data/houston-facts';
+interface Props { headingLevel?: 'h1' | 'h2' }
+const { headingLevel: H = 'h2' } = Astro.props;
+const Subheading = H === 'h1' ? 'h2' : 'h3';
 ---
 <section class="section houston-facts" id="houston-facts" aria-labelledby="houstonFactsH">
   <div class="wrap">
     <div class="houston-facts-heading">
-      <h2 id="houstonFactsH">Houston rain.<br>The facts hit home.</h2>
+      <H id="houstonFactsH">Houston rain.<br>The facts hit home.</H>
       <p class="lede">From an afternoon downpour to a stalled tropical storm, water needs a place to go. Here&rsquo;s what the local rainfall record—and the cost of flooding—can tell us.</p>
     </div>
     <div class="houston-facts-layout">
@@ -14,7 +17,7 @@ import { houstonFacts, monthlyRainfall, houstonClimateSource } from '../data/hou
           <figcaption><strong>Our city. Our bayous. Our homes.</strong><span>Buffalo Bayou, Houston · <a href="https://unsplash.com/photos/a-city-skyline-with-a-river-running-through-it-VMwl7U2qeNg" target="_blank" rel="noopener">Photo: Anvesh Uppunuthula</a></span></figcaption>
         </figure>
         <figure class="houston-rain-chart" aria-labelledby="monthlyRainH">
-          <figcaption><h3 id="monthlyRainH">Rain doesn&rsquo;t take a season off.</h3><p>Average rainfall at Houston Intercontinental Airport, by month. Inches, 1991–2020 normals.</p></figcaption>
+          <figcaption><Subheading id="monthlyRainH">Rain doesn&rsquo;t take a season off.</Subheading><p>Average rainfall at Houston Intercontinental Airport, by month. Inches, 1991–2020 normals.</p></figcaption>
           <div class="rain-plot" aria-hidden="true">
             <div class="rain-chart-scale"><span>6″</span><span>0″</span></div>
             <ol class="rain-bars">
@@ -28,12 +31,12 @@ import { houstonFacts, monthlyRainfall, houstonClimateSource } from '../data/hou
       <dl class="houston-facts-list">
         {houstonFacts.map(fact => <div class="houston-fact">
           <dt><strong>{fact.value}</strong><span>{fact.unit}</span></dt>
-          <dd><h3>{fact.title}</h3><p>{fact.detail}</p><a href={fact.url} target="_blank" rel="noopener">{fact.source}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></dd>
+          <dd><Subheading>{fact.title}</Subheading><p>{fact.detail}</p><a href={fact.url} target="_blank" rel="noopener">{fact.source}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></dd>
         </div>)}
       </dl>
     </div>
     <div class="houston-facts-next">
-      <div><h3>Start with the water around your home.</h3><p>Look at roof runoff, low spots, the foundation and the outlet together. A yard drainage system can manage local runoff; street and bayou flooding need a broader plan.</p></div>
+      <div><Subheading>Start with the water around your home.</Subheading><p>Look at roof runoff, low spots, the foundation and the outlet together. A yard drainage system can manage local runoff; street and bayou flooding need a broader plan.</p></div>
       <a class="btn btn-primary" href="/runoff-calculator/">See your roof&rsquo;s runoff <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </div>

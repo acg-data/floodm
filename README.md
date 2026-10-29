@@ -4,13 +4,13 @@ Website for **Flood Mitigators**, the family-owned Houston flood assessment and 
 
 The look follows the original Flood Mitigators brand — Plus Jakarta Sans and the navy/blue/sky/ice palette — across a full [Astro](https://astro.build) site. The home page focuses on onsite Houston drainage assessments, installation, real work, credentials, Google reviews and the runoff calculator. It builds to plain static files.
 
-## What’s on the site (53 pages in each language)
+## What’s on the site (54 pages in each language)
 
 English pages have matching Spanish pages at `/es/`, with a language switch that keeps the current page. The build also generates English/Spanish canonical and language-alternate metadata and a combined sitemap. Each language has its own 404 page.
 
 | Section | Pages |
 | --- | --- |
-| Home | `/` — onsite Houston drainage services, home imagery, credentials, Google Business widget, sourced reviews, rainfall facts and tools |
+| Home | `/` — compact onsite-service overview with the interactive house, four services, Google reviews, process, four FAQs and an estimate form |
 | Reports | Existing `/reports/` and product URLs remain available; the remote-report funnel is removed from the home page and main navigation |
 | Services | `/services/` and 12 service pages, including Root Re-Router alongside drainage installation, cleaning and maintenance. Pages that already exist on floodmitigators.com keep their URLs. |
 | Service areas | `/service-areas/` and 17 neighborhood pages (Memorial, Energy Corridor, Meyerland, Kingwood, Katy, Sugar Land…) |
@@ -35,6 +35,7 @@ Every page has its own title, description, share image and structured data (busi
 - **Google Business location and reviews:** `src/data/google-business.ts` stores the verified listing and official Google Maps embed. The card includes Google's business pin and rating/review entry point. `src/data/reviews.ts` holds the dated rating/count and selected original review excerpts; these static excerpts are not an automatically refreshed review feed.
 - **Manny’s photo:** the current portrait is AI-generated and visibly labeled as temporary. Replace `site.owner.photo` in `src/data/site.ts` with the real photo path, set `photoIsPlaceholder` to false, and update the portrait alt text and caption in `src/components/Manny.astro`.
 - **Project photographs and credentials:** `public/assets/source/` contains optimized copies of the current business site’s photographs, original logo and credential artwork. `src/data/media.ts` records source URLs and captions. The gallery describes visible work without inventing project locations or outcomes.
+- **Interactive house:** `src/components/InteractiveHome.astro`, `src/data/home-drainage-spots.ts` and `src/styles/interactive-home.css`. The supplied house reference was edited with the built-in image tool; optimized files live in `public/assets/photos/houston-drainage-home-*.webp`. `docs/interactive-home-refresh.md` records the prompt and provenance. The image and example routes are illustrative, with six touch/keyboard hotspots and a no-JavaScript fallback.
 - **A service, area or guide:** edit its entry in `src/data/` or its `.md` file; pages, menus, footer, sitemap and structured data update automatically.
 - **Share image:** after changing the logo, hero photo or phone number, run `npm run build && npm run og`.
 
@@ -85,6 +86,8 @@ The Houston facts section adds IAH rainfall normals, a monthly chart with an acc
 The latest brand-board pass restores the original navy/blue/sky/ice/white palette and alligator-and-water logo. Compact credentials sit immediately below the light hero, with the Houston home next. Facts, rainfall data, the calculator and drainage checkup share the light treatment. See `docs/light-palette-refresh.md` for scope and validation.
 
 The following content pass removes the home report ladder, Snapshot signup and neighborhood grid, moves locations into a dropdown, removes link underlines, and makes the core booking/process/FAQ copy onsite-first. The official Google Business card appears on home and contact pages. See `docs/onsite-houston-refresh.md` for the source and validation record.
+
+The approved shorter home page replaces the old house band with the interactive reference house and moves detailed facts, calculator, company, full credentials, aftercare and guide content to deeper pages. Google reviews remain; the location map expands on request. Rainfall facts now live at `/resources/houston-rainfall-flood-facts/` in both languages. At 390px, the English page measured 8,828px tall versus 24,921px before this pass, about 65% less scrolling. See `docs/interactive-home-refresh.md` and the home surface brief for scope and validation.
 
 ```sh
 npm test

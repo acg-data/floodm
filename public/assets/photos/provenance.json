@@ -43,5 +43,21 @@
     "license": "Unsplash License",
     "licenseUrl": "https://unsplash.com/license",
     "retrieved": "2026-10-29"
+  },
+  {
+    "id": "houston-drainage-home",
+    "reference": "User-supplied codex-clipboard-c0e9a6ef-399f-47f1-bc2f-99395850aa97.png",
+    "creator": "AI image edit from user-provided reference",
+    "tool": "Built-in image_gen",
+    "width": 1774,
+    "height": 887,
+    "files": [
+      "houston-drainage-home-800.webp",
+      "houston-drainage-home-1600.webp"
+    ],
+    "use": "Illustrative interactive drainage explainer; not an actual customer project or an engineered drainage plan.",
+    "modifications": "Removed baked-in labels and basement cutaway; natural photographic lighting and water; resized and encoded as WebP.",
+    "created": "2026-10-29",
+    "promptRecord": "docs/interactive-home-refresh.md"
   }
 ]

@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import HoustonFacts from '../../components/HoustonFacts.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { breadcrumbLd } from '../../lib/schema';
+const crumbs = [{ name: 'Resources', href: '/resources/' }, { name: 'Houston rain & flood facts', href: '/resources/houston-rainfall-flood-facts/' }];
+---
+<Base title="Houston Rainfall & Flood Facts" description="Houston rainfall normals, monthly totals, Hurricane Harvey rainfall and storm damage context, with direct sources from the National Weather Service, TDI and USGS." jsonLd={[breadcrumbLd(crumbs)]}>
+  <div class="band-ice"><div class="wrap" style="padding-top:24px"><Crumbs crumbs={crumbs} /></div></div>
+  <HoustonFacts headingLevel="h1" />
+  <FinalCta />
+</Base>

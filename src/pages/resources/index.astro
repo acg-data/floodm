@@ -13,6 +13,7 @@ const crumbs = [{ name: 'Resources', href: '/resources/' }];
     <div class="wrap">
       <div class="section-head"><span class="eyebrow">Guides</span><h2>Read up before the next storm.</h2></div>
       <div class="res-grid">
+        <a class="res" href="/resources/houston-rainfall-flood-facts/"><svg aria-hidden="true"><use href="#i-drop"/></svg><h3>Houston rain &amp; flood facts</h3><p>Local rainfall records, monthly totals and sourced storm damage context.</p><span class="link-arrow">Explore the facts <svg><use href="#i-arrow"/></svg></span></a>
         {guides.map((g) => <a class="res" href={guidePath(g.slug)}><svg aria-hidden="true"><use href={`#${g.icon}`}/></svg><h3>{g.title}</h3><p>{g.summary}</p><span class="link-arrow">Read the guide <svg><use href="#i-arrow"/></svg></span></a>)}
         <a class="res" href="/faq/"><svg aria-hidden="true"><use href="#i-question"/></svg><h3>Frequently asked questions</h3><p>Assessments, drainage basics, warranty and emergencies, answered straight.</p><span class="link-arrow">Read the FAQ <svg><use href="#i-arrow"/></svg></span></a>
       </div>

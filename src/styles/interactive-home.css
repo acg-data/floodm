@@ -1,0 +1,69 @@
+/* The supplied house is the subject. UI annotations reveal one issue at a time. */
+.houston-facts-heading h1{font-size:clamp(2.1rem,3.6vw,2.9rem);max-width:17ch}
+.interactive-home{background:var(--white);padding-top:48px;scroll-margin-top:92px}
+.home-tour-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:28px}
+.home-tour-heading h2{font-size:clamp(1.9rem,3.4vw,2.7rem)}
+.home-tour-heading p{color:var(--muted);margin-top:14px;font-size:1rem}
+.house-enhanced{display:none}
+[data-home-house][data-ready] .house-enhanced{display:flex}
+.house-route-toggle{align-items:center;justify-content:center;gap:9px;flex-shrink:0;border:1px solid var(--line-strong);border-radius:8px;color:var(--blue);background:var(--white);font:600 .85rem/1.4 var(--font);padding:12px 15px;cursor:pointer;min-height:44px}
+.house-route-toggle:hover{background:var(--ice)}
+.house-route-toggle[aria-pressed=true]{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.house-route-toggle svg{width:19px;height:19px;flex-shrink:0}
+.home-tour-figure{margin:0}
+.home-tour-photo{position:relative;aspect-ratio:2/1;border-radius:12px;overflow:hidden;background:var(--ice)}
+.home-tour-photo > img{width:100%;height:100%;object-fit:contain}
+.home-hotspots{position:absolute;inset:0}
+.home-hotspot{position:absolute;left:var(--spot-x);top:var(--spot-y);transform:translate(-50%,-50%);display:grid;place-items:center;width:44px;height:44px;border:0;padding:4px;background:transparent;border-radius:50%;cursor:pointer;color:var(--navy);font:800 .95rem/1 var(--font)}
+.home-hotspot > span{display:grid;place-items:center;width:36px;height:36px;border:2px solid var(--white);border-radius:50%;background:var(--white);box-shadow:0 3px 10px #102f4659;transition:background .18s,color .18s,transform .18s}
+.home-hotspot:hover > span{transform:scale(1.08)}
+.home-hotspot[aria-selected=true]{z-index:2}
+.home-hotspot[aria-selected=true] > span{background:var(--blue);color:var(--white)}
+.home-hotspot:focus-visible{outline:3px solid var(--sky);outline-offset:1px}
+.home-tour-figure figcaption{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:.7rem;line-height:1.5;padding-top:12px}
+.house-instruction{font-weight:700;color:var(--navy)}
+.home-tour-route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.home-tour-route[data-route-visible=false],.home-tour-route g[data-route-selected=false]{display:none}
+.home-tour-route path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.home-tour-route .route-underlay{stroke:#fff;stroke-width:8;opacity:.9}
+.home-tour-route .route-flow{stroke:var(--blue);stroke-width:4;stroke-dasharray:12 10}
+.home-tour-route circle{fill:var(--blue);stroke:#fff;stroke-width:3;vector-effect:non-scaling-stroke}
+.home-route-note{font-size:.76rem;color:var(--muted);margin-top:14px}
+.home-spot-panels{margin-top:25px}
+.home-spot-panel{display:grid;grid-template-columns:1fr 1fr;gap:45px;padding-block:24px;border-block:1px solid var(--line);min-height:166px;align-content:start}
+.home-spot-panel h3{font-size:1.3rem;line-height:1.3;margin-bottom:10px}
+.home-spot-panel p{font-size:.91rem;line-height:1.7;color:var(--muted);max-width:54ch}
+.home-spot-panel strong{color:var(--navy);font-weight:700}
+.home-spot-panel .link-arrow{font-size:.87rem;line-height:1.5;margin-top:12px}
+.home-spot-panel .link-arrow svg{flex-shrink:0}
+.home-tour-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:18px}
+.home-tour-bottom > .link-arrow{font-size:.85rem}
+.home-tour-paging{align-items:center;gap:13px;font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.home-tour-paging button{display:grid;place-items:center;width:44px;height:44px;background:var(--ice);color:var(--navy);border:0;border-radius:8px;cursor:pointer}
+.home-tour-paging button:hover{background:var(--line)}
+.home-tour-paging svg{width:18px;height:18px}
+.home-tour-paging button:first-child svg{transform:rotate(180deg)}
+.home-services .svc-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.home-services .svc-img{aspect-ratio:4/3}
+.home-services .svc-body{padding:19px}
+.home-services .svc-body h3{font-size:1.05rem;line-height:1.35}
+.home-services .svc-body p{font-size:.85rem}
+.home-services::before{display:none}
+.home-services-bottom{display:flex;justify-content:space-between;align-items:center;gap:22px;margin-top:28px}
+.home-services-bottom p{color:var(--muted);font-size:.9rem;max-width:60ch}
+.home-services-bottom a{flex-shrink:0;font-size:.9rem}
+.home-quick-links{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px}
+.home-quick-links a{font-size:.83rem}
+.reviews-location{margin-top:25px;border:0;border-block:1px solid var(--line);border-radius:0;box-shadow:none;background:transparent}
+.reviews-location[open]{box-shadow:none;border-color:var(--line)}
+.reviews-location > summary{padding:19px 0;color:var(--blue);font-size:.9rem;font-weight:700}
+.reviews-location > summary > svg{width:17px;height:17px;flex-shrink:0}
+.reviews-location > .google-business-widget{margin-bottom:18px}
+.homeowner-reviews.compact .reviews-heading{margin-bottom:20px}
+.homeowner-reviews.compact .homeowner-review{gap:13px;padding-block:24px}
+.homeowner-reviews.compact .review-source-note{margin-top:10px}
+@media(max-width:960px){.home-services .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-services .svc-img{aspect-ratio:5/2.3}}
+@media(max-width:700px){.home-tour-heading{align-items:flex-start;flex-direction:column;gap:20px;margin-bottom:22px}.home-tour-heading p{font-size:.93rem}.home-tour-figure figcaption{gap:8px;flex-direction:column}.home-spot-panel{grid-template-columns:1fr;gap:15px;min-height:290px;padding-block:22px}.home-spot-panels{margin-top:20px}.home-tour-bottom{align-items:flex-start;flex-direction:column;gap:17px}.home-tour-bottom > .link-arrow{font-size:.8rem}.home-services-bottom{align-items:flex-start;flex-direction:column;gap:18px}.interactive-home{padding-top:36px}.home-hotspot{font-size:.85rem}.home-hotspot > span{width:32px;height:32px}.house-route-toggle{font-size:.8rem}.home-spot-panel h3{font-size:1.22rem}.home-quick-links{gap:15px 22px}}
+@media(max-width:480px){.home-services .svc-grid{grid-template-columns:1fr}.home-services .svc-img{aspect-ratio:5/2}.home-services .svc-body{padding:18px 20px}}
+@media(prefers-reduced-motion:no-preference){.home-tour-route .route-flow{animation:home-route-flow 2s linear infinite}@keyframes home-route-flow{to{stroke-dashoffset:-44}}}
+@media(prefers-reduced-motion:reduce){.home-hotspot > span{transition:none}}

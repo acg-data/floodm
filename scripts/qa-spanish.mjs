@@ -13,9 +13,9 @@ try{
  // Batched visual inspection of the actual edited surfaces, in both languages.
  for(const lang of ['en','es']){
   const prefix=lang==='es'?'/es':'';await p.setViewportSize({width:1440,height:1000});await p.goto(base+prefix+'/',{waitUntil:'networkidle'});await p.screenshot({path:`qa-bilingual/home-${lang}-desktop.png`});
-  await p.locator('#credentials').evaluate(e=>e.scrollIntoView({block:'start'}));await p.waitForLoadState('networkidle');await p.screenshot({path:`qa-bilingual/credentials-${lang}-desktop.png`});
+  await p.locator('.mini-credentials').evaluate(e=>e.scrollIntoView({block:'start'}));await p.waitForLoadState('networkidle');await p.screenshot({path:`qa-bilingual/credentials-${lang}-desktop.png`});
   await p.setViewportSize({width:390,height:844});await p.goto(base+prefix+'/',{waitUntil:'networkidle'});await p.screenshot({path:`qa-bilingual/home-${lang}-mobile.png`});
-  await p.locator('#about').evaluate(e=>e.scrollIntoView({block:'start'}));await p.waitForLoadState('networkidle');await p.screenshot({path:`qa-bilingual/manny-${lang}-mobile.png`});
+  await p.goto(base+prefix+'/about/',{waitUntil:'networkidle'});await p.locator('#about').evaluate(e=>e.scrollIntoView({block:'start'}));await p.waitForLoadState('networkidle');await p.screenshot({path:`qa-bilingual/manny-${lang}-mobile.png`});
   await p.goto(base+prefix+'/our-work/',{waitUntil:'networkidle'});await p.locator('.project-grid').evaluate(e=>e.scrollIntoView({block:'start'}));await p.waitForLoadState('networkidle');await p.screenshot({path:`qa-bilingual/gallery-${lang}-mobile.png`});
  }
  assert(!errors.length,'Page errors: '+errors.join('; '));await writeFile('qa-bilingual/spanish-results.json',JSON.stringify({flows:8,errors,passed:true},null,2));console.log('Spanish language switch, navigation, booking, Snapshot, contact, calculator, quiz and checklist passed.');

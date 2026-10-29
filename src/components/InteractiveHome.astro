@@ -1,0 +1,72 @@
+---
+import { homeDrainageSpots as spots } from '../data/home-drainage-spots';
+---
+<section class="section interactive-home" id="home-drainage" aria-labelledby="homeDrainageH" data-home-house>
+  <div class="wrap">
+    <div class="home-tour-heading">
+      <div><h2 id="homeDrainageH">Where does the water<br>go at your home?</h2><p>Start with the places it collects. See what may help.</p></div>
+      <button class="house-route-toggle house-enhanced" type="button" aria-pressed="false" data-house-route-toggle><svg aria-hidden="true"><use href="#i-drop"/></svg><span data-route-off>Show a drainage route</span><span data-route-on hidden>Hide the drainage route</span></button>
+    </div>
+    <figure class="home-tour-figure">
+      <div class="home-tour-photo">
+        <img src="/assets/photos/houston-drainage-home-1600.webp" srcset="/assets/photos/houston-drainage-home-800.webp 800w, /assets/photos/houston-drainage-home-1600.webp 1600w" sizes="(max-width: 720px) calc(100vw - 32px), (max-width: 1180px) calc(100vw - 64px), 1116px" width="1600" height="800" alt="Illustrative brick home after rain, with pooling in the lawn, wet planting beds, roof runoff and a leaf-blocked driveway drain" loading="lazy" decoding="async">
+        <svg class="home-tour-route" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" data-house-route data-route-visible="false">
+          {spots.map((spot, i) => <g data-house-route-path={i} data-route-selected={String(i === 0)}><path class="route-underlay" d={spot.route}/><path class="route-flow" d={spot.route}/><circle cx="920" cy="825" r="10"/></g>)}
+        </svg>
+        <div class="home-hotspots house-enhanced" role="tablist" aria-label="Explore six drainage trouble spots">
+          {spots.map((spot, i) => <button type="button" class="home-hotspot" role="tab" id={`home-spot-${i}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`home-spot-panel-${i}`} aria-label={`${i + 1}. ${spot.title}`} tabindex={i === 0 ? 0 : -1} style={`--spot-x:${spot.x}%;--spot-y:${spot.y}%`} data-house-spot={i}><span aria-hidden="true">{i + 1}</span></button>)}
+        </div>
+      </div>
+      <figcaption><span>AI-edited illustration · not a customer project.</span><span class="house-instruction house-enhanced">Tap a number to explore.</span></figcaption>
+    </figure>
+    <p class="home-route-note" data-house-route-note hidden>Illustrative route only. We confirm the slope, outlet and system design onsite.</p>
+    <div class="home-spot-panels" aria-live="polite" aria-atomic="true">
+      {spots.map((spot, i) => <div class="home-spot-panel" id={`home-spot-panel-${i}`} role="tabpanel" aria-labelledby={`home-spot-${i}`} tabindex="0" data-house-panel={i}>
+        <div><h3>{spot.title}</h3><p>{spot.problem}</p></div>
+        <div><p><strong>What may help:</strong> {spot.solution}</p><a class="link-arrow" href={spot.href}>{spot.link}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>)}
+    </div>
+    <div class="home-tour-bottom">
+      <div class="home-tour-paging house-enhanced"><button type="button" data-house-prev aria-label="Previous drainage spot"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button><span aria-hidden="true"><span data-house-current>1</span> / {spots.length}</span><button type="button" data-house-next aria-label="Next drainage spot"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+      <a class="link-arrow" href="/runoff-calculator/">How much water leaves your roof? <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-home-house]').forEach(root => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-house-spot]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-house-panel]')];
+    const paths = [...root.querySelectorAll<SVGGElement>('[data-house-route-path]')];
+    let selected = 0;
+    function select(index: number, focus = false) {
+      selected = (index + tabs.length) % tabs.length;
+      tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === selected)); tab.tabIndex = i === selected ? 0 : -1; });
+      panels.forEach((panel, i) => { panel.hidden = i !== selected; });
+      paths.forEach((path, i) => { path.setAttribute('data-route-selected', String(i === selected)); });
+      root.querySelector('[data-house-current]')!.textContent = String(selected + 1);
+      if (focus) tabs[selected].focus({ preventScroll: true });
+    }
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', event => {
+        const offset = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : ['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 0;
+        if (!offset && !['Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        select(event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : selected + offset, true);
+      });
+    });
+    root.querySelector('[data-house-prev]')?.addEventListener('click', () => select(selected - 1));
+    root.querySelector('[data-house-next]')?.addEventListener('click', () => select(selected + 1));
+    const toggle = root.querySelector<HTMLButtonElement>('[data-house-route-toggle]')!;
+    toggle.addEventListener('click', () => {
+      const show = toggle.getAttribute('aria-pressed') !== 'true';
+      toggle.setAttribute('aria-pressed', String(show));
+      root.querySelector<HTMLElement>('[data-route-off]')!.hidden = show;
+      root.querySelector<HTMLElement>('[data-route-on]')!.hidden = !show;
+      root.querySelector('[data-house-route]')!.setAttribute('data-route-visible', String(show));
+      root.querySelector<HTMLElement>('[data-house-route-note]')!.hidden = !show;
+    });
+    select(0);
+    root.dataset.ready = 'true';
+  });
+</script>

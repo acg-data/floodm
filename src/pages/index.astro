@@ -1,31 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
-import Trust from '../components/Trust.astro';
 import ServiceCard from '../components/ServiceCard.astro';
-import MiniCard from '../components/MiniCard.astro';
 import Steps from '../components/Steps.astro';
-import Local from '../components/Local.astro';
-import Runoff from '../components/Runoff.astro';
-import Crew from '../components/Crew.astro';
-import Manny from '../components/Manny.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
-import ProjectGallery from '../components/ProjectGallery.astro';
-import Credentials from '../components/Credentials.astro';
-import Aftercare from '../components/Aftercare.astro';
 import { services } from '../data/services';
-import { guides, tools, guidePath } from '../data/resources';
 import { faqLd } from '../lib/schema';
 import { site } from '../data/site';
-import { onsiteFaqs as faqs } from '../data/onsite-faqs';
+import { onsiteFaqs } from '../data/onsite-faqs';
 import HomeHero from '../components/HomeHero.astro';
-import YardBenefits from '../components/YardBenefits.astro';
+import InteractiveHome from '../components/InteractiveHome.astro';
 import Reviews from '../components/Reviews.astro';
-import HoustonFacts from '../components/HoustonFacts.astro';
 import MiniCredentials from '../components/MiniCredentials.astro';
 
-const photoServices = services.filter((s) => s.photo);
-const otherServices = services.filter((s) => !s.photo);
+const featuredSlugs = ['french-drain-installation-houston', 'sump-pump-installation-houston', 'grading-drainage-houston', 'downspout-catch-basin-houston'];
+const featuredServices = featuredSlugs.map(slug => services.find(service => service.slug === slug)!);
+const faqs = [onsiteFaqs[0], onsiteFaqs[2], onsiteFaqs[4], onsiteFaqs[7]];
 
 ---
 
@@ -38,30 +28,22 @@ const otherServices = services.filter((s) => !s.photo);
   <HomeHero />
 
   <MiniCredentials />
-  <YardBenefits />
-  <Trust />
-  <HoustonFacts />
-  <Reviews />
+  <InteractiveHome />
 
-  <section class="section services" id="services">
+  <section class="section services home-services" id="services">
     <div class="wrap">
       <div class="section-head">
-        <h2>Drainage solutions for<br>Houston homes.</h2>
-        <p class="lede">French drains, downspout lines, grading and more. We look at where the water starts, where it collects and where it can go, then build a system that works together.</p>
+        <h2>The right fix<br>for your yard.</h2>
+        <p class="lede">We assess your property in person, then design around the way water moves.</p>
       </div>
       <div class="svc-grid">
-        {photoServices.map((s) => <ServiceCard service={s} />)}
+        {featuredServices.map((s) => <ServiceCard service={s} />)}
       </div>
-      <div class="svc-more">
-        <div class="svc-more-head"><h3>Keep it flowing</h3><p>Culverts, cleaning and jetting for any drainage system, whoever installed it.</p></div>
-        <div class="svc-more-grid">
-          {otherServices.map((s) => <MiniCard service={s} />)}
-        </div>
-      </div>
+      <div class="home-services-bottom"><p>Need cleaning, repairs or another drainage service?</p><a class="link-arrow" href="/services/">See all drainage services <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
     </div>
   </section>
 
-  <Local />
+  <Reviews compact />
 
   <section class="section process" id="process">
     <div class="wrap">
@@ -72,14 +54,6 @@ const otherServices = services.filter((s) => !s.photo);
     </div>
   </section>
 
-  <Crew />
-  <ProjectGallery />
-  <Manny />
-  <Aftercare />
-  <div id="credentials"><Credentials /></div>
-
-  <Runoff />
-
   <section class="section faq" id="faq">
     <div class="wrap faq-grid">
       <div class="faq-side">
@@ -88,23 +62,6 @@ const otherServices = services.filter((s) => !s.photo);
         <div class="hero-actions"><button class="btn btn-primary" data-book="assessment">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
       </div>
       <Faq items={faqs} />
-    </div>
-  </section>
-
-  <section class="section band-white" aria-labelledby="resH">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="resH">A homeowner&rsquo;s guide<br>to Houston rain.</h2>
-        <p class="lede">Plain-English guides and free tools for Houston homeowners. No sign-up.</p>
-      </div>
-      <div class="res-grid">
-        {guides.slice(0, 3).map((g) => (
-          <a class="res" href={guidePath(g.slug)}><svg aria-hidden="true"><use href={`#${g.icon}`}/></svg><h3>{g.title}</h3><p>{g.summary}</p><span class="link-arrow">Read the guide <svg><use href="#i-arrow"/></svg></span></a>
-        ))}
-        {tools.map((t) => (
-          <a class="res" href={t.href}><svg aria-hidden="true"><use href={`#${t.icon}`}/></svg><h3>{t.title}</h3><p>{t.summary}</p><span class="link-arrow">Open the tool <svg><use href="#i-arrow"/></svg></span></a>
-        ))}
-      </div>
     </div>
   </section>
 
