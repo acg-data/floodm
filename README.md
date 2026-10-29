@@ -77,8 +77,10 @@ The preview build adds `noindex` to every page while retaining the approved floo
 
 ## Check before you ship
 
+The home page uses the supplied Neal Roofing screenshot as a layout reference, with Flood Mitigators branding, a residential photo hero, an estimate form, drainage benefits and sourced Google review excerpts. See `docs/home-refresh-brief.md` for the adaptation and verification contract. Stock home photography is illustrative; its license and creator records are in `public/assets/photos/provenance.json`. Review rating/count are a dated snapshot in `src/data/reviews.ts`, checked directly on Google on October 29, 2026. Original review excerpts and author names stay in English on the Spanish page.
+
 ```sh
 npm test
 ```
 
-Type-checks and builds both languages, then loads all 106 content pages in Chromium to check links, files, console errors, titles, structured data, sideways scrolling from 320px phones to 1440px desktops, and accessibility (axe). It also drives the English and Spanish menus, Snapshot, booking, contact, calculator, quiz and checklist flows. Needs Playwright with Chromium on the machine.
+Type-checks and builds both languages, then loads all 106 content pages in Chromium to check links, files, console errors, titles, structured data, sideways scrolling from 320px phones to 1440px desktops, and accessibility (axe). It also drives the English and Spanish menus, Snapshot, booking, contact, calculator, quiz and checklist flows. `npm run qa:home` checks bilingual estimate validation, consent, email-app fallback, server failure/retry and successful confirmation using a mocked endpoint, plus review attribution and responsive screenshots. Needs Playwright with Chromium on the machine.

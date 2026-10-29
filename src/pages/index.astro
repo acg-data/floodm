@@ -22,6 +22,9 @@ import { faqLd } from '../lib/schema';
 import { site } from '../data/site';
 import { houstonCoverage } from '../data/houston';
 import type { Faq as FaqItem } from '../data/types';
+import HomeHero from '../components/HomeHero.astro';
+import YardBenefits from '../components/YardBenefits.astro';
+import Reviews from '../components/Reviews.astro';
 
 const photoServices = services.filter((s) => s.photo);
 const otherServices = services.filter((s) => !s.photo);
@@ -45,33 +48,13 @@ const faqs: FaqItem[] = [
   description="Yard drainage and flood mitigation for Houston homes. French drains, grading, downspout lines and drain cleaning from Manny’s local team. Call (281) 849-1082."
   jsonLd={[faqLd(faqs)]}
 >
-  <section class="hero houston-hero">
-    <div class="wrap">
-      <div class="hero-copy">
-        <h1><span>Yard drainage &amp;</span><span>flood mitigation</span><span class="accent">in Houston.</span></h1>
-        <p class="lede">Soggy yard after every storm? Water against the slab? Manny&rsquo;s Houston team designs and installs drainage around your soil, your street and the way water moves across your lot.</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" data-book="install">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button>
-          <a class="link-arrow" href={site.phone.href}><svg aria-hidden="true"><use href="#i-phone"/></svg>{site.phone.display}</a>
-        </div>
-        <ul class="houston-hero-proof" aria-label="About our Houston team"><li>Family-owned in Houston</li><li>Our own installation crew</li><li>3-year limited warranty</li></ul>
-        <p class="houston-hero-note">Serving Houston, Katy, Cypress, Sugar Land, Pearland and the surrounding communities. <a href="#areas">Find your neighborhood</a></p>
-      </div>
-
-      <div class="hero-visual">
-        <div class="hero-photo"><img src="/assets/source/van-in-action.webp" width="1440" height="1080" fetchpriority="high" alt="The Flood Mitigators van at work beside a Houston-area home"></div>
-        <aside class="snapshot houston-plan" aria-label="Our Houston installation team">
-          <div class="snap-top"><span class="snap-tag">Houston-operated</span><svg aria-hidden="true"><use href="#i-house"/></svg></div>
-          <h2>Your local crew.<br>Every step of the way.</h2>
-          <p>From the first assessment to installation, testing and ongoing care.</p>
-          <a class="link-arrow" href="/our-work/">See our crew in action <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </aside>
-      </div>
-    </div>
-  </section>
+  <HomeHero />
 
   <Trust />
   <div class="certified-strip"><div class="wrap"><img src="/assets/source/nds-certified.webp" width="600" height="611" alt="NDS Professional Drainage Certified Contractor" /><p><strong>NDS Professional Drainage Certified Contractor</strong><span>Careful design. Proven components. A Houston team that stands behind the work.</span></p><a href="#credentials">Our credentials <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
+
+  <YardBenefits />
+  <Reviews />
 
   <section class="section services" id="services">
     <div class="wrap">

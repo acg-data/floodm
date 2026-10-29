@@ -1,0 +1,21 @@
+---
+import { reviews, reviewSummary } from '../data/reviews';
+import Stars from './Stars.astro';
+---
+<section class="section homeowner-reviews" id="reviews" aria-labelledby="reviewsH">
+  <div class="wrap">
+    <div class="reviews-heading">
+      <div><h2 id="reviewsH">Houston homeowners.<br>In their own words.</h2><p>Real feedback, published on Google.</p></div>
+      <a class="reviews-rating" href={reviewSummary.url} target="_blank" rel="noopener"><strong>{reviewSummary.rating}<span>/ 5</span></strong><span><Stars/><span>Based on {reviewSummary.count} Google reviews <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>
+    </div>
+    <div class="reviews-grid">
+      {reviews.map(review => <figure class="homeowner-review">
+        <Stars label="5 out of 5 stars"/>
+        <h3>{review.topic}</h3>
+        <blockquote lang="en" data-no-translate>&ldquo;{review.excerpt}&rdquo;</blockquote>
+        <figcaption><span class="review-avatar" aria-hidden="true">{review.initials}</span><span><b data-no-translate>{review.author}</b><a href={reviewSummary.url} target="_blank" rel="noopener">Read on Google <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></span></figcaption>
+      </figure>)}
+    </div>
+    <p class="review-source-note">Selected excerpts; original reviews are in English. Rating and review count checked <time datetime={reviewSummary.checkedISO}>{reviewSummary.checked}</time>. <a href={reviewSummary.url} target="_blank" rel="noopener">Read all reviews on Google</a>.</p>
+  </div>
+</section>

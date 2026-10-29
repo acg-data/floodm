@@ -1,0 +1,24 @@
+[
+  {
+    "id": "neighborhood",
+    "creator": "Sophie N",
+    "page": "https://unsplash.com/photos/an-aerial-view-of-a-neighborhood-with-lots-of-houses-RJ-CaBQH7Sk",
+    "width": 2000,
+    "height": 1250,
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "retrieved": "2026-10-29",
+    "use": "Illustrative residential photography; not represented as a Flood Mitigators project or a specific Houston property."
+  },
+  {
+    "id": "home-and-lawn",
+    "creator": "Roger Starnes Sr",
+    "page": "https://unsplash.com/photos/a-brick-house-with-a-green-lawn-and-a-blue-sky-ph6qQVK00n0",
+    "width": 1200,
+    "height": 1000,
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "retrieved": "2026-10-29",
+    "use": "Illustrative residential photography; not represented as a Flood Mitigators project or a specific Houston property."
+  }
+]

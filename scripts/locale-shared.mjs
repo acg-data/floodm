@@ -48,7 +48,7 @@ export function visitTranslatable($, fn) {
       return;
     }
     if (node.type === 'script' || node.type === 'style' || ['script', 'style', 'noscript', 'code', 'pre'].includes(node.name)) return;
-    if ($(node).is?.('.language-switch, .language-switch *')) return;
+    if ($(node).is?.('.language-switch, .language-switch *, [data-no-translate]')) return;
     for (const attr of ['alt', 'title', 'aria-label', 'placeholder', 'data-svc']) {
       const text = node.attribs?.[attr];
       if (text && shouldTranslate(text)) { const result = fn(normalize(text)); if (result !== undefined) $(node).attr(attr, result); }

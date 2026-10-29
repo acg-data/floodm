@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-29",
+  "reference": "User-supplied Neal Roofing screenshot, 1789x873",
+  "actual": "qa-bilingual/home-refresh/hero-en-1789.png",
+  "diff": "qa-bilingual/home-refresh/reference-diff.png",
+  "diagnosticMetrics": {
+    "meanAbsoluteError": 34.5843,
+    "rootMeanSquareError": 66.4934,
+    "changedPixelPercent": 53.7263,
+    "interpretation": "Photography, copy and brand substitutions deliberately change pixels. Metrics are diagnostic, with structural and visual inspection determining acceptance."
+  },
+  "inspectedLanguages": ["en-US", "es-US"],
+  "inspectedViewports": ["1789x873", "1440x1000", "390x844", "320x844"],
+  "surfaces": ["Shared dark header and contact strip", "Photo hero and service links", "Estimate form and source badges", "Home and garden benefits", "Water collection/transport/outlet explanation", "Google review excerpts"],
+  "resolved": ["Removed the requested crew overlay", "Used a portrait crop to prevent a soft mobile background", "Refined Spanish headline, benefits and warranty language", "Added scroll clearance for the sticky header"],
+  "intentionalDifferences": ["Flood Mitigators branding, business data and Houston copy", "Licensed residential photography instead of Neal Roofing media", "Verified 4.8/56 Google snapshot and 3-year limited warranty instead of the reference claims", "NDS and BBB source artwork instead of unverified Facebook ratings", "More contrast for form notes, placeholders and buttons", "Short contact consent instead of the roofing reference's marketing terms", "Stacked mobile composition, with the established phone action bar", "Existing lighter editorial sections, tools and complete bilingual routes retained"],
+  "verification": "Astro check/build, bilingual form and existing tool flows, responsive overflow and axe checks, static SEO audit. Full results and screenshots are in qa-bilingual/home-refresh/.",
+  "remainingLimitations": ["Estimate requests use the existing email-app fallback until a lead endpoint is configured", "Review count/rating are a dated snapshot rather than a live feed", "Temporary illustrative portrait remains labeled"]
+}

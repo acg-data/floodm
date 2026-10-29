@@ -1,0 +1,28 @@
+---
+import EstimateForm from './EstimateForm.astro';
+import Stars from './Stars.astro';
+import { reviewSummary } from '../data/reviews';
+---
+<section class="home-hero" aria-labelledby="homeH">
+  <picture class="home-hero-background">
+    <source media="(max-width: 640px)" srcset="/assets/photos/neighborhood-mobile.webp">
+    <img src="/assets/photos/neighborhood-2000.webp" width="2000" height="1250" fetchpriority="high" alt="An aerial view of homes, gardens and tree-lined streets">
+  </picture>
+  <div class="wrap home-hero-grid">
+    <div class="home-hero-copy">
+      <div class="home-hero-proof">
+        <a class="hero-review-proof" href="#reviews"><Stars/><span><strong>{reviewSummary.rating}-star rated</strong><span>{reviewSummary.count} Google reviews</span></span></a>
+        <a href="/warranty-and-care/"><svg class="hero-proof-shield" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>3-year limited</strong><span>parts &amp; labor warranty</span></span></a>
+      </div>
+      <h1 id="homeH">Yard drainage for<br>Houston homes.<span>Room to grow.</span></h1>
+      <p>Keep water flowing away from your home, and get back to enjoying your yard. We design drainage around your property so your lawn, garden and life outside have room to thrive.</p>
+      <ul class="home-service-links" aria-label="Explore our drainage services">
+        <li><a href="/french-drain-installation-houston/"><svg aria-hidden="true"><use href="#i-check"/></svg>French drains</a></li>
+        <li><a href="/grading-drainage-houston/"><svg aria-hidden="true"><use href="#i-check"/></svg>Yard drainage</a></li>
+        <li><a href="/drain-cleaning-services-houston/"><svg aria-hidden="true"><use href="#i-check"/></svg>Drain cleaning</a></li>
+      </ul>
+      <a class="home-hero-areas" href="/service-areas/">Serving Houston &amp; surrounding communities <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <EstimateForm />
+  </div>
+</section>

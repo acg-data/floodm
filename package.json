@@ -11,7 +11,8 @@
     "translations:sync": "node scripts/sync-translations.mjs",
     "start": "node scripts/serve.mjs",
     "check": "astro check",
-    "test": "astro check && npm run build && node scripts/qa.mjs && node scripts/qa-spanish.mjs",
+    "test": "astro check && npm run build && node scripts/qa.mjs && node scripts/qa-spanish.mjs && node scripts/qa-home.mjs",
+    "qa:home": "node scripts/qa-home.mjs",
     "qa:spanish": "node scripts/qa-spanish.mjs",
     "og": "node scripts/make-og.mjs"
   },

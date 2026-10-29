@@ -19,7 +19,7 @@ const here = (href: string) => (path === href ? 'page' : undefined);
   <div class="wrap" style="position:relative">
     <a class="brand" href="/" aria-label="Flood Mitigators home">
       <img class="mark" src="/assets/source/brand-original.webp" width="600" height="600" alt="">
-      <img class="word" src="/assets/img/logo-wordmark.png" width="364" height="100" alt="Flood Mitigators">
+      <img class="word" src="/assets/img/logo-wordmark-white.png" width="364" height="100" alt="Flood Mitigators">
     </a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
     <nav class="nav" id="nav" aria-label="Primary">
@@ -101,7 +101,7 @@ const here = (href: string) => (path === href ? 'page' : undefined);
       <a class="navlink" href="/about/" aria-current={here('/about/')}>About</a>
       <a class="navlink nav-sm" href="/contact/" aria-current={here('/contact/')}>Contact</a>
       <a class="navlink nav-sm nav-em" href="/emergency/" aria-current={here('/emergency/')}>24/7 emergency</a>
-      <button class="btn btn-primary" data-book="install">Get an assessment</button>
+      <a class="btn btn-primary nav-phone" href={site.phone.href}>{site.phone.display}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </nav>
   </div>
 </header>

@@ -1,0 +1,87 @@
+---
+import { site } from '../data/site';
+import { reviewSummary } from '../data/reviews';
+import Stars from './Stars.astro';
+---
+<div class="estimate-panel" id="estimate" aria-labelledby="estimateH">
+  <h2 id="estimateH">Let&rsquo;s get your yard draining.<span>Request your <strong>free estimate.</strong></span></h2>
+  <form id="estimateForm" novalidate>
+    <div class="estimate-select">
+      <label class="sr-only" for="eService">Choose a service (required)</label>
+      <select id="eService" name="service" required>
+        <option value="">Choose a service*</option>
+        <option value="Yard drainage & French drains">Yard drainage &amp; French drains</option>
+        <option value="Downspout drainage">Downspout drainage</option>
+        <option value="Grading & surface drainage">Grading &amp; surface drainage</option>
+        <option value="Sump pumps">Sump pumps</option>
+        <option value="Drain cleaning & maintenance">Drain cleaning &amp; maintenance</option>
+        <option value="Help me choose">Not sure — help me choose</option>
+      </select>
+      <svg aria-hidden="true"><use href="#i-chev"/></svg>
+    </div>
+    <label class="sr-only" for="eAddress">Full property address (required)</label>
+    <input id="eAddress" name="address" placeholder="Full property address*" autocomplete="street-address" required>
+    <label class="sr-only" for="eName">Your name (required)</label>
+    <input id="eName" name="name" placeholder="Your name*" autocomplete="name" required>
+    <label class="sr-only" for="eEmail">Email (optional)</label>
+    <input id="eEmail" name="email" type="email" placeholder="Email (optional)" autocomplete="email">
+    <label class="sr-only" for="ePhone">Phone number (required)</label>
+    <input id="ePhone" name="phone" type="tel" placeholder="Phone number*" autocomplete="tel" required>
+    <label class="estimate-consent"><input id="eConsent" name="consent" type="checkbox" required><span>You may contact me about this estimate using the details I provide. <a href="/privacy/">Privacy policy</a></span></label>
+    <p class="estimate-error" id="estimateErr" role="alert" hidden></p>
+    <button class="btn estimate-submit" type="submit">Request my free estimate <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    <p class="estimate-note">No obligation. Virtual or onsite assessments.</p>
+  </form>
+  <div class="estimate-done" id="estimateDone" role="status" tabindex="-1" hidden>
+    <h3 id="estimateDoneH"></h3><p id="estimateDoneText"></p>
+    <a href={site.phone.href}>Or call {site.phone.display}</a>
+  </div>
+  <div class="estimate-proof">
+    <a href={reviewSummary.url} target="_blank" rel="noopener"><b>Google</b><Stars/><span>{reviewSummary.rating} · {reviewSummary.count} reviews</span></a>
+    <a href="#credentials"><img src="/assets/source/nds-certified.webp" width="600" height="611" alt="NDS Certified Contractor"></a>
+    <a href="#credentials"><img src="/assets/source/bbb.webp" width="200" height="90" alt="BBB Accredited Business"></a>
+  </div>
+</div>
+
+<script>
+  import { sendLead } from '../scripts/lead';
+  import { tr } from '../scripts/locale';
+  const form = document.querySelector<HTMLFormElement>('#estimateForm');
+  if (form) {
+    const error = document.querySelector<HTMLElement>('#estimateErr')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const field = (id: string) => form.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`)!;
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      error.hidden = true;
+      form.querySelectorAll('[aria-invalid]').forEach(el => { el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); });
+      const invalid = (id: string, message: string) => {
+        const input = field(id); input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', 'estimateErr');
+        error.textContent = message; error.hidden = false; input.focus();
+      };
+      if (!field('eService').value) return invalid('eService', tr('Choose a service, or select “Not sure” and we’ll help.', 'Elige un servicio o selecciona «No estoy seguro» y te ayudaremos.'));
+      if (field('eAddress').value.trim().length < 6 || !/\d/.test(field('eAddress').value)) return invalid('eAddress', tr('Add the property’s street address and house number.', 'Agrega la dirección de la propiedad y el número de la casa.'));
+      if (field('eName').value.trim().length < 2) return invalid('eName', tr('Add your name so we know who to contact.', 'Agrega tu nombre para saber a quién contactar.'));
+      const email = field('eEmail').value.trim();
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return invalid('eEmail', tr('Check your email address, or leave it blank.', 'Revisa tu correo electrónico o deja el campo vacío.'));
+      if (field('ePhone').value.replace(/\D/g, '').length < 10) return invalid('ePhone', tr('Add a phone number with at least 10 digits.', 'Agrega un número de teléfono de al menos 10 dígitos.'));
+      if (!(field('eConsent') as HTMLInputElement).checked) return invalid('eConsent', tr('Please confirm we may contact you about this estimate.', 'Confirma que podemos contactarte sobre este presupuesto.'));
+      button.disabled = true; button.setAttribute('aria-busy', 'true');
+      const result = await sendLead(tr('Free drainage estimate request', 'Solicitud de presupuesto de drenaje gratuito'), {
+        service: (field('eService') as HTMLSelectElement).selectedOptions[0]?.textContent?.trim() || field('eService').value,
+        address: field('eAddress').value.trim(), name: field('eName').value.trim(), email,
+        phone: field('ePhone').value.trim(), consent: tr('Permission to contact about this estimate', 'Permiso para contactar sobre este presupuesto'),
+      });
+      button.disabled = false; button.removeAttribute('aria-busy');
+      if (result === 'failed') {
+        error.textContent = tr('Your request could not be sent. Please try again or call (281) 849-1082.', 'No se pudo enviar tu solicitud. Inténtalo de nuevo o llama al (281) 849-1082.'); error.hidden = false; return;
+      }
+      document.querySelector('#estimateDoneH')!.textContent = result === 'mailto' ? tr('One last step.', 'Un último paso.') : tr('Your request is in.', 'Recibimos tu solicitud.');
+      document.querySelector('#estimateDoneText')!.textContent = result === 'mailto'
+        ? tr('Your email app opened with your estimate request. Press send to get it to our team.', 'Tu aplicación de correo se abrió con la solicitud. Pulsa enviar para que llegue a nuestro equipo.')
+        : tr('Our team will contact you to talk through your property and the next step.', 'Nuestro equipo te contactará para hablar de tu propiedad y del siguiente paso.');
+      form.hidden = true;
+      const done = document.querySelector<HTMLElement>('#estimateDone')!; done.hidden = false; done.focus();
+    });
+  }
+</script>
