@@ -1,0 +1,35 @@
+---
+// Meet Manny — owner section, in the original design's style.
+import { site } from '../data/site';
+interface Props { headingLevel?: 'h1' | 'h2' }
+const { headingLevel: H = 'h2' } = Astro.props;
+---
+  <section class="section manny" id="about" aria-labelledby="mannyH">
+    <div class="wrap manny-grid">
+      <div class="manny-visual">
+        <div class="manny-card">
+          <!-- Owner photo: replace the logo image below with
+               <img class="manny-photo" src="/assets/img/manny.jpg" alt="Manny, owner of Flood Mitigators"> -->
+          <img src="/assets/img/logo-mark-white.png" width="296" height="100" alt="" loading="lazy" decoding="async">
+          <svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60c70-26 130-26 200 0s130 26 200 0v60H0z" fill="#167DC4" opacity=".55"/><path d="M0 84c70-22 130-22 200 0s130 22 200 0v36H0z" fill="#0B2335"/></svg>
+          <div class="manny-name"><b>Manny</b><span>Owner &amp; Founder</span></div>
+        </div>
+        <div class="manny-badge"><span class="snap-tag">Since Harvey</span><b>2017</b><span>Family-owned &amp; Houston-operated</span></div>
+      </div>
+      <div class="manny-copy">
+        <span class="eyebrow">Meet the owner</span>
+        <H id="mannyH">Started after Harvey hit home.</H>
+        <p class="lede">In 2017, Hurricane Harvey put Manny&rsquo;s family and friends through what thousands of Houston households lived through: water where it never should have been, and no good answer for keeping it out next time.</p>
+        <p>The flood-prevention options on the market were ineffective, half-measures or priced out of reach. So Manny and the team designed and built their own drainage systems. That work became Flood Mitigators, and it is still family-owned and Houston-operated today.</p>
+        <ul class="checks">
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>Family-owned, Houston-operated</b><span>Started here after Harvey, and still run here.</span></div></li>
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>3-year parts &amp; labor limited warranty</b><span>Backing the drainage systems we install.</span></div></li>
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>24/7 emergency response</b><span>When water is threatening your home, call any time.</span></div></li>
+        </ul>
+        <div class="manny-actions">
+          <a class="btn btn-primary" href={site.phone.href}><svg><use href="#i-phone"/></svg>Call Manny&rsquo;s team</a>
+          <button class="btn btn-ghost" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>

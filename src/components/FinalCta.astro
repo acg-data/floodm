@@ -1,0 +1,21 @@
+---
+import { site } from '../data/site';
+interface Props { title?: string; body?: string; book?: string; svc?: string }
+const { title = 'Get ahead of the next heavy rain.', body = 'Start with a clearer picture of your property.', book = '', svc } = Astro.props;
+---
+<section class="final" aria-labelledby="finalH">
+  <svg class="final-waves" viewBox="0 0 780 240" aria-hidden="true">
+    <path d="M0 200C140 190 260 120 420 112S680 150 780 120V240H0z" fill="#0B2335" opacity=".8"/>
+    <path d="M30 215C200 170 330 70 520 70c120 0 200 30 260 18" fill="none" stroke="#65C7ED" stroke-width="14" stroke-linecap="round" opacity=".9"/>
+    <path d="M90 238C250 200 380 128 560 128c100 0 170 22 220 14" fill="none" stroke="#167DC4" stroke-width="18" stroke-linecap="round"/>
+  </svg>
+  <div class="wrap">
+    <h2 id="finalH">{title}</h2>
+    <p>{body}</p>
+    <div class="row">
+      <a class="btn btn-primary" href="/reports/flood-snapshot/" data-focus-snap>Get my free Snapshot <svg><use href="#i-arrow"/></svg></a>
+      <button class="btn btn-ghost btn-on-navy" data-book={book} data-svc={svc}>Book an assessment <svg><use href="#i-arrow"/></svg></button>
+      <a class="btn btn-ghost btn-on-navy" href={site.phone.href}><svg><use href="#i-phone"/></svg>{site.phone.display}</a>
+    </div>
+  </div>
+</section>

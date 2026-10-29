@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import MiniCard from '../components/MiniCard.astro';
+import { services } from '../data/services';
+import { site } from '../data/site';
+---
+<Base title="Page not found" description="The page you were looking for isn't here. Find Flood Mitigators' services, reports and guides, or call us." noindex>
+  <PageHero eyebrow="Error 404" headline={['This page', 'washed away.']} lede="The page you’re looking for isn’t here — but the water problem you came about is something we can fix.">
+    <div class="hero-actions"><a class="btn btn-primary" href="/">Go to the homepage <svg><use href="#i-arrow"/></svg></a><a class="link-arrow" href={site.phone.href}>Call {site.phone.display} <svg><use href="#i-arrow"/></svg></a></div>
+  </PageHero>
+  <section class="section band-white"><div class="wrap"><div class="section-head"><span class="eyebrow">Our services</span><h2>Maybe you were looking for one of these.</h2></div><div class="svc-more-grid">{services.slice(0, 10).map((s) => <MiniCard service={s} />)}</div></div></section>
+</Base>

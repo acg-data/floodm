@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Ladder from '../../components/Ladder.astro';
+import Steps from '../../components/Steps.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { reports } from '../../data/reports';
+import { breadcrumbLd, faqLd } from '../../lib/schema';
+
+const crumbs = [{ name: 'Reports', href: '/reports/' }];
+const faqs = reports.flatMap((r) => r.faqs.slice(0, 2));
+---
+
+<Base title="Flood Reports & Assessments for Houston Homes" description="Three remote ways to understand your property's flood and drainage risk: a free Flood Snapshot, the Flood Intelligence report and an Expert Mitigation Plan." jsonLd={[breadcrumbLd(crumbs), faqLd(faqs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Start with answers" headline={['Know where', 'the water goes.']} lede="Three ways to understand your property, from a quick free read to a plan from a mitigation specialist. Each step builds on the one before it — and every one is done remotely." />
+  <section class="section reports">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Compare the three</span><h2>From a free read to a written plan.</h2></div>
+      <Ladder />
+    </div>
+  </section>
+  <section class="section process band-ice">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">How it fits together</span><h2>From a free read to a finished install.</h2></div>
+      <Steps />
+    </div>
+  </section>
+  <section class="section faq" style="background:var(--white)">
+    <div class="wrap faq-grid">
+      <div class="faq-side"><span class="eyebrow">FAQ</span><h2>Questions about the reports.</h2><p>Not sure which one you need? Start with the free Snapshot. It tells you whether to dig deeper.</p></div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+  <FinalCta />
+</Base>

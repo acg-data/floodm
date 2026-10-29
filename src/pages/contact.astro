@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SnapshotForm from '../components/SnapshotForm.astro';
+import Steps from '../components/Steps.astro';
+import { site } from '../data/site';
+import { services } from '../data/services';
+import { breadcrumbLd } from '../lib/schema';
+const crumbs = [{ name: 'Contact', href: '/contact/' }];
+const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Contact Flood Mitigators', url: `${site.url}/contact/`, about: { '@id': `${site.url}/#business` } };
+---
+<Base title="Contact Flood Mitigators" description={`Call or text ${site.phone.display}, email ${site.email}, or send a request. Houston flood assessments and drainage. Mon–Fri 6 am–6 pm, 24/7 emergency response.`} jsonLd={[contactLd, breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Contact" headline={['Let’s get the water', 'off your property.']} lede="Send a request, call or text. If water is threatening your home right now, call — we offer 24/7 emergency response." />
+  <section class="section band-ice">
+    <div class="wrap two-col">
+      <div class="contact-cards">
+        <a class="ccard primary" href={site.phone.href}><svg aria-hidden="true"><use href="#i-phone"/></svg><span><small>Call or text</small><b>{site.phone.display}</b><small>{site.hours.label} · {site.emergency}</small></span></a>
+        <a class="ccard" href={site.sms}><svg aria-hidden="true"><use href="#i-video"/></svg><span><b>Text us photos or video</b><small>The fastest way to show us the problem.</small></span></a>
+        <a class="ccard" href={`mailto:${site.email}`}><svg aria-hidden="true"><use href="#i-mail"/></svg><span><b>{site.email}</b><small>We reply about your property only.</small></span></a>
+        <a class="ccard" href="/emergency/"><svg aria-hidden="true"><use href="#i-siren"/></svg><span><b>Water coming in right now?</b><small>What to do, and how to reach us 24/7.</small></span></a>
+        <div class="panel" style="margin-top:8px">
+          <h2 style="font-size:1.2rem">Or start with a free Flood Snapshot</h2>
+          <SnapshotForm />
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="dlg-head"><div><h2>Book an assessment</h2><p>Tell us about your property. A specialist replies with next steps.</p></div></div>
+        <form class="dlg-body" id="contactForm" novalidate>
+          <div class="opts" role="radiogroup" aria-label="What do you need?">
+            <div class="opt"><input type="radio" name="cneed" id="c-intel" value="Flood Intelligence report"><label for="c-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-expert" value="Expert Mitigation Plan" checked><label for="c-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-install" value="Drainage install quote"><label for="c-install"><b>Install quote</b><span>Drainage work</span></label></div>
+          </div>
+          <div class="f2">
+            <div class="fld"><label for="cName">Name</label><input id="cName" name="name" autocomplete="name" required></div>
+            <div class="fld"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="f2">
+            <div class="fld"><label for="cPhone">Phone <small>optional</small></label><input id="cPhone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="fld"><label for="cService">Service <small>optional</small></label>
+              <select id="cService" name="service"><option value="">Not sure yet</option>{services.map((s) => <option>{s.name}</option>)}</select>
+            </div>
+          </div>
+          <div class="fld"><label for="cAddr">Property address</label><input id="cAddr" name="address" autocomplete="street-address" placeholder="Street, city, ZIP" required></div>
+          <div class="fld"><label for="cNotes">What’s happening? <small>optional</small></label><textarea id="cNotes" name="notes" placeholder="Where the water sits, how long it stays, what you’ve tried"></textarea></div>
+          <p class="form-error" id="cErr" hidden></p>
+          <div class="dlg-foot"><small>We only use this to reply about your property.</small><button class="btn btn-primary" type="submit">Send request <svg><use href="#i-arrow"/></svg></button></div>
+        </form>
+        <div class="dlg-done" id="cDone" hidden>
+          <span class="ok"><svg><use href="#i-check"/></svg></span>
+          <h2>Request received.</h2>
+          <p id="cDoneText"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section process">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">What happens next</span><h2>No pressure. Just a plan.</h2></div>
+      <Steps />
+    </div>
+  </section>
+</Base>
+<script>
+  import { sendLead, callLink } from '../scripts/lead';
+  const f = document.querySelector<HTMLFormElement>('#contactForm');
+  f?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const v = (id: string) => (document.querySelector<HTMLInputElement>(id)?.value ?? '').trim();
+    const err = document.querySelector<HTMLElement>('#cErr')!;
+    const name = v('#cName'), email = v('#cEmail'), address = v('#cAddr');
+    const miss: string[] = [];
+    if (!name) miss.push('your name');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) miss.push('a valid email');
+    if (address.length < 6) miss.push('the property address');
+    if (miss.length) { err.textContent = `Add ${miss.join(', ').replace(/, ([^,]*)$/, ' and $1')} so we can reply.`; err.hidden = false; return; }
+    const request = f.querySelector<HTMLInputElement>('input[name=cneed]:checked')?.value ?? 'Assessment';
+    const result = await sendLead('Assessment request', { name, email, phone: v('#cPhone'), address, request, service: v('#cService'), notes: v('#cNotes') });
+    if (result === 'failed') { err.innerHTML = `That didn’t go through. Call or text ${callLink()} and we’ll take it from there.`; err.hidden = false; return; }
+    document.querySelector('#cDoneText')!.textContent = result === 'mailto'
+      ? `Thanks, ${name.split(' ')[0]}. Your email app opened with your request. Hit send and we reply to ${email}.`
+      : `Thanks, ${name.split(' ')[0]}. Your request is in. We reply to ${email}.`;
+    f.hidden = true;
+    document.querySelector<HTMLElement>('#cDone')!.hidden = false;
+  });
+</script>

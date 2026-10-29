@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { site } from '../data/site';
+import { breadcrumbLd } from '../lib/schema';
+const crumbs = [{ name: '24/7 emergency', href: '/emergency/' }];
+const now = [
+  { t: 'Stay safe first', b: 'Never walk or drive through floodwater. Turn around, don’t drown. If you’re in danger, call 911.' },
+  { t: 'Call or text us', b: `${site.phone.display}, any hour. Tell us where the water is coming from and where it’s going.` },
+  { t: 'Take photos and video', b: 'From somewhere safe, film where water flows and collects. It helps us now, and helps design the fix later.' },
+  { t: 'Clear what you safely can', b: 'Leaves and mulch on grates and pop-up emitters, and debris at the driveway culvert — only if it’s safe to reach.' },
+];
+const after = [
+  { t: 'Document for insurance', b: 'Photos of damage, water lines and receipts. Standard homeowners policies usually don’t cover flood, so check your flood policy.' },
+  { t: 'Check the slab and beds', b: 'Look for washed-out soil, exposed foundation edges and erosion where water ran.' },
+  { t: 'Check the sump pump', b: 'Make sure it’s still cycling and the discharge line is clear.' },
+  { t: 'Fix the cause', b: 'Get a free Flood Snapshot, then book an assessment so the next storm goes somewhere better.' },
+];
+---
+<Base title="24/7 Drainage Emergency Response in Houston" description={`Water threatening your Houston home? Call or text ${site.phone.display} for 24/7 emergency response. What to do right now, and what to do after the storm.`} jsonLd={[breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="24/7 emergency response" headline={['Water coming in?', 'Call us now.']} lede="We offer 24/7 emergency response for Houston homes when water is threatening the house. Call or text — any hour.">
+    <div class="hero-actions">
+      <a class="btn btn-danger" href={site.phone.href}><svg><use href="#i-phone"/></svg>Call {site.phone.display}</a>
+      <a class="btn btn-ghost" href={site.sms}>Text photos instead <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="alert" role="note"><svg aria-hidden="true"><use href="#i-siren"/></svg><span><b>If anyone is in danger, call 911 first.</b> Never walk or drive through floodwater.</span></div>
+  </PageHero>
+  <section class="section band-white">
+    <div class="wrap two-col">
+      <div><div class="section-head"><span class="eyebrow">Right now</span><h2>While it’s raining.</h2></div><ol class="timeline-steps">{now.map((s) => <li><div><b>{s.t}</b><span>{s.b}</span></div></li>)}</ol></div>
+      <div><div class="section-head"><span class="eyebrow">Once it’s safe</span><h2>After the storm.</h2></div><ol class="timeline-steps">{after.map((s) => <li><div><b>{s.t}</b><span>{s.b}</span></div></li>)}</ol></div>
+    </div>
+    <div class="wrap"><p class="note" style="margin-top:28px"><svg aria-hidden="true"><use href="#i-book"/></svg><span>More detail: <a href="/resources/what-to-do-when-your-yard-floods/">what to do when your yard floods</a> and the <a href="/resources/hurricane-season-checklist/">hurricane-season checklist</a>.</span></p></div>
+  </section>
+  <FinalCta title="Then let’s fix the cause." body="Start with a free Snapshot of your address. Our crew installs the fix once you have a plan." />
+</Base>

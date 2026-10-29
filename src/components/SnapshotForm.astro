@@ -1,0 +1,84 @@
+---
+// The original hero Snapshot capture: address first, then email.
+---
+<form class="snap-form" id="snapForm" novalidate>
+  <label class="snap-label" for="snapAddr" id="snapLabel">Enter your property address</label>
+  <div class="field-row">
+    <span class="ico" id="snapIco"><svg><use href="#i-pin"/></svg></span>
+    <input id="snapAddr" name="address" type="text" autocomplete="street-address" placeholder="e.g. 4410 Westheimer Rd, Houston, TX" required>
+    <button class="btn btn-primary" type="submit" id="snapBtn">Get my free Snapshot <svg><use href="#i-arrow"/></svg></button>
+  </div>
+  <p class="form-error" id="snapErr" hidden></p>
+  <div class="form-note">
+    <span><svg><use href="#i-check"/></svg>Free, no card</span>
+    <span><svg><use href="#i-check"/></svg>Sent to your inbox</span>
+    <span><svg><use href="#i-check"/></svg>Any Houston-area address</span>
+  </div>
+</form>
+<div class="snap-done" id="snapDone" hidden>
+  <strong>Your Snapshot is on its way.</strong>
+  <p id="snapDoneText"></p>
+  <a class="link-arrow" href="/reports/flood-intelligence-report/">See what a full Flood Intelligence report adds <svg><use href="#i-arrow"/></svg></a>
+</div>
+
+<script>
+  import { sendLead, callLink } from '../scripts/lead';
+  const sf = document.querySelector<HTMLFormElement>('#snapForm');
+  if (sf) {
+    const addr = sf.querySelector<HTMLInputElement>('#snapAddr')!;
+    const lab = sf.querySelector<HTMLElement>('#snapLabel')!;
+    const btn = sf.querySelector<HTMLButtonElement>('#snapBtn')!;
+    const err = sf.querySelector<HTMLElement>('#snapErr')!;
+    const done = document.querySelector<HTMLElement>('#snapDone')!;
+    let stage: 'address' | 'email' = 'address';
+    const saved = { address: '', email: '' };
+    sf.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      const v = addr.value.trim();
+      if (stage === 'address') {
+        if (v.length < 6 || !/\d/.test(v)) {
+          err.textContent = 'Enter a street address with a house number, like 4410 Westheimer Rd, Houston.';
+          err.hidden = false;
+          addr.focus();
+          return;
+        }
+        saved.address = v;
+        stage = 'email';
+        lab.textContent = `Where should we send the Snapshot for ${v}?`;
+        addr.value = '';
+        addr.type = 'email';
+        addr.autocomplete = 'email';
+        addr.placeholder = 'you@email.com';
+        sf.querySelector('#snapIco')!.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+        btn.innerHTML = 'Send my Snapshot <svg><use href="#i-arrow"/></svg>';
+        addr.focus();
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+        err.textContent = 'That email looks incomplete. Check for a typo and try again.';
+        err.hidden = false;
+        addr.focus();
+        return;
+      }
+      saved.email = v;
+      btn.disabled = true;
+      const result = await sendLead('Flood Snapshot request', saved);
+      btn.disabled = false;
+      if (result === 'failed') {
+        err.innerHTML = `That didn’t go through. Call or text ${callLink()} and we’ll send your Snapshot.`;
+        err.hidden = false;
+        return;
+      }
+      sf.hidden = true;
+      const text = done.querySelector('#snapDoneText')!;
+      if (result === 'mailto') {
+        done.querySelector('strong')!.textContent = 'One last step.';
+        text.textContent = `Your email app opened with the Snapshot request for ${saved.address}. Hit send and we’ll get it to ${saved.email}.`;
+      } else {
+        text.textContent = `We’re preparing the Flood Snapshot for ${saved.address}. It goes to ${saved.email}.`;
+      }
+      done.hidden = false;
+    });
+  }
+</script>

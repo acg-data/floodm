@@ -1,18 +1,27 @@
 {
   "name": "floodmitigators",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "Flood Mitigators — Houston flood assessments & drainage. Static one-page site in site/.",
+  "description": "Flood Mitigators — Houston flood assessments & drainage. floodmitigators.com",
   "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
     "start": "node scripts/serve.mjs",
-    "test": "node scripts/qa.mjs",
+    "check": "astro check",
+    "test": "astro check && astro build && node scripts/qa.mjs",
     "og": "node scripts/make-og.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.8"
   },
   "devDependencies": {
-    "axe-core": "4.11.0"
+    "@astrojs/check": "0.9.12",
+    "axe-core": "4.11.0",
+    "typescript": "5.9.3"
   }
 }

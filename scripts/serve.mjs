@@ -1,11 +1,11 @@
-// Zero-dependency preview server for site/. Prints a LAN address so you can
-// open the site on a phone on the same Wi-Fi.  Usage: npm start [-- --port 8080]
+// Zero-dependency preview server for the built site (dist/). Prints a LAN address so you can
+// open it on a phone on the same Wi-Fi. Usage: npm run build && npm start
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { networkInterfaces } from 'node:os';
 
-const root = new URL('../site/', import.meta.url).pathname;
+const root = new URL('../dist/', import.meta.url).pathname;
 const portArg = process.argv.indexOf('--port');
 const port = Number(portArg > -1 ? process.argv[portArg + 1] : process.env.PORT || 8080);
 const types = {

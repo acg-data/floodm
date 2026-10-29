@@ -1,0 +1,49 @@
+---
+import { site } from '../data/site';
+import { services, servicePath } from '../data/services';
+import { reports, reportPath } from '../data/reports';
+import { areas, areaPath } from '../data/areas';
+import { guides, tools, guidePath } from '../data/resources';
+
+const featuredAreas = ['memorial', 'meyerland', 'bellaire', 'the-heights', 'katy', 'cypress', 'kingwood', 'pearland']
+  .map((slug) => areas.find((a) => a.slug === slug))
+  .filter((a) => a !== undefined);
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="fbrand">
+      <a class="brand" href="/" aria-label="Flood Mitigators home">
+        <img class="mark" src="/assets/img/logo-mark-white.png" width="296" height="100" alt="" loading="lazy" decoding="async">
+        <img class="word" src="/assets/img/logo-wordmark-white.png" width="345" height="100" alt="Flood Mitigators" loading="lazy" decoding="async">
+      </a>
+      <p class="tag">Flood assessments and drainage solutions for Houston-area homes. Family-owned since Hurricane Harvey.</p>
+      <ul class="contact">
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><a class="ph" href={site.phone.href}>{site.phone.display}</a></li>
+        <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a class="em" href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><svg aria-hidden="true"><use href="#i-clock"/></svg><span>{site.hours.label}<br /><a href="/emergency/">{site.emergency}</a></span></li>
+        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Houston, Texas</span></li>
+      </ul>
+      <div class="social">
+        <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Flood Mitigators on Facebook"><svg><use href="#i-fb"/></svg></a>
+        <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Flood Mitigators on Instagram"><svg><use href="#i-ig"/></svg></a>
+      </div>
+    </div>
+    <div><h3>Services</h3><ul>{services.map((s) => <li><a href={servicePath(s)}>{s.navName}</a></li>)}</ul></div>
+    <div>
+      <h3>Reports</h3><ul>{reports.map((r) => <li><a href={reportPath(r)}>{r.name}</a></li>)}</ul>
+      <h3 class="fgap">Company</h3>
+      <ul><li><a href="/about/">About &amp; Manny</a></li><li><a href="/contact/">Contact</a></li><li><a href="/emergency/">24/7 emergency</a></li><li><a href="/faq/">FAQ</a></li></ul>
+    </div>
+    <div><h3>Service areas</h3><ul>{featuredAreas.map((a) => <li><a href={areaPath(a)}>{a.name}</a></li>)}<li><a href="/service-areas/">All areas</a></li></ul></div>
+    <div>
+      <h3>Resources</h3>
+      <ul>
+        {guides.slice(0, 3).map((g) => <li><a href={guidePath(g.slug)}>{g.title}</a></li>)}
+        {tools.map((t) => <li><a href={t.href}>{t.title}</a></li>)}
+        <li><a href="/resources/">All resources</a></li>
+      </ul>
+    </div>
+    <div class="legal"><span>© {new Date().getFullYear()} Flood Mitigators · Family-owned in Houston, TX</span><span><a href="/privacy/">Privacy</a> · <a href="/sitemap-index.xml">Sitemap</a></span></div>
+  </div>
+</footer>

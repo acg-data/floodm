@@ -1,0 +1,105 @@
+---
+import { site } from '../data/site';
+import { installServices, maintainServices, servicePath } from '../data/services';
+import { reports, reportPath } from '../data/reports';
+import { guides, tools, guidePath } from '../data/resources';
+
+const path = Astro.url.pathname;
+const here = (href: string) => (path === href ? 'page' : undefined);
+---
+
+<div class="topbar" role="region" aria-label="Contact and hours">
+  <div class="wrap">
+    <span class="tb-left"><span>Houston&rsquo;s #1 drainage &amp; flood protection</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">Family-owned</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">3-year warranty</span><span class="tb-dot" aria-hidden="true"></span><a class="tb-hide-sm tb-em" href="/emergency/">24/7 emergency response</a></span>
+    <span class="tb-right"><a class="tb-phone" href={site.phone.href}>Call or text {site.phone.display}</a><a class="tb-snap" href="/reports/flood-snapshot/">Free Flood Snapshot →</a></span>
+  </div>
+</div>
+
+<header class="header" id="hdr">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="/" aria-label="Flood Mitigators home">
+      <img class="mark" src="/assets/img/logo-mark.png" width="292" height="100" alt="">
+      <img class="word" src="/assets/img/logo-wordmark.png" width="364" height="100" alt="Flood Mitigators">
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <div class="nav-group">
+        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-reports">Reports <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="dd" id="dd-reports">
+          {reports.map((r) => (
+            <a href={reportPath(r)} aria-current={here(reportPath(r))}>
+              <svg aria-hidden="true"><use href={r.slug === 'flood-snapshot' ? '#i-doc' : r.slug === 'expert-mitigation-plan' ? '#i-video' : '#i-map'}/></svg>
+              <span><b>{r.name} <em>{r.price}</em></b><small>{r.summary.split(',')[0].replace(/\.$/, '')}.</small></span>
+            </a>
+          ))}
+          <a class="dd-all" href="/reports/">Compare all three <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <div class="nav-group nav-group-wide">
+        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-services">Services <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="dd dd-mega" id="dd-services">
+          <div class="dd-col">
+            <p class="dd-title">Build it right</p>
+            {installServices.map((s) => (
+              <a href={servicePath(s)} aria-current={here(servicePath(s))}>
+                <svg aria-hidden="true"><use href={`#${s.icon}`}/></svg>
+                <span><b>{s.navName}</b><small>{s.summary}</small></span>
+              </a>
+            ))}
+          </div>
+          <div class="dd-col">
+            <p class="dd-title">Keep it flowing</p>
+            {maintainServices.map((s) => (
+              <a href={servicePath(s)} aria-current={here(servicePath(s))}>
+                <svg aria-hidden="true"><use href={`#${s.icon}`}/></svg>
+                <span><b>{s.navName}</b><small>{s.summary}</small></span>
+              </a>
+            ))}
+            <a class="dd-cta" href="/drainage-checkup/">
+              <svg aria-hidden="true"><use href="#i-list"/></svg>
+              <span><b>Not sure what you need?</b><small>Take the 60-second drainage checkup.</small></span>
+            </a>
+          </div>
+          <a class="dd-all" href="/services/">All services <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <a class="navlink" href="/service-areas/" aria-current={here('/service-areas/')}>Service areas</a>
+
+      <div class="nav-group">
+        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-resources">Resources <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="dd dd-wide" id="dd-resources">
+          <div class="dd-col">
+            <p class="dd-title">Guides</p>
+            {guides.map((g) => (
+              <a href={guidePath(g.slug)} aria-current={here(guidePath(g.slug))}>
+                <svg aria-hidden="true"><use href={`#${g.icon}`}/></svg>
+                <span><b>{g.title}</b></span>
+              </a>
+            ))}
+          </div>
+          <div class="dd-col">
+            <p class="dd-title">Tools</p>
+            {tools.map((t) => (
+              <a href={t.href} aria-current={here(t.href)}>
+                <svg aria-hidden="true"><use href={`#${t.icon}`}/></svg>
+                <span><b>{t.title}</b><small>{t.summary}</small></span>
+              </a>
+            ))}
+            <a href="/faq/" aria-current={here('/faq/')}>
+              <svg aria-hidden="true"><use href="#i-question"/></svg>
+              <span><b>FAQ</b><small>Straight answers to common questions.</small></span>
+            </a>
+          </div>
+          <a class="dd-all" href="/resources/">All resources <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <a class="navlink" href="/about/" aria-current={here('/about/')}>About</a>
+      <a class="navlink nav-sm" href="/contact/" aria-current={here('/contact/')}>Contact</a>
+      <a class="navlink nav-sm nav-em" href="/emergency/" aria-current={here('/emergency/')}>24/7 emergency</a>
+      <button class="btn btn-primary" data-book="">Book an assessment</button>
+    </nav>
+  </div>
+</header>

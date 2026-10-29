@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { guides, tools, guidePath } from '../../data/resources';
+import { reports, reportPath } from '../../data/reports';
+import { breadcrumbLd } from '../../lib/schema';
+const crumbs = [{ name: 'Resources', href: '/resources/' }];
+---
+<Base title="Houston Drainage & Flood Guides and Tools" description="Plain-English guides to Houston flood zones, clay soil, downspouts and yard drainage, plus a free runoff calculator, drainage checkup and hurricane-season checklist." jsonLd={[breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Resources" headline={['Learn how water', 'works on your lot.']} lede="Guides and free tools for Houston homeowners. No sign-up, no sales pitch — just what we’d tell a neighbor." />
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Guides</span><h2>Read up before the next storm.</h2></div>
+      <div class="res-grid">
+        {guides.map((g) => <a class="res" href={guidePath(g.slug)}><svg aria-hidden="true"><use href={`#${g.icon}`}/></svg><h3>{g.title}</h3><p>{g.summary}</p><span class="link-arrow">Read the guide <svg><use href="#i-arrow"/></svg></span></a>)}
+        <a class="res" href="/faq/"><svg aria-hidden="true"><use href="#i-question"/></svg><h3>Frequently asked questions</h3><p>Assessments, drainage basics, warranty and emergencies, answered straight.</p><span class="link-arrow">Read the FAQ <svg><use href="#i-arrow"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+  <section class="section services">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Free tools</span><h2>Measure, check and prepare.</h2></div>
+      <div class="res-grid">
+        {tools.map((t) => <a class="res" href={t.href}><svg aria-hidden="true"><use href={`#${t.icon}`}/></svg><h3>{t.title}</h3><p>{t.summary}</p><span class="link-arrow">Open the tool <svg><use href="#i-arrow"/></svg></span></a>)}
+      </div>
+    </div>
+  </section>
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Reports for your address</span><h2>Go from general to specific.</h2></div>
+      <div class="res-grid">
+        {reports.map((r) => <a class="res" href={reportPath(r)}><svg aria-hidden="true"><use href="#i-doc"/></svg><h3>{r.name} <span class="price" style="font-size:.75rem;margin-left:6px">{r.price}</span></h3><p>{r.summary}</p><span class="link-arrow">Learn more <svg><use href="#i-arrow"/></svg></span></a>)}
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</Base>

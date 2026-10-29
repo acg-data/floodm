@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Steps from '../../components/Steps.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { areas, areaBySlug, areaPath } from '../../data/areas';
+import { serviceBySlug } from '../../data/services';
+import type { Area, Faq as FaqItem } from '../../data/types';
+import { site } from '../../data/site';
+import { breadcrumbLd, faqLd } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({ params: { slug: area.slug }, props: { area } }));
+}
+interface Props { area: Area }
+const { area: a } = Astro.props;
+const crumbs = [
+  { name: 'Service areas', href: '/service-areas/' },
+  { name: a.name, href: areaPath(a) },
+];
+const svc = a.services.map(serviceBySlug).filter((s) => s !== undefined);
+const nearby = a.nearby.map(areaBySlug).filter((n) => n !== undefined);
+const faqs: FaqItem[] = [
+  { q: `Do you serve ${a.name}?`, a: `Yes. Assessments work for any ${a.name} address, and our own crew installs in ${a.name} and the surrounding area. Not sure about your street? Call or text ${site.phone.display}.` },
+  { q: `Will a drainage system keep ${a.name} floodwater out?`, a: `Yard drainage handles the water that falls on and runs across your lot. It won’t hold back a bayou, creek or street that’s overtopped${a.waterways.length ? ` — and in ${a.name}, ${a.waterways[0]} matters` : ''}. Your Flood Snapshot shows that context for your address, and your plan covers what helps in that case and what won’t.` },
+  { q: 'How do I start?', a: 'Get a free Flood Snapshot of your address. If it raises questions, the Flood Intelligence report and the Expert Mitigation Plan turn them into a written fix — all done remotely before our crew comes out.' },
+];
+const placeLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `Drainage & flood mitigation in ${a.name}`,
+  description: a.metaDescription,
+  url: `${site.url}${areaPath(a)}`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: { '@type': 'Place', name: `${a.name}, TX`, containedInPlace: { '@type': 'AdministrativeArea', name: `${a.county} County, TX` } },
+};
+---
+
+<Base title={`${a.name} Drainage & Flood Mitigation`} description={a.metaDescription} jsonLd={[placeLd, breadcrumbLd(crumbs), faqLd(faqs)]}>
+  <PageHero crumbs={crumbs} eyebrow={`${a.region} · ${a.county} County`} headline={[`${a.name} yards,`, 'drained right.']} lede={a.lede}>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/reports/flood-snapshot/">Free Snapshot for my {a.name} address <svg><use href="#i-arrow"/></svg></a>
+      <button class="btn btn-ghost" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button>
+    </div>
+    {a.waterways.length > 0 && <div class="water-tags" aria-label="Nearby waterways">{a.waterways.map((w) => <span><svg aria-hidden="true"><use href="#i-drop"/></svg>{w}</span>)}</div>}
+  </PageHero>
+
+  <section class="section band-white">
+    <div class="wrap two-col wide-left">
+      <div class="prose">
+        <span class="eyebrow">Drainage in {a.name}</span>
+        <h2>What water does on a {a.name} lot.</h2>
+        {a.local.map((p, i) => <p class:list={{ 'lead-in': i === 0 }}>{p}</p>)}
+      </div>
+      <div class="panel">
+        <h3>What we watch for in {a.name}</h3>
+        <ul class="ticks warn">{a.issues.map((x) => <li><svg><use href="#i-info"/></svg>{x}</li>)}</ul>
+        <a class="link-arrow" href="/drainage-checkup/">Check your own yard <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Common fixes in {a.name}</span><h2>Services {a.name} homeowners ask us about.</h2></div>
+      <div class="svc-grid cols-4">{svc.map((s) => <ServiceCard service={s} />)}</div>
+    </div>
+  </section>
+
+  <section class="section process">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">How it works</span><h2>Remote assessment first. Our crew second.</h2></div>
+      <Steps />
+    </div>
+  </section>
+
+  <section class="section faq">
+    <div class="wrap faq-grid">
+      <div class="faq-side">
+        <span class="eyebrow">{a.name} FAQ</span>
+        <h2>Questions from {a.name} homeowners.</h2>
+        <p>Nearby: {nearby.map((n, i) => <><a href={areaPath(n)}>{n.name}</a>{i < nearby.length - 1 ? ', ' : ''}</>)}. <a href="/service-areas/">All areas</a>.</p>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <FinalCta title={`Get ahead of the next storm in ${a.name}.`} />
+</Base>

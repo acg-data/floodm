@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { areas, areaPath, regions } from '../../data/areas';
+import { site } from '../../data/site';
+import { breadcrumbLd } from '../../lib/schema';
+
+const crumbs = [{ name: 'Service areas', href: '/service-areas/' }];
+const order = ['Inner Loop', 'West Houston', 'Southwest', 'West & Fort Bend', 'North', 'Northeast', 'South & Bay Area'];
+const sorted = [...regions].sort((a, b) => order.indexOf(a) - order.indexOf(b));
+---
+
+<Base title="Service Areas Across Greater Houston" description="Flood Mitigators serves Greater Houston: Memorial, the Heights, Bellaire, Meyerland, Katy, Sugar Land, Cypress, The Woodlands, Kingwood, Pearland and more." jsonLd={[breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Where we work" headline={['Greater Houston,', 'street by street.']} lede="Assessments work for any Houston-area address. Our crew installs across the metro. Every neighborhood drains differently — here’s what we watch for in each.">
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/reports/flood-snapshot/">Get a free Snapshot for your address <svg><use href="#i-arrow"/></svg></a>
+      <a class="link-arrow" href={site.phone.href}>Not listed? Call {site.phone.display} <svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </PageHero>
+
+  <section class="section band-white">
+    <div class="wrap region-grid">
+      {sorted.map((r) => (
+        <div class="region">
+          <h2>{r}</h2>
+          <ul>{areas.filter((a) => a.region === r).map((a) => <li><a href={areaPath(a)}>{a.name}<small>{a.waterways.slice(0, 2).join(' · ')}</small></a></li>)}</ul>
+        </div>
+      ))}
+      <div class="region" style="background:var(--navy);border-color:var(--navy);color:var(--on-navy)">
+        <h2 style="color:var(--white)">Don’t see your neighborhood?</h2>
+        <p style="color:var(--on-navy-muted)">This list isn’t everything. Call or text and we’ll tell you right away if our crew covers your street.</p>
+        <a class="btn btn-primary" href={site.phone.href}><svg><use href="#i-phone"/></svg>{site.phone.display}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-ice">
+    <div class="wrap two-col">
+      <div class="section-head" style="margin:0">
+        <span class="eyebrow">Same clay, different streets</span>
+        <h2>Why we look at every lot on its own.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead-in">From older lots inside the Loop to new subdivisions in Katy and Cypress, Houston yards share the same slow-draining clay and the same Gulf storms. What changes is everything around them: how close the bayou or creek is, whether the street drains to curb and gutter or to an open ditch, how the builder graded the lot, and what’s been added since.</p>
+        <p>That’s why every job starts with your address. The free Flood Snapshot shows your flood zone, nearest waterways and how your lot sits against the street, so the plan fits the property — not the zip code.</p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

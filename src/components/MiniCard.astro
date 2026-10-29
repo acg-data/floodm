@@ -1,0 +1,7 @@
+---
+import type { Service } from '../data/types';
+import { servicePath } from '../data/services';
+interface Props { service: Service }
+const { service: s } = Astro.props;
+---
+<a class="mini" href={servicePath(s)}><svg aria-hidden="true"><use href={`#${s.icon}`} /></svg><span><b>{s.name}</b><small>{s.summary}</small></span></a>

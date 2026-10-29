@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+<Base title="Privacy" description="How Flood Mitigators handles the information you send through this website: what we collect, how we use it and how to reach us." noindex>
+  <PageHero crumbs={[{ name: 'Privacy', href: '/privacy/' }]} eyebrow="Privacy" headline={['Your information,', 'used for your property.']} />
+  <section class="section band-white">
+    <div class="wrap prose">
+      <h2>What we collect</h2>
+      <p>When you request a Flood Snapshot, report or assessment, we receive what you choose to send: your name, email, phone, property address and details about the problem.</p>
+      <h2>How we use it</h2>
+      <p>Only to prepare what you asked for, reply about your property and provide service. We don’t sell your information.</p>
+      <h2>Your choices</h2>
+      <p>To update or delete what you’ve sent us, email <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phone.href}>{site.phone.display}</a>.</p>
+      <h2>This website</h2>
+      <p>This site doesn’t use advertising cookies. The hurricane-season checklist saves your checkmarks in your own browser only.</p>
+    </div>
+  </section>
+</Base>

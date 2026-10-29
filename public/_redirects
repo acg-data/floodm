@@ -1,0 +1,12 @@
+# Pages on the current floodmitigators.com that moved (Cloudflare Pages / Netlify).
+# Service pages keep their existing URLs, so they need no redirect.
+/about-us/             /about/                              301
+/about-us              /about/                              301
+/contact-us/           /contact/                            301
+/contact-us            /contact/                            301
+/flood-tips-faq-2/     /faq/                                301
+/flood-tips-faq-2      /faq/                                301
+/rootrerouter/         /hydro-jetting-services-houston/     301
+/rootrerouter          /hydro-jetting-services-houston/     301
+/flood-snapshot/       /reports/flood-snapshot/             301
+/flood-snapshot        /reports/flood-snapshot/             301

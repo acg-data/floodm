@@ -1,0 +1,31 @@
+---
+// The original three-tier report ladder, with a link through to each report's page.
+import { reports, reportPath } from '../data/reports';
+const lists: Record<string, string[]> = {
+  'flood-snapshot': ['FEMA flood zone and nearest waterways', 'Elevation relative to your street', 'Roof runoff in a typical heavy storm', 'A drainage risk rating'],
+  'flood-intelligence-report': ['Flood and rainfall history around your block', 'How water moves across your lot', 'Insurance and flood-zone context', 'Fixes ranked by impact and effort'],
+  'expert-mitigation-plan': ['45-minute virtual consultation', 'Walk the property together on your phone', 'A prioritized, written mitigation plan', 'Install scope if you want us to build it'],
+};
+const metas: Record<string, string> = {
+  'flood-snapshot': 'Delivered by email',
+  'flood-intelligence-report': 'Automated report · same format for every address',
+  'expert-mitigation-plan': 'Video call · no site visit needed',
+};
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<div class="ladder">
+  {reports.map((r) => (
+    <article class:list={['tier', { feature: r.slug === 'flood-intelligence-report' }]}>
+      <div class="tier-step"><span class="step">{r.step}</span><span class="price">{r.price}</span></div>
+      <h3>{r.name}</h3>
+      <p>{r.summary}</p>
+      <ul>{lists[r.slug].map((li) => <li><svg><use href="#i-check"/></svg>{li}</li>)}</ul>
+      <div class="meta"><span>{metas[r.slug]}</span>{r.slug !== current && <a class="more-link" href={reportPath(r)}>What’s included</a>}</div>
+      {r.cta.snapshot
+        ? <a class="btn btn-primary" href="/reports/flood-snapshot/" data-focus-snap>{r.cta.label} <svg><use href="#i-arrow"/></svg></a>
+        : <button class="btn btn-primary" data-book={r.cta.book}>{r.cta.label} <svg><use href="#i-arrow"/></svg></button>}
+    </article>
+  ))}
+</div>
+<p class="ladder-note"><svg><use href="#i-info"/></svg>Every assessment is done remotely. Our crew comes out once you have a plan and want it installed.</p>

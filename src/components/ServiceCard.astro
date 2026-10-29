@@ -1,0 +1,16 @@
+---
+// The original design's photo service card, as a link to the service page.
+import { photos, type Service } from '../data/types';
+import { servicePath } from '../data/services';
+interface Props { service: Service }
+const { service: s } = Astro.props;
+const p = s.photo ? photos[s.photo] : null;
+---
+<a class="svc" href={servicePath(s)}>
+  {p ? (
+    <div class="svc-img"><img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" /></div>
+  ) : (
+    <div class="svc-img svc-art" aria-hidden="true"><svg><use href={`#${s.icon}`} /></svg></div>
+  )}
+  <div class="svc-body"><h3>{s.name}</h3><p>{s.summary}</p><svg aria-hidden="true"><use href="#i-arrow" /></svg></div>
+</a>

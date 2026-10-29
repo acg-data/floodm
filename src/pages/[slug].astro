@@ -1,0 +1,155 @@
+---
+// One page per service, at the URLs the current floodmitigators.com uses.
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Trust from '../components/Trust.astro';
+import Diagram from '../components/Diagram.astro';
+import Points from '../components/Points.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { services, serviceBySlug, servicePath } from '../data/services';
+import { areas, areaPath } from '../data/areas';
+import { photos, type Service } from '../data/types';
+import { site } from '../data/site';
+import { breadcrumbLd, faqLd } from '../lib/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+interface Props { service: Service }
+const { service: s } = Astro.props;
+
+const crumbs = [
+  { name: 'Services', href: '/services/' },
+  { name: s.name, href: servicePath(s) },
+];
+const related = s.related.map(serviceBySlug).filter((r) => r !== undefined);
+const localAreas = areas.filter((a) => a.services.includes(s.slug));
+const photo = s.photo ? photos[s.photo] : null;
+const isInstall = s.group === 'install';
+// Mid-sentence form of the name ("French" stays capitalized).
+const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+const mid = s.navName.startsWith('French') ? s.navName : lc(s.navName);
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: s.name,
+  serviceType: s.navName,
+  description: s.metaDescription,
+  url: `${site.url}${servicePath(s)}`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: { '@type': 'City', name: 'Houston' },
+};
+---
+
+<Base title={s.metaTitle} description={s.metaDescription} jsonLd={[serviceLd, breadcrumbLd(crumbs), faqLd(s.faqs)]}>
+  <PageHero crumbs={crumbs} eyebrow={s.eyebrow} headline={s.headline} lede={s.lede}>
+    <div class="hero-actions">
+      <button class="btn btn-primary" data-book="install" data-svc={s.name}>{isInstall ? 'Get an install quote' : 'Book this service'} <svg><use href="#i-arrow"/></svg></button>
+      <a class="link-arrow" href="/reports/flood-snapshot/">Start with a free Snapshot <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="hero-facts">
+      {isInstall && <span><svg><use href="#i-check"/></svg>3-year parts &amp; labor limited warranty</span>}
+      <span><svg><use href="#i-check"/></svg>Remote assessments</span>
+      <span><svg><use href="#i-check"/></svg>Our own Houston crew</span>
+    </div>
+    <Fragment slot="visual">
+      {s.diagram ? <Diagram name={s.diagram} /> : photo && <div class="visual-photo"><img src={photo.src} width={photo.w} height={photo.h} alt={photo.alt} fetchpriority="high" /></div>}
+    </Fragment>
+  </PageHero>
+
+  <Trust />
+
+  <section class="section band-white">
+    <div class="wrap two-col wide-left">
+      <div class="prose">
+        <span class="eyebrow">{s.navName} in Houston</span>
+        <h2>Why {mid} {s.navName.endsWith('s') ? 'matter' : 'matters'} here.</h2>
+        {s.intro.map((p, i) => <p class:list={{ 'lead-in': i === 0 }}>{p}</p>)}
+      </div>
+      <div class="stack-lg" style="gap:20px">
+        {s.diagram && photo && <div class="visual-photo" style="aspect-ratio:5/3"><img src={photo.src} width={photo.w} height={photo.h} alt={photo.alt} loading="lazy" decoding="async" /></div>}
+        <div class="panel">
+          <h3>Signs you need this</h3>
+          <ul class="ticks warn">{s.signs.map((x) => <li><svg><use href="#i-info"/></svg>{x}</li>)}</ul>
+          <a class="link-arrow" href="/drainage-checkup/">Not sure? Take the drainage checkup <svg><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-ice">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2>What’s happening under the grass.</h2>
+      </div>
+      <Points items={s.howItWorks} />
+    </div>
+  </section>
+
+  <section class="section process">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our process</span>
+        <h2>From the first look to the last shovel.</h2>
+        <p class="lede">Every job starts remotely with your address. Our crew comes out once you have a plan and want it built.</p>
+      </div>
+      <Steps steps={s.process} />
+    </div>
+  </section>
+
+  <section class="section band-ice">
+    <div class="wrap two-col">
+      <div class="panel navy">
+        <span class="eyebrow" style="color:var(--sky)">What’s included</span>
+        <h2>{isInstall ? 'Every install, done completely.' : 'Every visit, done completely.'}</h2>
+        <ul class="ticks">{s.included.map((x) => <li><svg><use href="#i-check"/></svg>{x}</li>)}</ul>
+        <p style="color:var(--on-navy-muted);font-size:.9rem">Your scope spells out exactly what your job includes before work starts.</p>
+      </div>
+      <div class="local-copy" style="padding:0;max-width:none">
+        <span class="eyebrow">Why Flood Mitigators</span>
+        <h2>One team, from the plan to the cleanup.</h2>
+        <ul class="checks">
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>Built around your property</b><span>Your lot, your grade, your outlet — not a generic checklist.</span></div></li>
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>Clear scope before work starts</b><span>You know what gets built and why.</span></div></li>
+          <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>Family-owned since Harvey</b><span>Started by <a href="/about/">Manny</a> after the 2017 floods, still Houston-operated.</span></div></li>
+          {isInstall && <li><span class="check"><svg><use href="#i-check"/></svg></span><div><b>3-year parts &amp; labor limited warranty</b><span>On the drainage systems we install.</span></div></li>}
+        </ul>
+        <div class="hero-actions"><button class="btn btn-primary" data-book="install" data-svc={s.name}>{isInstall ? 'Get an install quote' : 'Book this service'} <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href={site.phone.href}>Call {site.phone.display} <svg><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq">
+    <div class="wrap faq-grid">
+      <div class="faq-side">
+        <span class="eyebrow">FAQ</span>
+        <h2>{s.navName}: your questions, answered.</h2>
+        <p>Something else on your mind? Call or text <a href={site.phone.href}>{site.phone.display}</a>, or ask in the booking form.</p>
+        <div><a class="link-arrow" href="/faq/">More drainage FAQs <svg><use href="#i-arrow"/></svg></a></div>
+      </div>
+      <Faq items={s.faqs} />
+    </div>
+  </section>
+
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Related services</span>
+        <h2>Often paired with {mid}.</h2>
+      </div>
+      <div class="svc-grid">{related.map((r) => <ServiceCard service={r} />)}</div>
+      {localAreas.length > 0 && (
+        <div class="svc-more">
+          <div class="svc-more-head"><h3>{s.navName} near you</h3><p>Neighborhoods where we often recommend it.</p></div>
+          <ul class="area-list">{localAreas.map((a) => <li><a href={areaPath(a)}><svg aria-hidden="true"><use href="#i-pin"/></svg>{a.name}</a></li>)}<li><a href="/service-areas/">All service areas</a></li></ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <FinalCta title={isInstall ? 'Ready to give the water somewhere to go?' : 'Ready to get it flowing again?'} book="install" svc={s.name} />
+</Base>

@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Diagram from '../../components/Diagram.astro';
+import Steps from '../../components/Steps.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { installServices, maintainServices, services, servicePath } from '../../data/services';
+import { site } from '../../data/site';
+import { breadcrumbLd } from '../../lib/schema';
+
+const crumbs = [{ name: 'Services', href: '/services/' }];
+const listLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Flood Mitigators services',
+  itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: `${site.url}${servicePath(s)}` })),
+};
+---
+
+<Base title="Drainage & Flood Mitigation Services in Houston" description="French drains, sump pumps, grading, downspouts, channel drains, dry creek beds, culverts, drain and stormwater cleaning, and hydro jetting across Greater Houston." jsonLd={[breadcrumbLd(crumbs), listLd]}>
+  <PageHero crumbs={crumbs} eyebrow="Our services" headline={['A solution', 'for every flow.']} lede="Most yards need two or three of these working together. Your plan tells you which ones, and in what order — then our own crew builds it.">
+    <div class="hero-actions">
+      <button class="btn btn-primary" data-book="install">Get an install quote <svg><use href="#i-arrow"/></svg></button>
+      <a class="link-arrow" href="/drainage-checkup/">Not sure what you need? <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <Fragment slot="visual"><Diagram name="yard" /></Fragment>
+  </PageHero>
+
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Build it right</span>
+        <h2>Drainage systems we design and install.</h2>
+        <p class="lede">Every install is scoped before work starts and backed by our {site.warranty}.</p>
+      </div>
+      <div class="svc-grid">{installServices.map((s) => <ServiceCard service={s} />)}</div>
+    </div>
+  </section>
+
+  <section class="section services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Keep it flowing</span>
+        <h2>Cleaning and maintenance for any system.</h2>
+        <p class="lede">Drains, storm lines and culverts slow down over time. We clear them — whoever installed them.</p>
+      </div>
+      <div class="svc-grid cols-4">{maintainServices.map((s) => <ServiceCard service={s} />)}</div>
+    </div>
+  </section>
+
+  <section class="section process">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our process</span>
+        <h2>From standing water to a clear plan.</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

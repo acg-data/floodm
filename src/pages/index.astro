@@ -1,0 +1,171 @@
+---
+import Base from '../layouts/Base.astro';
+import SnapshotForm from '../components/SnapshotForm.astro';
+import Trust from '../components/Trust.astro';
+import Ladder from '../components/Ladder.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import MiniCard from '../components/MiniCard.astro';
+import Steps from '../components/Steps.astro';
+import Local from '../components/Local.astro';
+import Runoff from '../components/Runoff.astro';
+import Crew from '../components/Crew.astro';
+import Manny from '../components/Manny.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { services } from '../data/services';
+import { areas, areaPath } from '../data/areas';
+import { guides, tools, guidePath } from '../data/resources';
+import { faqLd } from '../lib/schema';
+import { site } from '../data/site';
+import type { Faq as FaqItem } from '../data/types';
+
+const photoServices = services.filter((s) => s.photo);
+const otherServices = services.filter((s) => !s.photo);
+
+const faqs: FaqItem[] = [
+  { q: 'Can you assess my property remotely?', a: 'Yes. Every assessment we offer is remote. The Snapshot and Flood Intelligence report are built from your address, and the Expert Mitigation Plan is a 45-minute video call where you show us the problem areas on your phone.' },
+  { q: 'Is the Flood Snapshot really free?', a: 'Yes. Enter your address and email and we send it. No card and no obligation. If it raises questions, the Flood Intelligence report answers them in detail.' },
+  { q: 'How is Flood Intelligence different from the Snapshot?', a: 'The Snapshot tells you whether you have a problem. Flood Intelligence tells you why, with flood and rainfall history near your block, how water moves across your lot, and a ranked list of fixes.' },
+  { q: 'What drainage problems do you help with?', a: 'Standing water in the yard, water pooling at the foundation, soggy side yards, overflowing gutters and downspouts, water reaching the garage or patio, and runoff coming from a neighbor’s lot.' },
+  { q: 'Will yard drainage stop street or bayou flooding?', a: 'Not always, and we’ll tell you so. Drains handle the water that falls on and runs across your lot. If floodwater comes from the street or a bayou, your report covers what helps in that case and what won’t.' },
+  { q: 'What happens after the assessment?', a: 'You keep the report either way. If you want the work done, we turn your plan into a fixed install scope, schedule the crew, and handle the job from layout to cleanup.' },
+  { q: 'Do you offer a warranty?', a: 'Yes. Drainage systems we install are backed by a 3-year parts and labor limited warranty. Your install scope spells out exactly what it covers.' },
+  { q: 'What if water is coming in right now?', a: 'Call or text (281) 849-1082. We offer 24/7 emergency response. Regular office hours are Monday to Friday, 6 am to 6 pm Central.' },
+  { q: 'What areas do you serve?', a: 'Greater Houston and the surrounding communities, from the Inner Loop out to Katy, Cypress, The Woodlands, Kingwood, Sugar Land and Pearland. Not sure about your street? Call or text and ask.' },
+];
+---
+
+<Base
+  title="Flood Mitigators | Houston's #1 Yard Drainage & Flood Mitigation"
+  rawTitle
+  description="Houston's #1 flood assessment and drainage team. Free Flood Snapshot of your address, then a plan and a crew to fix it. Family-owned. (281) 849-1082."
+  jsonLd={[faqLd(faqs)]}
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">Houston&rsquo;s #1 flood assessment &amp; drainage team</span>
+        <h1><span>Understand your risk.</span><span class="accent">Protect your property.</span></h1>
+        <p class="lede">Start with a free Flood Snapshot of your address. If the water needs somewhere better to go, we design the fix and our crew installs it.</p>
+        <SnapshotForm />
+        <div class="hero-links">
+          <button class="btn btn-ghost" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button>
+          <a class="link-arrow" href="#services">Explore our services <svg><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-photo"><img src="/assets/img/hero-house.jpg" width="449" height="507" fetchpriority="high" alt="Two-story stone house in a Houston neighborhood with a landscaped front yard"></div>
+        <aside class="snapshot" aria-label="Sample Flood Snapshot">
+          <div class="snap-top"><span class="snap-tag">Flood Snapshot</span><span class="snap-sample">Sample report</span></div>
+          <div class="snap-addr">2218 Bayou Crest Dr<br>Houston, TX 77025</div>
+          <dl class="snap-rows" style="margin:0">
+            <div><dt>FEMA flood zone</dt><dd>Zone X (shaded)</dd></div>
+            <div><dt>Nearest bayou</dt><dd>Brays · 0.7 mi</dd></div>
+            <div><dt>Lot grade</dt><dd>Slopes toward house</dd></div>
+            <div><dt>Roof runoff, 3″ storm</dt><dd>4,486 gal</dd></div>
+          </dl>
+          <div class="meter">
+            <div class="meter-head"><span>Drainage risk</span><b>Elevated</b></div>
+            <div class="meter-bar"><span class="meter-pin"></span></div>
+            <div class="meter-scale"><span>Low</span><span>Moderate</span><span>High</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <Trust />
+
+  <section class="section reports" id="reports">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Start with answers</span>
+        <h2>Know where the water goes.</h2>
+        <p class="lede">Three ways to understand your property, from a quick free read to a plan from a mitigation specialist. Each step builds on the one before it.</p>
+      </div>
+      <Ladder />
+    </div>
+  </section>
+
+  <section class="section services" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our services</span>
+        <h2>A solution for every flow.</h2>
+        <p class="lede">Most yards need two or three of these working together. Your plan tells you which ones, and in what order.</p>
+      </div>
+      <div class="svc-grid">
+        {photoServices.map((s) => <ServiceCard service={s} />)}
+      </div>
+      <div class="svc-more">
+        <div class="svc-more-head"><h3>Keep it flowing</h3><p>Culverts, cleaning and jetting for any drainage system, whoever installed it.</p></div>
+        <div class="svc-more-grid">
+          {otherServices.map((s) => <MiniCard service={s} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our process</span>
+        <h2>From standing water to a clear plan.</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <Local />
+  <Runoff />
+  <Crew />
+  <Manny />
+
+  <section class="section areas" id="areas" aria-labelledby="areasH">
+    <div class="wrap areas-grid">
+      <div class="section-head">
+        <span class="eyebrow">Where we work</span>
+        <h2 id="areasH">Greater Houston, street by street.</h2>
+        <p class="lede">Assessments work for any Houston-area address. Our crew installs across the metro. Not sure we reach your street? Call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
+        <a class="link-arrow" href="/service-areas/">See every area we serve <svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="area-list">
+        {areas.map((a) => <li><a href={areaPath(a)}><svg aria-hidden="true"><use href="#i-pin"/></svg>{a.name}</a></li>)}
+        <li class="more">and the communities around them</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section faq" id="faq">
+    <div class="wrap faq-grid">
+      <div class="faq-side">
+        <span class="eyebrow">FAQ</span>
+        <h2>A few questions, answered.</h2>
+        <p>Something else on your mind? Tell us in the booking form and a specialist will reply, or call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
+        <div class="hero-actions"><button class="btn btn-primary" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <section class="section band-white" aria-labelledby="resH">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Guides &amp; tools</span>
+        <h2 id="resH">Learn how water works on your lot.</h2>
+        <p class="lede">Plain-English guides and free tools for Houston homeowners. No sign-up.</p>
+      </div>
+      <div class="res-grid">
+        {guides.slice(0, 3).map((g) => (
+          <a class="res" href={guidePath(g.slug)}><svg aria-hidden="true"><use href={`#${g.icon}`}/></svg><h3>{g.title}</h3><p>{g.summary}</p><span class="link-arrow">Read the guide <svg><use href="#i-arrow"/></svg></span></a>
+        ))}
+        {tools.map((t) => (
+          <a class="res" href={t.href}><svg aria-hidden="true"><use href={`#${t.icon}`}/></svg><h3>{t.title}</h3><p>{t.summary}</p><span class="link-arrow">Open the tool <svg><use href="#i-arrow"/></svg></span></a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

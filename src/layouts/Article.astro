@@ -1,0 +1,94 @@
+---
+// Layout for the Markdown guides in src/pages/resources/.
+import Base from './Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { serviceBySlug, servicePath } from '../data/services';
+import { guides, guidePath } from '../data/resources';
+import { site } from '../data/site';
+import { breadcrumbLd } from '../lib/schema';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    metaTitle: string;
+    description: string;
+    eyebrow: string;
+    lede: string;
+    readMinutes?: number;
+    related?: string[];
+  };
+}
+const { frontmatter: fm } = Astro.props;
+const path = Astro.url.pathname;
+const crumbs = [
+  { name: 'Resources', href: '/resources/' },
+  { name: fm.title, href: path },
+];
+const related = (fm.related ?? []).map(serviceBySlug).filter((s) => s !== undefined);
+const more = guides.filter((g) => guidePath(g.slug) !== path).slice(0, 3);
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: fm.title,
+  description: fm.description,
+  mainEntityOfPage: new URL(path, site.url).href,
+  author: { '@type': 'Organization', name: site.name, url: site.url },
+  publisher: { '@id': `${site.url}/#business` },
+  image: `${site.url}/assets/og.jpg`,
+};
+---
+
+<Base title={fm.metaTitle} description={fm.description} jsonLd={[articleLd, breadcrumbLd(crumbs)]}>
+  <section class="hero hero-sub solo">
+    <div class="wrap">
+      <div class="hero-copy">
+        <Crumbs crumbs={crumbs} />
+        <span class="eyebrow">{fm.eyebrow}</span>
+        <h1>{fm.title}</h1>
+        <p class="lede">{fm.lede}</p>
+        <p class="meta-line">{fm.readMinutes && <span>{fm.readMinutes}-minute read</span>}<span>By the Flood Mitigators team</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-white">
+    <div class="wrap article">
+      <article class="article-body">
+        <slot />
+      </article>
+      <aside class="article-side" aria-label="Next steps">
+        <div class="panel navy">
+          <h2>Get a free Flood Snapshot</h2>
+          <p style="color:var(--on-navy-muted)">A one-page read on your address: flood zone, nearest waterways, elevation and roof runoff.</p>
+          <a class="btn btn-primary" href="/reports/flood-snapshot/">Get my free Snapshot <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        {related.length > 0 && (
+          <div class="panel">
+            <h2>Related services</h2>
+            <ul class="ticks">{related.map((s) => <li><svg><use href="#i-arrow"/></svg><a href={servicePath(s)}>{s.name}</a></li>)}</ul>
+          </div>
+        )}
+        <div class="panel">
+          <h2>More guides</h2>
+          <ul class="ticks">{more.map((g) => <li><svg><use href="#i-book"/></svg><a href={guidePath(g.slug)}>{g.title}</a></li>)}</ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>
+
+<script>
+  // Wide tables scroll sideways on phones; make the scroll area keyboard-reachable.
+  document.querySelectorAll('.article-body table').forEach((t) => {
+    const box = document.createElement('div');
+    box.className = 'table-scroll';
+    box.tabIndex = 0;
+    box.setAttribute('role', 'region');
+    box.setAttribute('aria-label', 'Table');
+    t.replaceWith(box);
+    box.append(t);
+  });
+</script>

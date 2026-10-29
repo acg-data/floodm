@@ -1,0 +1,21 @@
+---
+// Three-step process in the original design's style.
+interface Props { steps?: { title: string; body: string; icon?: string; tagline?: string }[] }
+const defaults = [
+  { icon: 'i-house', title: 'Assess your property', body: 'We review your address, grading and drainage, and identify the problem areas. You get a Snapshot or a full report.', tagline: 'Snapshot · Flood Intelligence' },
+  { icon: 'i-doc', title: 'Design your solution', body: 'A specialist turns the findings into a practical drainage plan tailored to your property, your budget and your goals.', tagline: 'Expert Mitigation Plan' },
+  { icon: 'i-hat', title: 'Install with care', body: 'Our crew installs the solution with attention to detail, restores the lawn and beds, and leaves the site clean.', tagline: 'Installation' },
+];
+const icons = ['i-house', 'i-doc', 'i-hat'];
+const { steps = defaults } = Astro.props;
+---
+<div class="steps">
+  {steps.map((st, i) => (
+    <div class="step-card">
+      <div class="step-top"><span class="step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><svg aria-hidden="true"><use href={`#${st.icon ?? icons[i] ?? 'i-check'}`} /></svg></div>
+      <h3>{st.title}</h3>
+      <p>{st.body}</p>
+      {st.tagline && <span class="tagline">{st.tagline}</span>}
+    </div>
+  ))}
+</div>

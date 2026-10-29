@@ -1,0 +1,44 @@
+---
+// Booking dialog from the original design; opened by any [data-book] button.
+---
+<dialog id="book" aria-labelledby="bookH">
+  <form class="dlg" id="bookForm" method="dialog" novalidate>
+    <div class="dlg-head">
+      <div><h2 id="bookH">Book an assessment</h2><p>Tell us about your property. A specialist replies with next steps.</p></div>
+      <button class="x" type="button" id="bookClose" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <div class="dlg-body" id="bookBody">
+      <div class="opts" role="radiogroup" aria-label="What do you need?">
+        <div class="opt"><input type="radio" name="need" id="need-intel" value="Flood Intelligence report"><label for="need-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
+        <div class="opt"><input type="radio" name="need" id="need-expert" value="Expert Mitigation Plan" checked><label for="need-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
+        <div class="opt"><input type="radio" name="need" id="need-install" value="Drainage install quote"><label for="need-install"><b>Install quote</b><span id="svcHint">Drainage work</span></label></div>
+      </div>
+      <div class="f2">
+        <div class="fld"><label for="bName">Name</label><input id="bName" name="name" autocomplete="name" required></div>
+        <div class="fld"><label for="bEmail">Email</label><input id="bEmail" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="f2">
+        <div class="fld"><label for="bPhone">Phone <small>optional</small></label><input id="bPhone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="fld"><label for="bIssue">What's happening?</label>
+          <select id="bIssue" name="issue">
+            <option>Water pools in the yard</option>
+            <option>Water collects at the foundation</option>
+            <option>Water gets into the garage or house</option>
+            <option>Street or bayou water reaches the lot</option>
+            <option>No problem yet, planning ahead</option>
+          </select>
+        </div>
+      </div>
+      <div class="fld"><label for="bAddr">Property address</label><input id="bAddr" name="address" autocomplete="street-address" placeholder="Street, city, ZIP" required></div>
+      <div class="fld"><label for="bNotes">Anything else? <small>optional</small></label><textarea id="bNotes" name="notes" placeholder="Where the water sits, how long it stays, what you've tried"></textarea></div>
+      <p class="form-error" id="bookErr" hidden></p>
+      <div class="dlg-foot"><small>We only use this to reply about your property.</small><button class="btn btn-primary" type="submit">Send request <svg><use href="#i-arrow"/></svg></button></div>
+    </div>
+    <div class="dlg-done" id="bookDone" hidden>
+      <span class="ok"><svg><use href="#i-check"/></svg></span>
+      <h2>Request received.</h2>
+      <p id="bookDoneText"></p>
+      <button class="btn btn-primary" type="button" id="bookDoneClose">Done</button>
+    </div>
+  </form>
+</dialog>

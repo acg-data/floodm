@@ -1,0 +1,95 @@
+---
+// Two-question self-assessment that recommends services and pre-fills the booking dialog.
+import { symptoms } from '../data/symptoms';
+import { services, servicePath } from '../data/services';
+const payload = JSON.stringify({
+  symptoms: symptoms.map(({ id, label, weights }) => ({ id, label, weights })),
+  services: Object.fromEntries(services.map((s) => [s.slug, { name: s.name, summary: s.summary, href: servicePath(s) }])),
+});
+---
+<div class="cu" data-checkup>
+  <script type="application/json" data-checkup-data set:html={payload} />
+  <fieldset>
+    <legend class="cu-q"><span class="n">1</span> What are you seeing? <small>Pick everything that applies.</small></legend>
+    <div class="cu-grid">
+      {symptoms.map((s) => (
+        <label class="cu-card"><input type="checkbox" value={s.id} data-symptom /><span><svg aria-hidden="true"><use href={`#${s.icon}`} /></svg>{s.label}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend class="cu-q"><span class="n">2</span> Is the wet area lower than the street or curb?</legend>
+    <div class="cu-seg">
+      <label><input type="radio" name="cu-low" value="yes" data-low /><span>Yes</span></label>
+      <label><input type="radio" name="cu-low" value="no" data-low /><span>No</span></label>
+      <label><input type="radio" name="cu-low" value="unsure" data-low checked /><span>Not sure</span></label>
+    </div>
+  </fieldset>
+  <div class="cu-out" aria-live="polite">
+    <p class="cu-empty" data-empty>Pick what you’re seeing above and we’ll point you to the likely fix.</p>
+    <div data-out hidden>
+      <h2>Based on what you picked, start here:</h2>
+      <ol class="cu-recs" data-recs></ol>
+      <div class="calc-cta" style="margin-top:16px">
+        <button class="btn btn-primary" type="button" data-cu-book>Send this to our team <svg><use href="#i-arrow"/></svg></button>
+        <a class="btn btn-ghost btn-on-navy" href="/reports/flood-snapshot/">Get a free Snapshot first <svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <button type="button" hidden data-book="install" data-cu-proxy>Book</button>
+      <p class="cu-fine">A starting point, not a diagnosis. An assessment confirms the right fix for your lot.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Data = { symptoms: { id: string; label: string; weights: Record<string, number> }[]; services: Record<string, { name: string; summary: string; href: string }> };
+  document.querySelectorAll<HTMLElement>('[data-checkup]').forEach((root) => {
+    const data: Data = JSON.parse(root.querySelector('[data-checkup-data]')!.textContent!);
+    const boxes = [...root.querySelectorAll<HTMLInputElement>('[data-symptom]')];
+    const lows = [...root.querySelectorAll<HTMLInputElement>('[data-low]')];
+    const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+    const out = root.querySelector<HTMLElement>('[data-out]')!;
+    const recs = root.querySelector<HTMLElement>('[data-recs]')!;
+    const book = root.querySelector<HTMLButtonElement>('[data-cu-book]')!;
+    const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+    let top = '';
+    let picked: string[] = [];
+    const render = () => {
+      picked = boxes.filter((b) => b.checked).map((b) => b.value);
+      const low = lows.find((r) => r.checked)?.value ?? 'unsure';
+      const scores: Record<string, number> = {};
+      const why: Record<string, string[]> = {};
+      for (const s of data.symptoms.filter((x) => picked.includes(x.id)))
+        for (const [slug, w] of Object.entries(s.weights)) {
+          scores[slug] = (scores[slug] ?? 0) + w;
+          (why[slug] ??= []).push(s.label.toLowerCase());
+        }
+      if (picked.length && low !== 'no') {
+        const slug = 'sump-pump-installation-houston';
+        scores[slug] = (scores[slug] ?? 0) + (low === 'yes' ? 3 : 1);
+        if (low === 'yes') (why[slug] ??= []).push('the wet area sits below the street');
+      }
+      const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      empty.hidden = ranked.length > 0;
+      out.hidden = ranked.length === 0;
+      if (!ranked.length) return;
+      top = data.services[ranked[0][0]].name;
+      recs.innerHTML = ranked
+        .map(([slug], i) => {
+          const s = data.services[slug];
+          const reason = (why[slug] ?? []).slice(0, 2).join(' and ');
+          return `<li><a href="${s.href}"><span class="rank">${i + 1}</span><span><b>${esc(s.name)}</b><small>${reason ? 'Because: ' + esc(reason) : esc(s.summary)}</small></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`;
+        })
+        .join('');
+    };
+    root.addEventListener('change', render);
+    book.addEventListener('click', () => {
+      // Open the site's booking dialog for the top recommendation, with the answers in the notes.
+      const proxy = root.querySelector<HTMLButtonElement>('[data-cu-proxy]')!;
+      proxy.dataset.svc = top;
+      proxy.click();
+      const notes = document.querySelector<HTMLTextAreaElement>('#bNotes');
+      if (notes) notes.value = `Drainage Checkup: ${data.symptoms.filter((s) => picked.includes(s.id)).map((s) => s.label).join('; ')}`;
+    });
+    render();
+  });
+</script>

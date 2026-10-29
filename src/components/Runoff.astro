@@ -1,0 +1,89 @@
+---
+// Roof runoff calculator from the original design.
+interface Props { headingLevel?: 'h1' | 'h2' }
+const { headingLevel: H = 'h2' } = Astro.props;
+---
+  <section class="section runoff" id="runoff">
+    <svg class="runoff-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60V22c180 26 360 34 560 18S940 0 1140 6s230 18 300 26v28z" fill="currentColor"/></svg>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Runoff calculator</span>
+        <H>How much water does your roof shed?</H>
+        <p class="lede">Every inch of rain on every square foot of roof is 0.623 gallons, and all of it leaves through your downspouts. See where yours is going.</p>
+      </div>
+      <div class="calc">
+        <div class="calc-inputs">
+          <div class="ctl">
+            <label for="roof">Roof footprint</label>
+            <div class="num-input"><input id="roof" type="number" inputmode="numeric" min="200" max="20000" step="50" value="2400"><span>sq ft</span></div>
+          </div>
+          <div class="ctl">
+            <div class="ctl-head"><label for="rain">Rainfall</label><output id="rainOut" for="rain">3.0 in</output></div>
+            <input id="rain" type="range" min="0.5" max="15" step="0.5" value="3">
+            <div class="chips" role="group" aria-label="Storm presets">
+              <button class="chip" type="button" data-rain="1" aria-pressed="false">Afternoon storm · 1″</button>
+              <button class="chip" type="button" data-rain="3" aria-pressed="true">Heavy rain day · 3″</button>
+              <button class="chip" type="button" data-rain="10" aria-pressed="false">Tropical storm · 10″</button>
+            </div>
+          </div>
+          <div class="ctl">
+            <div class="ctl-head"><label for="spouts">Downspouts</label><output id="spoutsOut" for="spouts">4</output></div>
+            <input id="spouts" type="range" min="1" max="12" step="1" value="4">
+          </div>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div class="big"><span class="n" id="gal">4,486</span><span class="u">gallons off your roof · <b id="drumsN">81.6</b> fifty-five-gallon drums</span></div>
+          <div class="drums" id="drums" aria-hidden="true"></div>
+          <div class="calc-stats">
+            <div class="stat"><span class="k">Per downspout</span><span class="v" id="perSpout">1,121 gal</span><span class="s">dumped at the foundation unless it's piped away</span></div>
+            <div class="stat"><span class="k">Weight of that water</span><span class="v" id="tons">18.7 tons</span><span class="s">at 8.34 lb per gallon</span></div>
+          </div>
+          <p class="calc-foot">Estimate for the roof only. Yard, driveway and neighbor runoff add to it.</p>
+          <div class="calc-cta">
+            <a class="btn btn-primary" href="/reports/flood-snapshot/" data-focus-snap>Get my free Snapshot <svg><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost btn-on-navy" href="/downspout-catch-basin-houston/">Downspout drainage <svg><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+  // Runoff calculator from the original page.
+  const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+  const roofEl = document.querySelector<HTMLInputElement>('#roof');
+  if (roofEl) {
+    const roof = roofEl, rain = $<HTMLInputElement>('#rain'), spouts = $<HTMLInputElement>('#spouts'), drums = $('#drums');
+    const fmt = (n: number, d = 0) => n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+    let shown = 4486, raf = 0;
+    const setP = (r: HTMLInputElement) => r.style.setProperty('--p', ((+r.value - +r.min) / (+r.max - +r.min)) * 100 + '%');
+    const animate = (to: number) => {
+      cancelAnimationFrame(raf);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { shown = to; $('#gal').textContent = fmt(to); return; }
+      const from = shown, t0 = performance.now();
+      const step = (t: number) => { const k = Math.min(1, (t - t0) / 450), e = 1 - Math.pow(1 - k, 3); shown = from + (to - from) * e; $('#gal').textContent = fmt(shown); if (k < 1) raf = requestAnimationFrame(step); };
+      step(t0);
+    };
+    const calc = () => {
+      const sq = Math.max(0, parseFloat(roof.value) || 0), inch = parseFloat(rain.value), n = parseInt(spouts.value, 10);
+      const gal = sq * inch * 0.623, dr = gal / 55;
+      $('#rainOut').textContent = inch.toFixed(1) + ' in';
+      $('#spoutsOut').textContent = String(n);
+      animate(Math.round(gal));
+      $('#drumsN').textContent = dr < 100 ? fmt(dr, 1) : fmt(dr);
+      $('#perSpout').textContent = fmt(gal / n) + ' gal';
+      $('#tons').textContent = fmt((gal * 8.34) / 2000, 1) + ' tons';
+      const full = Math.floor(dr), cap = 60;
+      let html = '';
+      for (let i = 0; i < Math.min(full, cap); i++) html += '<span class="drum"></span>';
+      if (full < cap && dr - full > 0.05) html += `<span class="drum part" style="--e:${Math.round((1 - (dr - full)) * 100)}%"></span>`;
+      if (full > cap) html += `<span class="drums-more">+${fmt(full - cap)} more</span>`;
+      drums.innerHTML = html;
+      document.querySelectorAll<HTMLButtonElement>('.chip').forEach((c) => c.setAttribute('aria-pressed', String(parseFloat(c.dataset.rain!) === inch)));
+      [rain, spouts].forEach(setP);
+    };
+    [roof, rain, spouts].forEach((el) => el.addEventListener('input', calc));
+    document.querySelectorAll<HTMLButtonElement>('.chip').forEach((c) => c.addEventListener('click', () => { rain.value = c.dataset.rain!; calc(); }));
+    calc();
+  }
+</script>

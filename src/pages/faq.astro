@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { services, servicePath } from '../data/services';
+import { reports } from '../data/reports';
+import type { Faq as FaqItem } from '../data/types';
+import { breadcrumbLd, faqLd } from '../lib/schema';
+
+const crumbs = [{ name: 'FAQ', href: '/faq/' }];
+const general: { id: string; topic: string; items: FaqItem[] }[] = [
+  { id: 'getting-started', topic: 'Getting started', items: [
+    { q: 'Can you assess my property remotely?', a: 'Yes. Every assessment we offer is remote. The Snapshot and Flood Intelligence report are built from your address, and the Expert Mitigation Plan is a 45-minute video call where you show us the problem areas on your phone.' },
+    { q: 'Where should I start?', a: 'With the free Flood Snapshot. It tells you whether you likely have a problem and what to ask next. From there, Flood Intelligence explains why, and the Expert Mitigation Plan turns it into a written fix.' },
+    { q: 'What happens after the assessment?', a: 'You keep the report either way. If you want the work done, we turn your plan into a fixed install scope, schedule the crew, and handle the job from layout to cleanup.' },
+    { q: 'What areas do you serve?', a: 'Greater Houston and the surrounding communities, from the Inner Loop out to Katy, Cypress, The Woodlands, Kingwood, Sugar Land and Pearland. Not sure about your street? Call or text (281) 849-1082 and ask.' },
+    { q: 'What are your hours?', a: 'Monday to Friday, 6 am to 6 pm Central. We also offer 24/7 emergency response when water is threatening your home.' },
+  ] },
+  { id: 'reports', topic: 'Reports', items: reports.flatMap((r) => r.faqs) },
+  { id: 'drainage-basics', topic: 'Drainage basics', items: [
+    { q: 'Why does my Houston yard flood when it rains?', a: 'Houston combines heavy rain, nearly flat ground and dense clay soil that takes in water slowly. Water that can’t soak in and can’t run off just sits — in the lawn, the beds and against the foundation.' },
+    { q: 'What drainage problems do you help with?', a: 'Standing water in the yard, water pooling at the foundation, soggy side yards, overflowing gutters and downspouts, water reaching the garage or patio, and runoff coming from a neighbor’s lot.' },
+    { q: 'Do I need a French drain or a sump pump?', a: 'If water can flow downhill from the problem spot to the street or another outlet, a gravity drain usually works. If the low spot sits below every outlet, a sump pump lifts the water out. Many yards need both.' },
+    { q: 'Does yard drainage protect my foundation?', a: 'Houston clay swells when it’s wet and shrinks as it dries. Keeping water from collecting at the slab helps reduce the moisture swings that stress foundations. For structural concerns, talk to a foundation engineer.' },
+    { q: 'Will yard drainage stop street or bayou flooding?', a: 'Not always, and we’ll tell you so. Drains handle the water that falls on and runs across your lot. If floodwater comes from the street or a bayou, your report covers what helps in that case and what won’t.' },
+  ] },
+  { id: 'warranty', topic: 'Warranty & aftercare', items: [
+    { q: 'Do you offer a warranty?', a: 'Yes. Drainage systems we install are backed by a 3-year parts and labor limited warranty. Your install scope spells out exactly what it covers.' },
+    { q: 'Do drainage systems need maintenance?', a: 'A little. Keep grates and catch basins clear of leaves and mulch, check that pop-up emitters open, and have lines cleaned or hydro jetted if they slow down.' },
+    { q: 'Do you service systems other companies installed?', a: 'Yes. We clean, repair and upgrade existing drainage systems, whoever built them.' },
+  ] },
+  { id: 'storms', topic: 'Storms & emergencies', items: [
+    { q: 'What if water is coming in right now?', a: 'Call or text (281) 849-1082. We offer 24/7 emergency response. If floodwater is rising, put your safety first and never walk or drive through it.' },
+    { q: 'When is hurricane season?', a: 'The Atlantic hurricane season runs June 1 through November 30. Our hurricane-season checklist walks through what to check before it starts.' },
+  ] },
+];
+const seen = new Set(general.flatMap((g) => g.items.map((f) => f.q)));
+const byService = services
+  .map((s) => ({ s, items: s.faqs.filter((f) => !seen.has(f.q) && (seen.add(f.q), true)) }))
+  .filter((g) => g.items.length);
+const all = [...general.flatMap((g) => g.items), ...byService.flatMap((g) => g.items)];
+---
+
+<Base title="Flood & Drainage FAQ for Houston Homeowners" description="Answers about Flood Snapshots and reports, French drains, sump pumps, grading, culverts, hydro jetting, warranties, hurricane season and emergencies in Houston." jsonLd={[breadcrumbLd(crumbs), faqLd(all)]}>
+  <PageHero crumbs={crumbs} eyebrow="FAQ" headline={['Straight answers,', 'no sales pitch.']} lede={`${all.length} questions Houston homeowners ask us — about flood risk, the reports, every service we offer, and what to do when it storms.`} />
+  <section class="section band-ice">
+    <div class="wrap faq-grid">
+      <nav class="toc" aria-label="FAQ topics">
+        {general.map((g) => <a href={`#${g.id}`}>{g.topic}</a>)}
+        {byService.map(({ s }) => <a href={`#${s.slug}`}>{s.navName}</a>)}
+      </nav>
+      <div>
+        {general.map((g) => <section class="faq-group" id={g.id}><h2>{g.topic}</h2><Faq items={g.items} openFirst={false} /></section>)}
+        {byService.map(({ s, items }) => <section class="faq-group" id={s.slug}><h2>{s.name}</h2><Faq items={items} openFirst={false} /><a class="link-arrow" href={servicePath(s)}>More about {s.navName.startsWith('French') ? s.navName : s.navName.toLowerCase()} <svg><use href="#i-arrow"/></svg></a></section>)}
+      </div>
+    </div>
+  </section>
+  <FinalCta title="Didn’t find your question?" body="Ask us directly. Call or text, or book an assessment and a specialist will reply." />
+</Base>

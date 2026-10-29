@@ -1,0 +1,25 @@
+---
+// Sub-page hero in the original hero's layout: copy left, visual right.
+import Crumbs from './Crumbs.astro';
+import type { Crumb } from '../lib/schema';
+interface Props {
+  eyebrow: string;
+  headline: [string, string];
+  lede?: string;
+  crumbs?: Crumb[];
+}
+const { eyebrow, headline, lede, crumbs = [] } = Astro.props;
+const solo = !Astro.slots.has('visual');
+---
+<section class:list={['hero', 'hero-sub', { solo }]}>
+  <div class="wrap">
+    <div class="hero-copy">
+      {crumbs.length > 0 && <Crumbs crumbs={crumbs} />}
+      <span class="eyebrow">{eyebrow}</span>
+      <h1><span>{headline[0]}</span><span class="accent">{headline[1]}</span></h1>
+      {lede && <p class="lede">{lede}</p>}
+      <slot />
+    </div>
+    {!solo && <div class="hero-visual"><slot name="visual" /></div>}
+  </div>
+</section>

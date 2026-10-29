@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+<Base title="Thank you" description="We received your request. A Flood Mitigators specialist will reply about your property with next steps." noindex>
+  <PageHero eyebrow="Request received" headline={['Got it.', 'We’ll be in touch.']} lede={`A specialist will reply about your property. If water is threatening your home right now, call ${site.phone.display}.`}>
+    <div class="hero-actions"><a class="btn btn-primary" href="/resources/hurricane-season-checklist/">Hurricane-season checklist <svg><use href="#i-arrow"/></svg></a><a class="link-arrow" href="/">Back to home <svg><use href="#i-arrow"/></svg></a></div>
+  </PageHero>
+  <section class="section band-white">
+    <div class="wrap two-col">
+      <div class="section-head" style="margin:0"><span class="eyebrow">While you wait</span><h2>Get your yard ready.</h2></div>
+      <p class="lede">Clear grates and pop-up emitters, check that downspouts send water away from the slab, and take a short video of the problem area during the next rain. It helps us more than anything.</p>
+    </div>
+  </section>
+</Base>

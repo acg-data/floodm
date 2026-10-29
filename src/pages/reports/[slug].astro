@@ -1,0 +1,110 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SnapshotForm from '../../components/SnapshotForm.astro';
+import Ladder from '../../components/Ladder.astro';
+import Points from '../../components/Points.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { reports, reportPath } from '../../data/reports';
+import type { Report } from '../../data/types';
+import { site } from '../../data/site';
+import { breadcrumbLd, faqLd } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return reports.map((report) => ({ params: { slug: report.slug }, props: { report } }));
+}
+interface Props { report: Report }
+const { report: r } = Astro.props;
+const crumbs = [
+  { name: 'Reports', href: '/reports/' },
+  { name: r.name, href: reportPath(r) },
+];
+const isSnapshot = r.slug === 'flood-snapshot';
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: r.name,
+  description: r.metaDescription,
+  url: `${site.url}${reportPath(r)}`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: { '@type': 'City', name: 'Houston' },
+  ...(isSnapshot ? { offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } } : {}),
+};
+---
+
+<Base title={r.metaTitle} description={r.metaDescription} jsonLd={[serviceLd, breadcrumbLd(crumbs), faqLd(r.faqs)]}>
+  <PageHero crumbs={crumbs} eyebrow={`${r.step} · ${r.price}`} headline={r.headline} lede={r.lede}>
+    {isSnapshot ? <SnapshotForm /> : (
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-book={r.cta.book}>{r.cta.label} <svg><use href="#i-arrow"/></svg></button>
+        <a class="link-arrow" href="/reports/flood-snapshot/">Start with the free Snapshot <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    )}
+    <Fragment slot="visual">
+      {isSnapshot ? (
+        <div style="position:relative">
+          <div class="hero-photo"><img src="/assets/img/hero-house.jpg" width="449" height="507" alt="Two-story stone house in a Houston neighborhood with a landscaped front yard" fetchpriority="high" /></div>
+          <aside class="snapshot" aria-label="Sample Flood Snapshot">
+            <div class="snap-top"><span class="snap-tag">Flood Snapshot</span><span class="snap-sample">Sample report</span></div>
+            <div class="snap-addr">2218 Bayou Crest Dr<br>Houston, TX 77025</div>
+            <dl class="snap-rows" style="margin:0">
+              <div><dt>FEMA flood zone</dt><dd>Zone X (shaded)</dd></div>
+              <div><dt>Nearest bayou</dt><dd>Brays · 0.7 mi</dd></div>
+              <div><dt>Lot grade</dt><dd>Slopes toward house</dd></div>
+              <div><dt>Roof runoff, 3″ storm</dt><dd>4,486 gal</dd></div>
+            </dl>
+            <div class="meter">
+              <div class="meter-head"><span>Drainage risk</span><b>Elevated</b></div>
+              <div class="meter-bar"><span class="meter-pin"></span></div>
+              <div class="meter-scale"><span>Low</span><span>Moderate</span><span>High</span></div>
+            </div>
+          </aside>
+        </div>
+      ) : (
+        <div class="report-card">
+          <span class="price">{r.price}</span>
+          <h2>{r.name}</h2>
+          <p>{r.summary}</p>
+          <ul class="ticks">{r.includes.map((i) => <li><svg><use href="#i-check"/></svg>{i.title}</li>)}</ul>
+        </div>
+      )}
+    </Fragment>
+  </PageHero>
+
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">What’s inside</span><h2>What you get with {r.name}.</h2></div>
+      <Points items={r.includes} />
+    </div>
+  </section>
+
+  <section class="section band-ice">
+    <div class="wrap two-col">
+      <div class="panel">
+        <h2>Good for</h2>
+        <ul class="ticks">{r.goodFor.map((g) => <li><svg><use href="#i-check"/></svg>{g}</li>)}</ul>
+      </div>
+      <div class="panel">
+        <h2>How it works</h2>
+        <ol class="timeline-steps">{r.howItWorks.map((h) => <li><div><b>{h.title}</b><span>{h.body}</span></div></li>)}</ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reports">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">The full ladder</span><h2>Each step builds on the one before it.</h2></div>
+      <Ladder current={r.slug} />
+    </div>
+  </section>
+
+  <section class="section faq">
+    <div class="wrap faq-grid">
+      <div class="faq-side"><span class="eyebrow">FAQ</span><h2>About {r.name}.</h2><p>Something else? Call or text <a href={site.phone.href}>{site.phone.display}</a>.</p></div>
+      <Faq items={r.faqs} />
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

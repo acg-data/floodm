@@ -1,0 +1,94 @@
+---
+import '../styles/fm.css';
+import '../styles/pages.css';
+import Sprite from '../components/Sprite.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import BookDialog from '../components/BookDialog.astro';
+import { site } from '../data/site';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+
+interface Props {
+  /** Page title; " | Flood Mitigators" is appended unless rawTitle. */
+  title: string;
+  description: string;
+  rawTitle?: boolean;
+  image?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+const { title, description, rawTitle = false, image = '/assets/og.jpg', noindex = false, jsonLd = [] } = Astro.props;
+const fullTitle = rawTitle ? title : `${title} | Flood Mitigators`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image, site.url).href;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  description: site.description,
+  url: `${site.url}/`,
+  telephone: site.phone.e164,
+  email: site.email,
+  image: `${site.url}/assets/og.jpg`,
+  logo: `${site.url}/assets/icons/icon-512.png`,
+  address: { '@type': 'PostalAddress', addressLocality: site.city, addressRegion: site.region, addressCountry: 'US' },
+  areaServed: [{ '@type': 'City', name: 'Houston' }, ...areas.map((a) => ({ '@type': 'Place', name: `${a.name}, TX` }))],
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes }],
+  founder: { '@type': 'Person', name: site.owner.name, jobTitle: site.owner.role },
+  sameAs: Object.values(site.social),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Flood assessments & drainage services',
+    itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: `${site.url}/${s.slug}/` } })),
+  },
+};
+const ld = (d: unknown) => JSON.stringify(d).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{fullTitle}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+{noindex && <meta name="robots" content="noindex, follow">}
+<meta name="theme-color" content="#102F46">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="/assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flood Mitigators">
+<meta property="og:title" content={fullTitle}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={ogImage}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="geo.region" content="US-TX">
+<meta name="geo.placename" content="Houston">
+<script type="application/ld+json" set:html={ld(business)} />
+{jsonLd.map((d) => <script type="application/ld+json" set:html={ld(d)} />)}
+</head>
+<body data-lead-endpoint={site.leadEndpoint} data-lead-email={site.email} data-phone={site.phone.display} data-tel={site.phone.href}>
+<Sprite />
+<Header />
+<main id="top">
+  <slot />
+</main>
+<Footer />
+<MobileBar />
+<BookDialog />
+<script>
+  import '../scripts/site';
+</script>
+</body>
+</html>

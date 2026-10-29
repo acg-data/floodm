@@ -38,7 +38,7 @@ const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 await page.goto(`http://localhost:${PORT}/robots.txt`);
 await page.setContent(html, { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
-await writeFile(new URL('../site/assets/og.jpg', import.meta.url), await page.screenshot({ type: 'jpeg', quality: 86 }));
+await writeFile(new URL('../public/assets/og.jpg', import.meta.url), await page.screenshot({ type: 'jpeg', quality: 86 }));
 await browser.close();
 server.close();
 console.log('wrote site/assets/og.jpg');

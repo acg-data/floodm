@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Runoff from '../components/Runoff.astro';
+import Points from '../components/Points.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { breadcrumbLd } from '../lib/schema';
+const crumbs = [{ name: 'Resources', href: '/resources/' }, { name: 'Runoff calculator', href: '/runoff-calculator/' }];
+const points = [
+  { title: 'The math', body: 'Each inch of rain on each square foot of roof is 0.623 gallons. A 2,400 sq ft roof in a 3-inch storm sheds about 4,486 gallons.' },
+  { title: 'Where it lands', body: 'All of it leaves through your downspouts. Without extensions or buried lines, it lands right beside the slab.' },
+  { title: 'Why it matters', body: 'Houston clay swells when it’s soaked and shrinks as it dries. Water dumped at the foundation feeds that cycle.' },
+  { title: 'What helps', body: 'Downspouts tied into solid pipe that carries water to a pop-up emitter or the curb, well clear of the house.' },
+];
+---
+<Base title="Roof Runoff Calculator for Houston Homes" description="How many gallons does your roof shed in a Houston storm? Enter your roof size, rainfall and downspouts to see the runoff, per-downspout gallons and weight." jsonLd={[breadcrumbLd(crumbs)]}>
+  <section class="band-white"><div class="wrap" style="padding-block:20px 0"><Crumbs crumbs={crumbs} /></div></section>
+  <Runoff headingLevel="h1" />
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Reading the numbers</span><h2>What your result means.</h2></div>
+      <Points items={points} />
+      <p class="note" style="margin-top:28px"><svg aria-hidden="true"><use href="#i-book"/></svg><span>Go deeper: <a href="/resources/downspout-drainage-guide/">where your downspouts should send water</a>, and <a href="/downspout-catch-basin-houston/">downspout &amp; catch basin installation</a>.</span></p>
+    </div>
+  </section>
+  <FinalCta />
+</Base>

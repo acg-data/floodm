@@ -1,0 +1,15 @@
+---
+import type { Faq } from '../data/types';
+interface Props { items: Faq[]; openFirst?: boolean }
+const { items, openFirst = true } = Astro.props;
+const linkify = (a: string) =>
+  a.replace(/\(281\) 849-1082/g, '<a href="tel:+12818491082">(281) 849-1082</a>');
+---
+<div class="qa">
+  {items.map((f, i) => (
+    <details open={openFirst && i === 0 ? true : undefined}>
+      <summary>{f.q} <svg aria-hidden="true"><use href="#i-chev" /></svg></summary>
+      <div class="ans" set:html={linkify(f.a)} />
+    </details>
+  ))}
+</div>
