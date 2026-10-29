@@ -1,13 +1,14 @@
 // Observed directly on the public Google Maps listing on 2026-10-29.
 // Review excerpts intentionally stay brief. Keep original wording and attribution.
 // This is a dated snapshot, not a live review feed. Do not add rating schema.
+import { googleBusiness } from './google-business';
 export const reviewSummary = {
   provider: 'Google',
   rating: 4.8,
   count: 56,
   checked: 'October 29, 2026',
   checkedISO: '2026-10-29',
-  url: 'https://www.google.com/maps?cid=6538590619509756704',
+  url: googleBusiness.url,
 } as const;
 
 export const reviews = [

@@ -24,7 +24,9 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--white);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--white)}
 img{display:block;max-width:100%}
-a{color:var(--blue)}
+a{color:var(--blue);text-decoration:none}
+/* Inline links stay recognizable through weight without an underline. */
+p a:not(.btn),.ans a,.prose a,figcaption a,.estimate-consent a{font-weight:700}
 h1,h2,h3{margin:0;color:var(--navy);text-wrap:balance;letter-spacing:-.025em;line-height:1.05}
 h1{font-size:clamp(2.4rem,5.2vw,4.1rem);font-weight:800}
 h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:800}
@@ -160,7 +162,7 @@ p{margin:0}
 .houston-region p{max-width:42ch;font-size:.93rem;line-height:1.65;color:var(--muted)}
 .houston-region ul{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;align-content:start;padding:0;margin:0;list-style:none}
 .houston-region a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:10px;color:var(--navy);font-size:.95rem;font-weight:600;text-decoration:none;min-height:44px}
-.houston-region a:hover{color:var(--blue);text-decoration:underline;text-underline-offset:4px}
+.houston-region a:hover{color:var(--blue)}
 .houston-region a svg{width:16px;height:16px;color:var(--blue);flex-shrink:0}
 .houston-coverage-note{font-size:.93rem;color:var(--muted);margin-top:24px}
 .houston-snapshot-form{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:24px;align-items:center;margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}

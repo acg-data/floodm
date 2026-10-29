@@ -1,0 +1,18 @@
+---
+import { googleBusiness } from '../data/google-business';
+import { site } from '../data/site';
+---
+<div class="google-business-widget">
+  <div class="business-profile-info">
+    <span class="eyebrow">Our Google Business Profile</span>
+    <h3>Flood Mitigators</h3>
+    <p>Onsite drainage assessments, installation and ongoing care for Houston homes.</p>
+    <address><svg aria-hidden="true"><use href="#i-pin"/></svg><a href={googleBusiness.url} target="_blank" rel="noopener">{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</a></address>
+    <a class="link-arrow" href={googleBusiness.url} target="_blank" rel="noopener">See our reviews on Google <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a class="business-profile-phone" href={site.phone.href}><svg aria-hidden="true"><use href="#i-phone"/></svg>{site.phone.display}</a>
+  </div>
+  <div class="business-map">
+    <iframe data-google-business-map src={googleBusiness.embedUrl} title="Flood Mitigators on Google Maps — location, rating and reviews" width="600" height="360" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <a class="business-map-fallback" href={googleBusiness.url} target="_blank" rel="noopener">Open our location and reviews in Google Maps <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+</div>

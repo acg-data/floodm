@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import SnapshotForm from '../components/SnapshotForm.astro';
+import GoogleBusiness from '../components/GoogleBusiness.astro';
+import { googleBusiness } from '../data/google-business';
 import Steps from '../components/Steps.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
@@ -18,20 +19,16 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
         <a class="ccard" href={site.sms}><svg aria-hidden="true"><use href="#i-video"/></svg><span><b>Text us photos or video</b><small>The fastest way to show us the problem.</small></span></a>
         <a class="ccard" href={`mailto:${site.email}`}><svg aria-hidden="true"><use href="#i-mail"/></svg><span><b>{site.email}</b><small>We reply about your property only.</small></span></a>
         <a class="ccard" href={site.booking} target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-list"/></svg><span><b>Book online</b><small>Open our appointment scheduler.</small></span></a>
-        <div class="ccard"><svg aria-hidden="true"><use href="#i-pin"/></svg><span><b>Write to our Houston headquarters</b><small>8614 Pagewood Ln<br />Houston, TX 77063</small></span></div>
+        <a class="ccard" href={googleBusiness.url} target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg><span><b>Our Houston location on Google</b><small>8614 Pagewood Ln<br />Houston, TX 77063</small></span></a>
         <a class="ccard" href="/emergency/"><svg aria-hidden="true"><use href="#i-siren"/></svg><span><b>Water coming in right now?</b><small>What to do, and how to reach us 24/7.</small></span></a>
-        <div class="panel" style="margin-top:8px">
-          <h2 style="font-size:1.2rem">Or start with a free Flood Snapshot</h2>
-          <SnapshotForm />
-        </div>
       </div>
       <div class="form-card">
-        <div class="dlg-head"><div><h2>Book an assessment</h2><p>Tell us about your property. A specialist replies with next steps.</p></div></div>
+        <div class="dlg-head"><div><h2>Arrange an onsite visit</h2><p>Tell us about your property so we can plan an in-person drainage assessment.</p></div></div>
         <form class="dlg-body" id="contactForm" novalidate>
           <div class="opts" role="radiogroup" aria-label="What do you need?">
-            <div class="opt"><input type="radio" name="cneed" id="c-install" value="Drainage install quote" checked><label for="c-install"><b>Install quote</b><span>Drainage work</span></label></div>
-            <div class="opt"><input type="radio" name="cneed" id="c-intel" value="Flood Intelligence report"><label for="c-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
-            <div class="opt"><input type="radio" name="cneed" id="c-expert" value="Expert Mitigation Plan"><label for="c-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-assessment" value="Onsite drainage assessment" checked><label for="c-assessment"><b>Onsite assessment</b><span>Visit my property</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-install" value="Drainage install quote"><label for="c-install"><b>Install quote</b><span>Drainage work</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-maintenance" value="Drainage maintenance or repair"><label for="c-maintenance"><b>Maintenance &amp; repair</b><span>Existing drainage</span></label></div>
           </div>
           <div class="f2">
             <div class="fld"><label for="cName">Name</label><input id="cName" name="name" autocomplete="name" required></div>
@@ -55,6 +52,9 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
         </div>
       </div>
     </div>
+  </section>
+  <section class="section" aria-labelledby="locationH">
+    <div class="wrap"><div class="section-head"><h2 id="locationH">Find our Houston team.</h2><p class="lede">Our Google listing, location and homeowner reviews.</p></div><GoogleBusiness /></div>
   </section>
   <section class="section process">
     <div class="wrap">

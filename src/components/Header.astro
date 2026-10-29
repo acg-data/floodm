@@ -1,7 +1,8 @@
 ---
 import { site } from '../data/site';
 import { installServices, maintainServices, servicePath } from '../data/services';
-import { reports, reportPath } from '../data/reports';
+import { areas, areaPath } from '../data/areas';
+import { houstonCoverage } from '../data/houston';
 import { guides, tools, guidePath } from '../data/resources';
 
 const path = Astro.url.pathname;
@@ -52,20 +53,21 @@ const here = (href: string) => (path === href ? 'page' : undefined);
         </div>
       </div>
 
-      <a class="navlink" href="/service-areas/" aria-current={here('/service-areas/')}>Houston areas</a>
-
-      <div class="nav-group">
-        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-reports">Reports <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
-        <div class="dd" id="dd-reports">
-          {reports.map((r) => (
-            <a href={reportPath(r)} aria-current={here(reportPath(r))}>
-              <svg aria-hidden="true"><use href={r.slug === 'flood-snapshot' ? '#i-doc' : r.slug === 'expert-mitigation-plan' ? '#i-video' : '#i-map'}/></svg>
-              <span><b>{r.name} <em>{r.price}</em></b><small>{r.summary.split(',')[0].replace(/\.$/, '')}.</small></span>
-            </a>
-          ))}
-          <a class="dd-all" href="/reports/">Compare all three <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <div class="nav-group nav-group-wide">
+        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-locations">Locations <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="dd dd-wide dd-locations" id="dd-locations">
+          {houstonCoverage.map(group => <div class="dd-col">
+            <p class="dd-title">{group.name}</p>
+            {group.slugs.map(slug => {
+              const area = areas.find(area => area.slug === slug)!;
+              return <a href={areaPath(area)} aria-current={here(areaPath(area))}><span>{area.name}</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>;
+            })}
+          </div>)}
+          <a class="dd-all" href="/service-areas/">All Houston service areas <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
+
+      <a class="navlink" href="/our-work/" aria-current={here('/our-work/')}>Our work</a>
 
       <div class="nav-group">
         <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-resources">Resources <svg aria-hidden="true"><use href="#i-chev"/></svg></button>

@@ -1,16 +1,23 @@
 ---
 // Booking dialog from the original design; opened by any [data-book] button.
+// Existing report URLs retain their product-specific requests.
+const reportPage = Astro.url.pathname.startsWith('/reports/');
 ---
 <dialog id="book" aria-labelledby="bookH">
   <form class="dlg" id="bookForm" method="dialog" novalidate>
     <div class="dlg-head">
-      <div><h2 id="bookH">Book an assessment</h2><p>Tell us about your Houston-area property. Our team replies with next steps.</p></div>
+      <div><h2 id="bookH">{reportPage ? 'Book an assessment' : 'Arrange an onsite visit'}</h2><p>Tell us about your Houston-area property. Our team replies with next steps.</p></div>
       <button class="x" type="button" id="bookClose" aria-label="Close"><svg><use href="#i-x"/></svg></button>
     </div>
     <div class="dlg-body" id="bookBody">
       <div class="opts" role="radiogroup" aria-label="What do you need?">
-        <div class="opt"><input type="radio" name="need" id="need-intel" value="Flood Intelligence report"><label for="need-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
-        <div class="opt"><input type="radio" name="need" id="need-expert" value="Expert Mitigation Plan" checked><label for="need-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
+        {reportPage ? <>
+          <div class="opt"><input type="radio" name="need" id="need-intel" value="Flood Intelligence report"><label for="need-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
+          <div class="opt"><input type="radio" name="need" id="need-expert" value="Expert Mitigation Plan" checked><label for="need-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
+        </> : <>
+          <div class="opt"><input type="radio" name="need" id="need-assessment" value="Onsite drainage assessment" checked><label for="need-assessment"><b>Onsite assessment</b><span>Visit my property</span></label></div>
+          <div class="opt"><input type="radio" name="need" id="need-maintenance" value="Drainage maintenance or repair"><label for="need-maintenance"><b>Maintenance &amp; repair</b><span>Existing drainage</span></label></div>
+        </>}
         <div class="opt"><input type="radio" name="need" id="need-install" value="Drainage install quote"><label for="need-install"><b>Install quote</b><span id="svcHint">Drainage work</span></label></div>
       </div>
       <div class="f2">

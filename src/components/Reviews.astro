@@ -1,6 +1,7 @@
 ---
 import { reviews, reviewSummary } from '../data/reviews';
 import Stars from './Stars.astro';
+import GoogleBusiness from './GoogleBusiness.astro';
 ---
 <section class="section homeowner-reviews" id="reviews" aria-labelledby="reviewsH">
   <div class="wrap">
@@ -8,6 +9,7 @@ import Stars from './Stars.astro';
       <div><h2 id="reviewsH">Houston homeowners.<br>In their own words.</h2><p>Real feedback, published on Google.</p></div>
       <a class="reviews-rating" href={reviewSummary.url} target="_blank" rel="noopener"><strong>{reviewSummary.rating}<span>/ 5</span></strong><span><Stars/><span>Based on {reviewSummary.count} Google reviews <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>
     </div>
+    <GoogleBusiness />
     <div class="reviews-grid">
       {reviews.map(review => <figure class="homeowner-review">
         <Stars label="5 out of 5 stars"/>

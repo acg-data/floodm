@@ -2,9 +2,9 @@
 // Three-step process in the original design's style.
 interface Props { steps?: { title: string; body: string; icon?: string; tagline?: string }[] }
 const defaults = [
-  { icon: 'i-house', title: 'Assess your property', body: 'We review the property, grading and drainage, virtually or onsite, to identify the problem areas.', tagline: 'Virtual or onsite assessment' },
+  { icon: 'i-house', title: 'Visit your property', body: 'We assess your yard in person, looking at the grading, downspouts, low spots and outlets to find where the water needs to go.', tagline: 'Onsite drainage assessment' },
   { icon: 'i-doc', title: 'Design your solution', body: 'You receive a property-specific drainage design, an itemized estimate and an installation timeline before approving the work.', tagline: 'Design · Proposal · Clear scope' },
-  { icon: 'i-hat', title: 'Install with care', body: 'Our crew installs the solution with attention to detail, restores the lawn and beds, and leaves the site clean.', tagline: 'Installation' },
+  { icon: 'i-hat', title: 'Install, test and clean up', body: 'Our crew installs your drainage system, tests the flow of water, restores disturbed lawn and beds, and leaves the site clean.', tagline: 'Installation · Water testing · Cleanup' },
 ];
 const icons = ['i-house', 'i-doc', 'i-hat'];
 const { steps = defaults } = Astro.props;

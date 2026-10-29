@@ -15,7 +15,7 @@ export const areas: Area[] = [
       'Yard drainage and flood assessments for Memorial homes in west Houston. French drains, grading and downspout lines built for Buffalo Bayou-area lots.',
     lede: 'Big lots, mature trees and Buffalo Bayou running through the neighborhood. Memorial yards need drainage designed around all three.',
     local: [
-      'Memorial sits along Buffalo Bayou, downstream of the Addicks and Barker reservoirs. During Harvey, water released from those reservoirs flooded homes along the bayou — a reminder that some flood risk here comes from the bayou itself, not from the yard. A free Flood Snapshot shows where an address sits relative to the bayou and its flood zones, so you know which kind of water you are dealing with.',
+      'Memorial sits along Buffalo Bayou, downstream of the Addicks and Barker reservoirs. During Harvey, water released from those reservoirs flooded homes along the bayou — a reminder that some flood risk here comes from the bayou itself, not from the yard. During an onsite assessment, we distinguish problems with yard runoff from risks a drainage system cannot control.',
       'On the lot itself, the problems are usually quieter. Large live oaks and pines shade lawns that stay soggy, roots work into old drain lines, and decades of additions, pools and patios have changed how water leaves the property. Many homes have been rebuilt or raised on lots whose grading was never redesigned to match. We map how water actually moves across the yard today, then design drains and grading around it.',
     ],
     issues: [
@@ -37,7 +37,7 @@ export const areas: Area[] = [
       'Flood assessments and yard drainage for Energy Corridor homes in west Houston, next to Addicks and Barker reservoirs and Buffalo Bayou.',
     lede: 'Homes here sit beside Addicks and Barker reservoirs and Buffalo Bayou. Knowing your address’s flood context comes first; then we fix the water on your lot.',
     local: [
-      'The Energy Corridor borders the Addicks and Barker reservoirs, with Buffalo Bayou running east toward downtown. In Harvey, homes here flooded as the reservoirs filled and as water was released downstream. That kind of flooding is a regional problem that yard drainage can’t solve, and we will say so plainly. A free Flood Snapshot lays out your address’s flood zone, nearby waterways and how your lot sits relative to the street.',
+      'The Energy Corridor borders the Addicks and Barker reservoirs, with Buffalo Bayou running east toward downtown. In Harvey, homes here flooded as the reservoirs filled and as water was released downstream. That kind of flooding is a regional problem that yard drainage can’t solve, and we will say so plainly. Our onsite assessment focuses on your grading, downspouts and available drainage outlets.',
       'What drainage can fix is the everyday water: rain that ponds in flat backyards, side yards that never dry out, and downspouts that dump right at the slab. Many neighborhoods here are built on very flat ground with heavy clay, so water needs a deliberate path to the street. We design that path — French drains, catch basins, regrading or a pump where gravity can’t do it.',
     ],
     issues: [
@@ -104,7 +104,7 @@ export const areas: Area[] = [
     lede: 'Narrow lots, raised bungalows next to new slab builds, and White Oak Bayou close by. Heights drainage is a puzzle of tight spaces.',
     local: [
       'The Heights sits near White Oak Bayou, and its mix of houses makes drainage unusual. Raised pier-and-beam bungalows stand next to new slab-on-grade builds, and water that pools under an older house behaves differently from water pressing against a slab. Narrow lots leave little room for slope, so side yards often turn into channels that carry everything from the roof and the neighbors toward the back.',
-      'The fixes have to fit tight spaces: compact channel drains along side yards, downspout lines tied into a shared outlet, and careful regrading so water moves away from crawlspaces and slabs alike. Your Flood Snapshot covers the bayou and flood-zone side of things; our plan handles the water that lands on and crosses your lot.',
+      'The fixes have to fit tight spaces: compact channel drains along side yards, downspout lines tied into a shared outlet, and careful regrading so water moves away from crawlspaces and slabs alike. We inspect those spaces in person and plan around the water that lands on and crosses your lot.',
     ],
     issues: [
       'Water collecting under raised pier-and-beam homes',
@@ -125,7 +125,7 @@ export const areas: Area[] = [
       'Flood assessments and yard drainage for Bellaire homes near Houston, in the Brays Bayou watershed. French drains, pumps and downspout systems.',
     lede: 'Bellaire is in the Brays Bayou watershed, and many homes have been rebuilt or raised. The yard drainage has to catch up.',
     local: [
-      'Bellaire lies in the Brays Bayou watershed, where repeated floods in the last decade led many owners to rebuild, raise or replace their homes. A raised or rebuilt house changes everything around it: new slab heights, new patios and bigger roofs all shift where water goes, and the original yard grading rarely matches. The Flood Snapshot gives you the watershed and flood-zone context for your address before you spend a dollar on fixes.',
+      'Bellaire lies in the Brays Bayou watershed, where repeated floods in the last decade led many owners to rebuild, raise or replace their homes. A raised or rebuilt house changes everything around it: new slab heights, new patios and bigger roofs all shift where water goes, and the original yard grading rarely matches. We inspect those changes onsite before recommending drainage work.',
       'On the lot, we often find yards that now drain toward the house, new downspouts tied into nothing, and low backyards that sit below the street, where only a pump can move the water out. We design those pieces together so roof, patio and lawn water all leave the property by a reliable route.',
     ],
     issues: [
@@ -169,7 +169,7 @@ export const areas: Area[] = [
       'Flood assessments and yard drainage for Meyerland homes in Houston, along Brays Bayou. Know your flood context, then fix the water on your lot.',
     lede: 'Meyerland sits along Brays Bayou and flooded in 2015, 2016 and 2017. Start with a clear picture of your address, then fix what your lot can control.',
     local: [
-      'Few Houston neighborhoods know flooding like Meyerland. Along Brays Bayou, homes here flooded in 2015, again in 2016 and again during Harvey in 2017, and many have since been raised, rebuilt or sold. That history makes it important to separate two kinds of water: bayou and street flooding, which is a regional problem, and rain that falls on and runs across your lot. The free Flood Snapshot lays out your address’s flood zone and position relative to the bayou.',
+      'Few Houston neighborhoods know flooding like Meyerland. Along Brays Bayou, homes here flooded in 2015, again in 2016 and again during Harvey in 2017, and many have since been raised, rebuilt or sold. That history makes it important to separate two kinds of water: bayou and street flooding, which is a regional problem, and rain that falls on and runs across your lot. An onsite assessment helps identify the lot-level problems we can address.',
       'Yard drainage handles the second kind. Raised homes often leave the surrounding yard lower than ever, with new stairs, patios and downspouts that send water where it never used to go. We design drainage around the house you have now, so everyday storms move off the property instead of sitting against it.',
     ],
     issues: [
@@ -191,7 +191,7 @@ export const areas: Area[] = [
       'Yard drainage for Katy and Cinco Ranch homes west of Houston: builder-graded lots, tight side yards and Barker Reservoir flood context.',
     lede: 'Newer subdivisions, builder grading and tight side yards, with parts of the area near the Barker Reservoir flood pool.',
     local: [
-      'Parts of the Katy area, including sections of Cinco Ranch, sit in or near the Barker Reservoir flood pool, which flooded during Harvey. That is reservoir flooding, and yard drainage won’t stop it. A free Flood Snapshot shows where your address sits relative to the reservoir and FEMA flood zones, so you know your real risk before deciding what to fix.',
+      'Parts of the Katy area, including sections of Cinco Ranch, sit in or near the Barker Reservoir flood pool, which flooded during Harvey. That is reservoir flooding, and yard drainage won’t stop it. Our onsite assessment identifies how water moves around your house and which yard drainage improvements may help.',
       'Most Katy drainage calls are about the lot itself. Newer subdivisions were graded quickly by builders, sod settles, and narrow side yards between slab-on-grade homes become rivers in a heavy rain. Add a patio extension or a pool and the original swales often stop working. We restore the slope, tie downspouts into buried lines and add French drains or channel drains where the builder’s plan falls short — within any HOA rules that apply.',
     ],
     issues: [
@@ -213,7 +213,7 @@ export const areas: Area[] = [
       'Yard drainage for Sugar Land homes southwest of Houston. Levees protect much of the city; your lot still needs water to drain away from the house.',
     lede: 'Levee districts protect much of Sugar Land from the Brazos. The water in your backyard is still your lot’s job.',
     local: [
-      'Sugar Land sits along the Brazos River and Oyster Creek, and much of the city is protected by levee improvement districts that manage river and creek water. That protection is regional. It doesn’t change how rain moves across your own yard, and a lot with poor grading will still pond, wash out beds and send water toward the slab. The Flood Snapshot summarizes your address’s flood-zone context alongside the lot-level picture.',
+      'Sugar Land sits along the Brazos River and Oyster Creek, and much of the city is protected by levee improvement districts that manage river and creek water. That protection is regional. It doesn’t change how rain moves across your own yard, and a lot with poor grading will still pond, wash out beds and send water toward the slab. We assess the grading, downspouts and outlets in person to plan appropriate yard drainage.',
       'Many Sugar Land homes are in master-planned communities with established landscaping, mature trees and HOA standards. Drainage here tends to mean tidy, well-hidden fixes: buried downspout lines, catch basins in low corners, dry creek beds that read as landscaping, and regrading where beds and lawns have built up against the house over the years.',
     ],
     issues: [
@@ -235,7 +235,7 @@ export const areas: Area[] = [
       'Yard drainage and culvert work for Cypress homes northwest of Houston, near Cypress Creek. French drains, grading, culverts and catch basins.',
     lede: 'Fast-growing subdivisions near Cypress Creek and Little Cypress Creek, with flat lots and plenty of open ditches.',
     local: [
-      'Cypress is named for Cypress Creek, and Little Cypress Creek runs through the area too. The creeks carry regional flood risk that yard drainage can’t change, so the Flood Snapshot starts by showing where your address sits relative to the creeks and FEMA flood zones. From there, the work is about the water your lot handles every storm.',
+      'Cypress is named for Cypress Creek, and Little Cypress Creek runs through the area too. The creeks carry regional flood risk that yard drainage can’t change. Our onsite work focuses on the water your lot handles every storm: where it collects, how it moves and which outlets are available.',
       'Much of Cypress is newer construction on very flat ground. Builder grading settles, sod sinks along foundations and fences, and backyards with little fall hold water for days. On streets with open ditches, a driveway culvert that has silted up or was set too high can back water into the front yard. We correct grades, add French drains and catch basins, and clean or reset culverts so water keeps moving.',
     ],
     issues: [
@@ -257,7 +257,7 @@ export const areas: Area[] = [
       'Yard drainage, culvert cleaning and French drains for Spring homes north of Houston, between Cypress Creek and Spring Creek.',
     lede: 'Between Cypress Creek and Spring Creek, with wooded lots, older subdivisions and streets with open ditches.',
     local: [
-      'Spring sits between Cypress Creek and Spring Creek. Like the rest of north Harris County, creek flooding is a regional issue, and your Flood Snapshot shows where your address stands relative to both creeks and their flood zones. Yard drainage takes care of the rain that falls on your property and the runoff that crosses it.',
+      'Spring sits between Cypress Creek and Spring Creek. Like the rest of north Harris County, creek flooding is a regional issue. During an onsite visit, we assess the rain that falls on your property and the runoff that crosses it, and explain the limits of a yard drainage system.',
       'The area mixes older subdivisions under tall pines with newer communities, and many streets still drain to open roadside ditches. Pine needles and leaves fill catch basins and gutters fast, roots find their way into drain lines, and culverts under driveways silt up. Regular cleaning, hydro jetting and properly set culverts keep the system working, and French drains handle the wet spots that never dry.',
     ],
     issues: [
@@ -279,7 +279,7 @@ export const areas: Area[] = [
       'Yard drainage for The Woodlands homes north of Houston: wooded lots, root-clogged lines and runoff. French drains, dry creek beds and line cleaning.',
     lede: 'Wooded lots and natural landscaping, with Spring Creek along the southern edge. Drainage has to work with the trees, not against them.',
     local: [
-      'The Woodlands was planned around its forest, and Spring Creek runs along its southern edge. Creek flooding is regional, and your Flood Snapshot covers that context for your address. On the lot, the forest is what shapes drainage: heavy shade keeps soil wet, leaf litter and pine needles fill gutters and grates, and roots push into anything buried.',
+      'The Woodlands was planned around its forest, and Spring Creek runs along its southern edge. Creek flooding is regional and cannot be controlled by a yard drain. On the lot, the forest is what shapes drainage: heavy shade keeps soil wet, leaf litter and pine needles fill gutters and grates, and roots push into anything buried.',
       'Homeowners here often prefer fixes that look natural. Dry creek beds can carry runoff through wooded yards in a way that fits the setting, and French drains routed around root zones handle wet areas without damaging trees. Existing lines that have slowed down usually respond well to cleaning or hydro jetting before anything needs to be dug up.',
     ],
     issues: [
@@ -301,7 +301,7 @@ export const areas: Area[] = [
       'Flood assessments and yard drainage for Kingwood homes in northeast Houston, near Lake Houston and the San Jacinto River. French drains and more.',
     lede: 'Kingwood sits along the West Fork of the San Jacinto River and Lake Houston. Harvey made flood risk here impossible to ignore.',
     local: [
-      'Kingwood lies along the West Fork of the San Jacinto River and Lake Houston, and Harvey flooded thousands of homes and businesses here. River and lake flooding is a regional problem that no yard drain will stop, so the first step is understanding your address: the Flood Snapshot shows your flood zone and how your lot sits relative to the street and nearby water.',
+      'Kingwood lies along the West Fork of the San Jacinto River and Lake Houston, and Harvey flooded thousands of homes and businesses here. River and lake flooding is a regional problem that no yard drain will stop. We visit your property to assess the lot-level drainage, including downspouts, grading and outlets.',
       'Day to day, Kingwood’s wooded lots bring their own drainage problems. Heavy tree cover keeps yards damp, roots invade buried lines, and leaves fill gutters and catch basins every fall. Some streets drain to open ditches with culverts under each driveway. We clear and jet existing lines, reset or clean culverts, and add French drains and grading where water lingers near the house.',
     ],
     issues: [
@@ -323,7 +323,7 @@ export const areas: Area[] = [
       'Yard drainage for Pearland homes south of Houston, near Clear Creek. French drains, grading, culverts and downspout systems for flat, clay lots.',
     lede: 'Flat land, heavy clay and Clear Creek running through. Pearland yards need a clear path for water to leave.',
     local: [
-      'Clear Creek runs through Pearland, and the surrounding land is some of the flattest in the region. Creek flooding is a regional issue, and your Flood Snapshot shows where your address sits relative to Clear Creek and its flood zones. For everything that happens on the lot, the main challenge is simple: with so little natural slope, rain has nowhere to go unless the yard is built to move it.',
+      'Clear Creek runs through Pearland, and the surrounding land is some of the flattest in the region. Creek flooding is a regional issue, distinct from the drainage we assess onsite. For everything that happens on the lot, the main challenge is simple: with so little natural slope, rain has nowhere to go unless the yard is built to move it.',
       'Many Pearland homes are in newer subdivisions with builder grading that settles over time, while older areas and acreage lots may drain to open roadside ditches with driveway culverts. We regrade yards, add French drains and catch basins, pipe downspouts to a proper outlet, and clean or reset culverts so the water you do get moves off the property quickly.',
     ],
     issues: [
@@ -345,7 +345,7 @@ export const areas: Area[] = [
       'Yard drainage and flood assessments for Friendswood homes south of Houston, along Clear Creek. French drains, pumps, grading and culvert work.',
     lede: 'Clear Creek winds through Friendswood. Know your address’s flood context, then give the water on your lot a way out.',
     local: [
-      'Friendswood sits along Clear Creek, and creek flooding is a regional risk that yard drainage can’t control. The free Flood Snapshot gives you your address’s flood zone and position relative to the creek, which helps you separate creek risk from the drainage problems you can actually fix.',
+      'Friendswood sits along Clear Creek, and creek flooding is a regional risk that yard drainage can’t control. Our onsite assessment focuses on drainage problems around your house and explains which improvements can help with water on your lot.',
       'Those fixable problems are familiar here: mature trees and large lots in established neighborhoods, newer subdivisions with flat builder grading, and some streets with open ditches and driveway culverts. Backyards that sit lower than the street may need a sump system to move water out, while beds and side yards usually respond to regrading, buried downspout lines and French drains.',
     ],
     issues: [
@@ -367,7 +367,7 @@ export const areas: Area[] = [
       'Yard drainage for Clear Lake homes in southeast Houston near Clear Creek, Armand Bayou and Galveston Bay. Grading, French drains and more.',
     lede: 'Clear Creek, Armand Bayou and the lake itself, close to Galveston Bay. Low, flat ground makes every inch of slope count.',
     local: [
-      'Clear Lake sits where Clear Creek and Armand Bayou meet the lake near Galveston Bay. Low elevation and nearby water bring regional and coastal flood risk that yard drainage doesn’t address, and the Flood Snapshot shows your address’s FEMA flood zone and nearby waterways so you can see that side clearly.',
+      'Clear Lake sits where Clear Creek and Armand Bayou meet the lake near Galveston Bay. Low elevation and nearby water bring regional and coastal flood risk that yard drainage doesn’t address. We inspect your property in person to identify the roof runoff, low spots and outlet issues a yard drainage system can manage.',
       'On the lot, the ground here is low and flat, and many neighborhoods date back decades, with mature trees and older drain lines. Water that can’t fall to the street sits in lawns and beds, and old lines lose capacity to roots and silt. We clean and jet existing systems, correct grading, and add French drains or a pump where a low yard has no gravity outlet.',
     ],
     issues: [

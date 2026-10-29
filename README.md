@@ -2,7 +2,7 @@
 
 Website for **Flood Mitigators**, the family-owned Houston flood assessment and drainage company started by owner **Manny** after Hurricane Harvey.
 
-The look is the original “Flood Mitigators” page designed in Claude — Plus Jakarta Sans, the navy/blue/sky palette, the Flood Snapshot, report ladder, runoff calculator and booking dialog — grown into a full site with [Astro](https://astro.build). It builds to plain static files.
+The look follows the original Flood Mitigators brand — Plus Jakarta Sans and the navy/blue/sky/ice palette — across a full [Astro](https://astro.build) site. The home page focuses on onsite Houston drainage assessments, installation, real work, credentials, Google reviews and the runoff calculator. It builds to plain static files.
 
 ## What’s on the site (53 pages in each language)
 
@@ -10,8 +10,8 @@ English pages have matching Spanish pages at `/es/`, with a language switch that
 
 | Section | Pages |
 | --- | --- |
-| Home | `/` — the original page, now linking into everything below |
-| Reports | `/reports/` and Flood Snapshot, Flood Intelligence, Expert Mitigation Plan |
+| Home | `/` — onsite Houston drainage services, home imagery, credentials, Google Business widget, sourced reviews, rainfall facts and tools |
+| Reports | Existing `/reports/` and product URLs remain available; the remote-report funnel is removed from the home page and main navigation |
 | Services | `/services/` and 12 service pages, including Root Re-Router alongside drainage installation, cleaning and maintenance. Pages that already exist on floodmitigators.com keep their URLs. |
 | Service areas | `/service-areas/` and 17 neighborhood pages (Memorial, Energy Corridor, Meyerland, Kingwood, Katy, Sugar Land…) |
 | Resources | `/resources/`, 5 guides, the hurricane-season checklist, `/runoff-calculator/`, `/drainage-checkup/`, `/faq/` (60+ questions) |
@@ -31,7 +31,8 @@ Every page has its own title, description, share image and structured data (busi
 ## Common edits
 
 - **Phone, email, hours, warranty wording:** `src/data/site.ts`.
-- **Form submissions:** set `PUBLIC_LEAD_ENDPOINT` (in Cloudflare Pages environment variables, or a `.env` file) to any URL that accepts a JSON POST — Formspree, a Supabase Edge Function, a Cloudflare Pages Function. Until then, the Snapshot, booking and contact forms open the visitor’s email app addressed to info@floodmitigators.com, so no request is lost.
+- **Form submissions:** set `PUBLIC_LEAD_ENDPOINT` (in Cloudflare Pages environment variables, or a `.env` file) to any URL that accepts a JSON POST — Formspree, a Supabase Edge Function, a Cloudflare Pages Function. Until then, forms open the visitor’s email app addressed to info@floodmitigators.com; the visitor must press send to deliver the request.
+- **Google Business location and reviews:** `src/data/google-business.ts` stores the verified listing and official Google Maps embed. The card includes Google's business pin and rating/review entry point. `src/data/reviews.ts` holds the dated rating/count and selected original review excerpts; these static excerpts are not an automatically refreshed review feed.
 - **Manny’s photo:** the current portrait is AI-generated and visibly labeled as temporary. Replace `site.owner.photo` in `src/data/site.ts` with the real photo path, set `photoIsPlaceholder` to false, and update the portrait alt text and caption in `src/components/Manny.astro`.
 - **Project photographs and credentials:** `public/assets/source/` contains optimized copies of the current business site’s photographs, original logo and credential artwork. `src/data/media.ts` records source URLs and captions. The gallery describes visible work without inventing project locations or outcomes.
 - **A service, area or guide:** edit its entry in `src/data/` or its `.md` file; pages, menus, footer, sitemap and structured data update automatically.
@@ -82,6 +83,8 @@ The home page uses the supplied Neal Roofing screenshot as a layout reference, w
 The Houston facts section adds IAH rainfall normals, a monthly chart with an accessible data table, Harvey rainfall and damage context, and the published cost warning for an inch of floodwater indoors. Sources, station/period definitions and photo licenses are documented in `docs/houston-facts-sources.md`. The Houston Heights residence and Buffalo Bayou photos illustrate the local setting.
 
 The latest brand-board pass restores the original navy/blue/sky/ice/white palette and alligator-and-water logo. Compact credentials sit immediately below the light hero, with the Houston home next. Facts, rainfall data, the calculator and drainage checkup share the light treatment. See `docs/light-palette-refresh.md` for scope and validation.
+
+The following content pass removes the home report ladder, Snapshot signup and neighborhood grid, moves locations into a dropdown, removes link underlines, and makes the core booking/process/FAQ copy onsite-first. The official Google Business card appears on home and contact pages. See `docs/onsite-houston-refresh.md` for the source and validation record.
 
 ```sh
 npm test

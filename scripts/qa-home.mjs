@@ -21,6 +21,15 @@ try {
     await page.evaluate(async () => { await document.fonts.ready; for (const image of document.images) { image.loading = 'eager'; await image.decode().catch(() => {}); } });
     assert((await page.locator('.homeowner-review blockquote').allTextContents()).join('|') === '“John and Manny were incredibly helpful from day one”|“the communication was great. He was very knowledgeable.”|“their integrity and transparency”', 'Review excerpts changed in '+language);
     assert(!await page.getByText('Your local crew.', { exact: false }).count(), 'Removed crew overlay remains');
+    assert(!await page.locator('#reports, #snapForm, #areas, .houston-coverage').count(), 'Removed home report or location sections remain');
+    assert(!await page.locator('a[href*="/reports/"]').count(), 'Home still promotes the remote report funnel');
+    assert(!/Snapshot|Intelligence|virtual|remotely|remote assessment|videollamada|evaluaciones virtuales/i.test(await page.locator('main').innerText()), 'Home still describes a remote assessment');
+    assert(await page.locator('#dd-locations a[href*="/service-areas/"]').count()===18,'Location dropdown is missing a community');
+    assert(await page.locator('iframe[data-google-business-map]').count()===1,'Google Business widget is missing');
+    assert((await page.locator('iframe[data-google-business-map]').getAttribute('src')).includes('0x5abdbd8687949320'),'Google widget points to another business');
+    if(language==='es')assert((await page.locator('iframe[data-google-business-map]').getAttribute('src')).includes('!1ses'),'Google embed language did not switch');
+    const underlines = await page.locator('a').evaluateAll(links=>links.filter(a=>getComputedStyle(a).textDecorationLine.includes('underline')).map(a=>a.textContent));
+    assert(!underlines.length, 'Underlined links remain: '+underlines.join('|'));
     assert(await page.locator('.home-hero + .mini-credentials .credential-pop-row li').count()===4,'Compact credentials are not directly below the hero');
     assert(await page.locator('.mini-credentials + .yard-benefits .benefits-home').count()===1,'Houston home is not the next feature below credentials');
     assert((await page.locator('.header .brand .mark').getAttribute('src'))==='/assets/img/logo-mark.png','Original brand mark is missing');
@@ -70,6 +79,18 @@ try {
     await page.locator('#runoff [data-rain="10"]').click();
     await page.waitForFunction(()=>document.querySelector('#gal').textContent==='14,952');
     results.flows.push(`${language}: light runoff calculator preserves the 14,952-gallon example`);
+    for(const width of [1280,390]){
+      await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));
+      if(width===390)await page.locator('#menuBtn').click();
+      await page.locator('[aria-controls="dd-locations"]').click();
+      assert(await page.locator('#dd-locations').isVisible(), 'Locations dropdown did not open');
+      assert((await page.locator('#dd-locations a[href*="/memorial/"]').getAttribute('href'))===(language==='es'?'/es/service-areas/memorial/':'/service-areas/memorial/'),'Locations leave the selected language');
+      await page.screenshot({path:`${directory}/locations-${language}-${width}.png`});
+      await page.keyboard.press('Escape');
+      assert(await page.locator('#dd-locations').isHidden(),'Locations dropdown did not close on Escape');
+      if(width===390)await page.keyboard.press('Escape');
+    }
+    results.flows.push(`${language}: desktop and phone Locations dropdown, language-preserving links and Escape`);
     const submit = page.locator('#estimateForm button[type=submit]');
     await submit.click();
     assert((await page.locator('#estimateErr').innerText()).startsWith(language==='es'?'Elige':'Choose'), 'Service validation language');

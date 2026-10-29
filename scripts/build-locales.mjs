@@ -60,6 +60,7 @@ for (const page of pages) {
   visitTranslatable(es, translate);
   es('html').attr('lang', 'es-US');
   es('body').attr('data-locale', 'es');
+  es('iframe[data-google-business-map]').each((_, el) => es(el).attr('src', es(el).attr('src').replaceAll('!1sen', '!1ses')));
   es('[href]').each((_, el) => { if (!es(el).is('[data-language], link[rel=canonical]')) es(el).attr('href', local(es(el).attr('href'))); });
   es('link[rel=canonical]').attr('href', origin + '/es' + page.path);
   es('meta[property="og:url"]').attr('content', origin + '/es' + page.path);

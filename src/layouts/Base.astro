@@ -11,6 +11,7 @@ import Footer from '../components/Footer.astro';
 import MobileBar from '../components/MobileBar.astro';
 import BookDialog from '../components/BookDialog.astro';
 import { site } from '../data/site';
+import { googleBusiness } from '../data/google-business';
 import { services } from '../data/services';
 import { areas } from '../data/areas';
 
@@ -45,6 +46,7 @@ const business = {
   openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes }],
   founder: { '@type': 'Person', name: site.owner.name, jobTitle: site.owner.role },
   sameAs: Object.values(site.social),
+  hasMap: googleBusiness.url,
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Flood assessments & drainage services',

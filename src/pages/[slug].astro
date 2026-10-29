@@ -48,11 +48,11 @@ const serviceLd = {
   <PageHero crumbs={crumbs} eyebrow={s.eyebrow} headline={s.headline} lede={s.lede}>
     <div class="hero-actions">
       <button class="btn btn-primary" data-book="install" data-svc={s.name}>{isInstall ? 'Get an install quote' : 'Book this service'} <svg><use href="#i-arrow"/></svg></button>
-      <a class="link-arrow" href="/reports/flood-snapshot/">Start with a free Snapshot <svg><use href="#i-arrow"/></svg></a>
+      <a class="link-arrow" href={site.phone.href}>Talk with our Houston team <svg><use href="#i-arrow"/></svg></a>
     </div>
     <div class="hero-facts">
       {isInstall && <span><svg><use href="#i-check"/></svg>3-year parts &amp; labor limited warranty</span>}
-      <span><svg><use href="#i-check"/></svg>Virtual or onsite assessments</span>
+      <span><svg><use href="#i-check"/></svg>Onsite drainage assessments</span>
       <span><svg><use href="#i-check"/></svg>Our own Houston crew</span>
     </div>
     <Fragment slot="visual">
@@ -95,7 +95,7 @@ const serviceLd = {
       <div class="section-head">
         <span class="eyebrow">Our process</span>
         <h2>From the first look to the last shovel.</h2>
-        <p class="lede">Start with your address and photos. We offer virtual or onsite assessments, explain the proposed system, and agree on the work before installation.</p>
+        <p class="lede">We visit your property, inspect the drainage, explain the proposed system and agree on the work before installation.</p>
       </div>
       <Steps steps={s.process} />
     </div>

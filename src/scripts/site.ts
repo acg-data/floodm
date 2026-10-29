@@ -83,8 +83,9 @@ function openBook(kind: string | null, svc: string | null) {
   $('#bookBody')!.hidden = false;
   $('#bookDone')!.hidden = true;
   $('#bookErr')!.hidden = true;
-  const id = kind === 'intel' ? 'need-intel' : kind === 'install' ? 'need-install' : 'need-expert';
-  $<HTMLInputElement>(`#${id}`)!.checked = true;
+  const id = kind === 'intel' ? 'need-intel' : kind === 'install' ? 'need-install' : kind === 'maintenance' ? 'need-maintenance' : 'need-expert';
+  const option = $<HTMLInputElement>(`#${id}`) || $<HTMLInputElement>('#need-assessment');
+  if (option) option.checked = true;
   if (svcHint) svcHint.textContent = svc || tr('Drainage work', 'Trabajo de drenaje');
   bf.dataset.svc = svc || '';
   if (typeof dlg.showModal === 'function') dlg.showModal();

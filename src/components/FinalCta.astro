@@ -1,7 +1,7 @@
 ---
 import { site } from '../data/site';
 interface Props { title?: string; body?: string; book?: string; svc?: string; serviceFirst?: boolean }
-const { title = 'Get ahead of the next Houston rain.', body = 'Talk with our local team about your property and the next step.', book = 'install', svc, serviceFirst = book === 'install' } = Astro.props;
+const { title = 'Get ahead of the next Houston rain.', body = 'Talk with our local team about your property and the next step.', book = 'assessment', svc, serviceFirst = !['intel', 'expert', ''].includes(book) } = Astro.props;
 ---
 <section class="final" aria-labelledby="finalH">
   <svg class="final-waves" viewBox="0 0 780 240" aria-hidden="true">
@@ -14,7 +14,7 @@ const { title = 'Get ahead of the next Houston rain.', body = 'Talk with our loc
     <p>{body}</p>
     <div class="row">
       {serviceFirst ? <button class="btn btn-primary" data-book={book} data-svc={svc}>Get a drainage assessment <svg><use href="#i-arrow"/></svg></button> : <a class="btn btn-primary" href="/reports/flood-snapshot/" data-focus-snap>Get my free Snapshot <svg><use href="#i-arrow"/></svg></a>}
-      {serviceFirst ? <a class="btn btn-ghost btn-on-navy" href="/reports/flood-snapshot/" data-focus-snap>Get my free Snapshot <svg><use href="#i-arrow"/></svg></a> : <button class="btn btn-ghost btn-on-navy" data-book={book} data-svc={svc}>Book an assessment <svg><use href="#i-arrow"/></svg></button>}
+      {!serviceFirst && <button class="btn btn-ghost btn-on-navy" data-book={book} data-svc={svc}>Book an assessment <svg><use href="#i-arrow"/></svg></button>}
       <a class="btn btn-ghost btn-on-navy" href={site.phone.href}><svg><use href="#i-phone"/></svg>{site.phone.display}</a>
     </div>
   </div>

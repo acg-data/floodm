@@ -28,7 +28,7 @@ const phases = [
     'Clear storm debris from grates, inlets and the culvert',
     'Check for washed-out soil or exposed slab edges around the foundation',
     'Make sure the sump pump is still cycling normally',
-    'Get a free Flood Snapshot and book an assessment if water reached places it shouldn’t',
+    'Arrange an onsite drainage assessment if water reached places it shouldn’t',
   ] },
 ];
 const howTo = { '@context': 'https://schema.org', '@type': 'HowTo', name: 'Hurricane-season drainage checklist for Houston homes', step: phases.flatMap((p) => p.items.map((text) => ({ '@type': 'HowToStep', name: p.title, text }))) };
@@ -50,7 +50,7 @@ const howTo = { '@context': 'https://schema.org', '@type': 'HowTo', name: 'Hurri
       <p class="note" style="margin-top:20px"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Your checkmarks are saved on this device only. Flood alerts: <a href="https://www.harriscountyfws.org/" target="_blank" rel="noopener">Harris County Flood Warning System</a>.</span></p>
     </div>
   </section>
-  <FinalCta title="Want us to check it for you?" body="Start with a free Snapshot of your address, or book an assessment before the season starts." />
+  <FinalCta title="Want us to check it for you?" body="Arrange an onsite drainage assessment with our Houston team before the season starts." />
 </Base>
 <script>
   import { tr } from '../../scripts/locale';

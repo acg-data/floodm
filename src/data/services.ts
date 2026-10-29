@@ -48,7 +48,7 @@ export const services: Service[] = [
       '3-year parts & labor limited warranty',
     ],
     process: [
-      { title: 'Map the water', body: 'Your Snapshot, report or video consult shows where water collects, where it comes from and where it can leave.' },
+      { title: 'Map the water', body: 'We walk your property to inspect where water collects, where it comes from and where it can leave.' },
       { title: 'Design the run', body: 'We lay out the trench path, slope, pipe and outlet, and agree a fixed install scope before work starts.' },
       { title: 'Build and test', body: 'Our crew digs to grade, installs fabric, gravel and pipe, restores the yard and runs water through it.' },
     ],
@@ -56,7 +56,7 @@ export const services: Service[] = [
       { q: 'What is a French drain?', a: 'A trench filled with gravel around a perforated pipe. Water from the surface and the surrounding soil enters the trench, drops into the pipe and is carried to an outlet away from your home.' },
       { q: 'Do French drains work in Houston clay?', a: 'Yes, when they’re designed for it. Clay drains slowly, so the system can’t rely on the soil to soak water up. It has to collect water where it gathers and move it by slope or pump to a real outlet.' },
       { q: 'Where does the water go?', a: 'Usually to the street through a curb outlet, to a pop-up emitter in a lower part of the yard, or to a sump basin when no outlet sits low enough. Your plan names the outlet before anything is dug.' },
-      { q: 'Will a French drain stop street or bayou flooding?', a: 'No. It handles water that falls on and runs across your lot. If floodwater comes from the street or a bayou, your report covers what helps in that case and what won’t.' },
+      { q: 'Will a French drain stop street or bayou flooding?', a: 'A French drain manages water on your lot. Floodwater from the street or a bayou can overwhelm the outlet. During the onsite assessment we explain what a proposed system can handle and where its limits are.' },
       { q: 'Do French drains need maintenance?', a: 'Very little. Filter fabric keeps most sediment out. If a line slows over the years from roots or silt, hydro jetting clears it without digging.' },
     ],
     related: ['sump-pump-installation-houston', 'downspout-catch-basin-houston', 'grading-drainage-houston'],
@@ -429,7 +429,7 @@ export const services: Service[] = [
       'Plain-English notes on any damaged sections',
     ],
     process: [
-      { title: 'Show us the problem', body: 'Photos or a quick video call show which drains are slow and where the system outlets.' },
+      { title: 'Inspect the problem', body: 'We check which drains are slow and inspect the inlets, lines and outlet at your property.' },
       { title: 'Scope the cleaning', body: 'We confirm what gets cleaned and how, and agree the scope before the crew comes out.' },
       { title: 'Clean and verify', body: 'Our crew clears the basins and lines, flushes the system and checks it at the outlet.' },
     ],
@@ -482,7 +482,7 @@ export const services: Service[] = [
       'Pre-hurricane-season scheduling',
     ],
     process: [
-      { title: 'Review the system', body: 'Photos, a site plan or a video call show where inlets, lines and outlets are.' },
+      { title: 'Review the system', body: 'We inspect your property to locate the inlets, lines and outlets and identify where water is backing up.' },
       { title: 'Scope the work', body: 'We confirm which inlets and lines get cleaned and agree the scope.' },
       { title: 'Clean and confirm', body: 'Our crew clears inlets and lines, removes the sediment and checks the outlet.' },
     ],
@@ -534,7 +534,7 @@ export const services: Service[] = [
       'Replacement guidance if the pipe has failed',
     ],
     process: [
-      { title: 'Show us the culvert', body: 'Photos of both ends, or a quick video call, show how blocked it is.' },
+      { title: 'Inspect the culvert', body: 'We inspect both ends of the culvert and check the obstruction before choosing the cleaning method.' },
       { title: 'Confirm the approach', body: 'We decide whether it’s a cleaning job or a replacement and agree the scope.' },
       { title: 'Clear and check', body: 'Our crew clears the pipe, opens the ends and confirms the ditch flows through.' },
     ],
@@ -586,7 +586,7 @@ export const services: Service[] = [
       'Notes on any damaged sections',
     ],
     process: [
-      { title: 'Show us the line', body: 'Photos or a video call show which line is slow and where it runs and outlets.' },
+      { title: 'Inspect the line', body: 'We inspect the slow line, trace its route and check the outlet before cleaning.' },
       { title: 'Choose the approach', body: 'We decide whether jetting is right for the pipe and agree the scope.' },
       { title: 'Jet and verify', body: 'Our crew jets the line, flushes it to the outlet and confirms full flow.' },
     ],

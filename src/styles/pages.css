@@ -26,6 +26,8 @@
 .dd a.dd-all svg{width:16px;height:16px;margin:0}
 .dd a.dd-all:hover{background:var(--line)}
 .dd a.dd-cta{margin-top:6px;border:1px dashed var(--line-strong)}
+.dd-locations a:not(.dd-all){align-items:center;justify-content:space-between;font-size:.9rem;font-weight:600;padding-block:8px}
+.dd-locations a:not(.dd-all) > svg{width:15px;height:15px;margin:0}
 @media (min-width:1081px){
   .dd{position:absolute;top:calc(100% + 16px);left:50%;width:330px;opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .16s, transform .16s, visibility .16s;z-index:60}
   .dd::before{content:"";position:absolute;left:0;right:0;top:-22px;height:22px}
@@ -274,7 +276,7 @@ a.mini{text-decoration:none}
 /* ---- Tier ladder links ---- */
 .tier .more-link{font-size:.88rem;font-weight:600;color:var(--blue);text-decoration:none}
 .tier.feature .more-link{color:var(--sky)}
-.tier .more-link:hover{text-decoration:underline}
+.tier .more-link:hover{color:var(--blue-press)}
 
 /* ---- Small helpers ---- */
 .center{text-align:center}

@@ -1,13 +1,9 @@
 ---
 import { site } from '../data/site';
 import { services, servicePath } from '../data/services';
-import { reports, reportPath } from '../data/reports';
-import { areas, areaPath } from '../data/areas';
+import { googleBusiness } from '../data/google-business';
 import { guides, tools, guidePath } from '../data/resources';
 
-const featuredAreas = ['memorial', 'meyerland', 'bellaire', 'the-heights', 'katy', 'cypress', 'kingwood', 'pearland']
-  .map((slug) => areas.find((a) => a.slug === slug))
-  .filter((a) => a !== undefined);
 ---
 
 <footer class="footer">
@@ -22,7 +18,7 @@ const featuredAreas = ['memorial', 'meyerland', 'bellaire', 'the-heights', 'katy
         <li><svg aria-hidden="true"><use href="#i-phone"/></svg><a class="ph" href={site.phone.href}>{site.phone.display}</a></li>
         <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a class="em" href={`mailto:${site.email}`}>{site.email}</a></li>
         <li><svg aria-hidden="true"><use href="#i-clock"/></svg><span>{site.hours.label}<br /><a href="/emergency/">{site.emergency}</a></span></li>
-        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>{site.address.street}<br />Houston, TX {site.address.postalCode}</span></li>
+        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><a href={googleBusiness.url} target="_blank" rel="noopener">{site.address.street}<br />Houston, TX {site.address.postalCode}</a></li>
       </ul>
       <div class="social">
         <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Flood Mitigators on Facebook"><svg><use href="#i-fb"/></svg></a>
@@ -31,11 +27,9 @@ const featuredAreas = ['memorial', 'meyerland', 'bellaire', 'the-heights', 'katy
     </div>
     <div><h3>Services</h3><ul>{services.map((s) => <li><a href={servicePath(s)}>{s.navName}</a></li>)}</ul></div>
     <div>
-      <h3>Reports</h3><ul>{reports.map((r) => <li><a href={reportPath(r)}>{r.name}</a></li>)}</ul>
-      <h3 class="fgap">Company</h3>
+      <h3>Company</h3>
       <ul><li><a href="/about/">About &amp; Manny</a></li><li><a href="/our-work/">Our work</a></li><li><a href="/warranty-and-care/">Warranty &amp; care</a></li><li><a href="/contact/">Contact</a></li><li><a href="/emergency/">24/7 emergency</a></li><li><a href="/faq/">FAQ</a></li></ul>
     </div>
-    <div><h3>Greater Houston</h3><ul>{featuredAreas.map((a) => <li><a href={areaPath(a)}>{a.name}</a></li>)}<li><a href="/service-areas/">All Houston service areas</a></li></ul></div>
     <div>
       <h3>Resources</h3>
       <ul>

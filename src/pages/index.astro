@@ -1,8 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import SnapshotForm from '../components/SnapshotForm.astro';
 import Trust from '../components/Trust.astro';
-import Ladder from '../components/Ladder.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import MiniCard from '../components/MiniCard.astro';
 import Steps from '../components/Steps.astro';
@@ -16,12 +14,10 @@ import ProjectGallery from '../components/ProjectGallery.astro';
 import Credentials from '../components/Credentials.astro';
 import Aftercare from '../components/Aftercare.astro';
 import { services } from '../data/services';
-import { areas, areaPath } from '../data/areas';
 import { guides, tools, guidePath } from '../data/resources';
 import { faqLd } from '../lib/schema';
 import { site } from '../data/site';
-import { houstonCoverage } from '../data/houston';
-import type { Faq as FaqItem } from '../data/types';
+import { onsiteFaqs as faqs } from '../data/onsite-faqs';
 import HomeHero from '../components/HomeHero.astro';
 import YardBenefits from '../components/YardBenefits.astro';
 import Reviews from '../components/Reviews.astro';
@@ -31,17 +27,6 @@ import MiniCredentials from '../components/MiniCredentials.astro';
 const photoServices = services.filter((s) => s.photo);
 const otherServices = services.filter((s) => !s.photo);
 
-const faqs: FaqItem[] = [
-  { q: 'Can you assess my property remotely?', a: 'Yes. Our Snapshot and Flood Intelligence reports are built from your address, and the Expert Mitigation Plan is a video call. Virtual or onsite drainage assessments are also available; tell us what you need when you contact the team.' },
-  { q: 'Is the Flood Snapshot really free?', a: 'Yes. Enter your address and email and we send it. No card and no obligation. If it raises questions, the Flood Intelligence report answers them in detail.' },
-  { q: 'How is Flood Intelligence different from the Snapshot?', a: 'The Snapshot tells you whether you have a problem. Flood Intelligence tells you why, with flood and rainfall history near your block, how water moves across your lot, and a ranked list of fixes.' },
-  { q: 'What drainage problems do you help with?', a: 'Standing water in the yard, water pooling at the foundation, soggy side yards, overflowing gutters and downspouts, water reaching the garage or patio, and runoff coming from a neighbor’s lot.' },
-  { q: 'Will yard drainage stop street or bayou flooding?', a: 'Not always, and we’ll tell you so. Drains handle the water that falls on and runs across your lot. If floodwater comes from the street or a bayou, your report covers what helps in that case and what won’t.' },
-  { q: 'What happens after the assessment?', a: 'You keep the report either way. If you want the work done, we turn your plan into a fixed install scope, schedule the crew, and handle the job from layout to cleanup.' },
-  { q: 'Do you offer a warranty?', a: 'Yes. Drainage systems we install are backed by a 3-year parts and labor limited warranty. Your install scope spells out exactly what it covers.' },
-  { q: 'What if water is coming in right now?', a: 'Call or text (281) 849-1082. We offer 24/7 emergency response. Regular office hours are Monday to Friday, 6 am to 6 pm Central.' },
-  { q: 'What areas do you serve?', a: 'Greater Houston and the surrounding communities, from the Inner Loop out to Katy, Cypress, The Woodlands, Kingwood, Sugar Land and Pearland. Not sure about your street? Call or text and ask.' },
-];
 ---
 
 <Base
@@ -78,30 +63,6 @@ const faqs: FaqItem[] = [
 
   <Local />
 
-  <section class="section houston-areas" id="areas" aria-labelledby="areasH">
-    <div class="wrap">
-      <div class="houston-areas-intro">
-        <div class="section-head">
-          <h2 id="areasH">Houston is home.<br>Your neighborhood matters.</h2>
-          <p class="lede">A yard in the Heights has a different drainage story from a lot in Katy. Find your community for local concerns, nearby waterways and options for your property.</p>
-        </div>
-        <a class="link-arrow" href="/service-areas/">Explore Greater Houston coverage <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="houston-coverage">
-        {houstonCoverage.map((group) => (
-          <div class="houston-region">
-            <div><h3>{group.name}</h3><p>{group.description}</p></div>
-            <ul>{group.slugs.map((slug) => {
-              const area = areas.find((a) => a.slug === slug)!;
-              return <li><a href={areaPath(area)}>{area.name}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>;
-            })}</ul>
-          </div>
-        ))}
-      </div>
-      <p class="houston-coverage-note">Don&rsquo;t see your street? <a href={site.phone.href}>Call or text {site.phone.display}</a> to check coverage.</p>
-    </div>
-  </section>
-
   <section class="section process" id="process">
     <div class="wrap">
       <div class="section-head">
@@ -117,25 +78,14 @@ const faqs: FaqItem[] = [
   <Aftercare />
   <div id="credentials"><Credentials /></div>
 
-  <section class="section reports" id="reports">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Know more about<br>your Houston property.</h2>
-        <p class="lede">Planning ahead, buying a home or wondering what your flood zone means? Start with a free Snapshot, explore the full report or talk through a mitigation plan.</p>
-      </div>
-      <Ladder />
-      <div class="houston-snapshot-form"><h3>Start with your Houston-area address.</h3><SnapshotForm /></div>
-    </div>
-  </section>
-
   <Runoff />
 
   <section class="section faq" id="faq">
     <div class="wrap faq-grid">
       <div class="faq-side">
         <h2>Houston drainage questions, answered.</h2>
-        <p>Something else on your mind? Tell us in the booking form and a specialist will reply, or call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
-        <div class="hero-actions"><button class="btn btn-primary" data-book="install">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
+        <p>Tell us where water collects and arrange an onsite visit with our Houston drainage team. Call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
+        <div class="hero-actions"><button class="btn btn-primary" data-book="assessment">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
       </div>
       <Faq items={faqs} />
     </div>
@@ -158,5 +108,5 @@ const faqs: FaqItem[] = [
     </div>
   </section>
 
-  <FinalCta title="Let’s get your Houston yard draining." body="Tell Manny’s team where the water collects. We’ll help you work out the next step." book="install" serviceFirst />
+  <FinalCta title="Let’s get your Houston yard draining." body="Tell Manny’s team where the water collects. We’ll help you work out the next step." book="assessment" serviceFirst />
 </Base>

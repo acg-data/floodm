@@ -13,9 +13,9 @@ const sorted = [...regions].sort((a, b) => order.indexOf(a) - order.indexOf(b));
 ---
 
 <Base title="Service Areas Across Greater Houston" description="Flood Mitigators serves Greater Houston: Memorial, the Heights, Bellaire, Meyerland, Katy, Sugar Land, Cypress, The Woodlands, Kingwood, Pearland and more." jsonLd={[breadcrumbLd(crumbs)]}>
-  <PageHero crumbs={crumbs} eyebrow="Where we work" headline={['Greater Houston,', 'street by street.']} lede="Assessments work for any Houston-area address. Our crew installs across the metro. Every neighborhood drains differently — here’s what we watch for in each.">
+  <PageHero crumbs={crumbs} eyebrow="Where we work" headline={['Greater Houston,', 'street by street.']} lede="Onsite drainage assessments and installation across Greater Houston. Every neighborhood drains differently — here’s what we watch for in each.">
     <div class="hero-actions">
-      <a class="btn btn-primary" href="/reports/flood-snapshot/">Get a free Snapshot for your address <svg><use href="#i-arrow"/></svg></a>
+      <button class="btn btn-primary" data-book="assessment">Arrange an onsite assessment <svg><use href="#i-arrow"/></svg></button>
       <a class="link-arrow" href={site.phone.href}>Not listed? Call {site.phone.display} <svg><use href="#i-arrow"/></svg></a>
     </div>
   </PageHero>
@@ -44,7 +44,7 @@ const sorted = [...regions].sort((a, b) => order.indexOf(a) - order.indexOf(b));
       </div>
       <div class="prose">
         <p class="lead-in">From older lots inside the Loop to new subdivisions in Katy and Cypress, Houston yards share the same slow-draining clay and the same Gulf storms. What changes is everything around them: how close the bayou or creek is, whether the street drains to curb and gutter or to an open ditch, how the builder graded the lot, and what’s been added since.</p>
-        <p>That’s why every job starts with your address. The free Flood Snapshot shows your flood zone, nearest waterways and how your lot sits against the street, so the plan fits the property — not the zip code.</p>
+        <p>That’s why we visit your property. We look at the grading, downspouts, low spots and available outlets in person, then design around the way water moves across your lot.</p>
       </div>
     </div>
   </section>
