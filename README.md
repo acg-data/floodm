@@ -79,6 +79,8 @@ The preview build adds `noindex` to every page while retaining the approved floo
 
 The home page uses the supplied Neal Roofing screenshot as a layout reference, with Flood Mitigators branding, a residential photo hero, an estimate form, drainage benefits and sourced Google review excerpts. See `docs/home-refresh-brief.md` for the adaptation and verification contract. Stock home photography is illustrative; its license and creator records are in `public/assets/photos/provenance.json`. Review rating/count are a dated snapshot in `src/data/reviews.ts`, checked directly on Google on October 29, 2026. Original review excerpts and author names stay in English on the Spanish page.
 
+The Houston facts section adds IAH rainfall normals, a monthly chart with an accessible data table, Harvey rainfall and damage context, and the published cost warning for an inch of floodwater indoors. Sources, station/period definitions and photo licenses are documented in `docs/houston-facts-sources.md`. The Houston Heights residence and Buffalo Bayou photos illustrate the local setting.
+
 ```sh
 npm test
 ```

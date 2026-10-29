@@ -21,7 +21,19 @@ try {
     await page.evaluate(async () => { await document.fonts.ready; for (const image of document.images) { image.loading = 'eager'; await image.decode().catch(() => {}); } });
     assert((await page.locator('.homeowner-review blockquote').allTextContents()).join('|') === '“John and Manny were incredibly helpful from day one”|“the communication was great. He was very knowledgeable.”|“their integrity and transparency”', 'Review excerpts changed in '+language);
     assert(!await page.getByText('Your local crew.', { exact: false }).count(), 'Removed crew overlay remains');
-    for (const [width, height] of [[1789,873], [1440,1000], [390,844], [320,844]]) {
+    assert(await page.locator('.houston-fact').count()===4,'Houston facts missing');
+    assert((await page.locator('.houston-facts-list').innerText()).includes('2017'),'Historical storm context missing');
+    assert((await page.locator('.benefits-home a').last().getAttribute('href'))==='https://creativecommons.org/licenses/by-sa/3.0/','Houston home license attribution missing');
+    const rainSummary=page.locator('.rain-data summary');
+    await rainSummary.focus();await page.keyboard.press('Enter');
+    assert(await page.locator('.rain-data table').isVisible(),'Monthly rainfall data cannot be opened by keyboard');
+    const monthly=await page.locator('.rain-data tbody td').allTextContents();
+    assert(monthly.length===12 && Math.abs(monthly.reduce((sum,v)=>sum+Number(v),0)-51.84)<.001,'Monthly rainfall differs from the annual normal');
+    await page.keyboard.press('Enter');
+    assert(!await page.locator('.rain-data table').isVisible(),'Monthly rainfall data cannot be closed by keyboard');
+    await rainSummary.blur();
+    assert(await page.locator('.houston-facts-next .btn').getAttribute('href')===(language==='es'?'/es/runoff-calculator/':'/runoff-calculator/'),'Runoff link leaves the selected language');
+    for (const [width, height] of [[1789,873], [1440,1000], [1280,1000], [1081,900], [1024,900], [768,900], [414,844], [390,844], [375,844], [320,844]]) {
       await page.setViewportSize({ width, height });
       await page.evaluate(() => scrollTo(0,0));
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
@@ -36,12 +48,21 @@ try {
     }
     for (const width of [1440,390]) {
       await page.setViewportSize({width,height:1000});
-      for (const selector of ['.yard-benefits', '#reviews', '#estimate']) {
+      for (const selector of ['.yard-benefits', '#houston-facts', '.houston-facts-list', '#reviews', '#estimate']) {
         await page.locator(selector).scrollIntoViewIfNeeded();
         await page.locator(selector).evaluate(element => element.scrollIntoView({block:'start'}));
         const path = `${directory}/${selector.replace(/[.#]/g,'')}-${language}-${width}.png`;
         await page.screenshot({ path }); results.screenshots.push(path);
       }
+      await page.locator('#houston-facts').screenshot({path:`${directory}/facts-complete-${language}-${width}.png`});
+      await rainSummary.scrollIntoViewIfNeeded();
+      for(const state of ['closed','open']){
+        if(state==='open')await rainSummary.click();
+        const issues=await page.evaluate(async()=> (await axe.run('#houston-facts',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})));
+        results.accessibility.push({language,width,state,issues});
+      }
+      await page.locator('.houston-rain-chart').screenshot({path:`${directory}/rainfall-expanded-${language}-${width}.png`});
+      await rainSummary.click();await rainSummary.blur();
     }
     const submit = page.locator('#estimateForm button[type=submit]');
     await submit.click();
@@ -85,5 +106,5 @@ try {
   await writeFile(`${directory}/results.json`,JSON.stringify(results,null,2));
   assert(!results.errors.length,'Console errors: '+results.errors.join('; '));
   assert(!results.accessibility.some(r=>r.issues.length),'Accessibility issues: '+JSON.stringify(results.accessibility.filter(r=>r.issues.length)));
-  console.log('Home refresh passed: bilingual estimate flows, review attribution, four widths and desktop/mobile accessibility.');
+  console.log('Home refresh passed: bilingual estimate flows, sourced Houston facts, keyboard rainfall table, photo attribution, ten widths and desktop/mobile accessibility.');
 } finally { await browser.close(); server.close(); }

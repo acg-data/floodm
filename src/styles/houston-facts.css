@@ -1,0 +1,58 @@
+/* Local rain records and documented flood impacts, in the existing visual system. */
+.benefits-home figcaption{display:grid;gap:6px}
+.benefits-home figcaption strong{font-size:.93rem;font-weight:600}
+.benefits-home figcaption > span{font-size:.66rem;line-height:1.6;color:#e3e9f8}
+.benefits-home figcaption a{color:#fff;text-underline-offset:3px}
+.houston-facts{background:var(--home-navy);color:#fff;scroll-margin-top:90px}
+.houston-facts h2,.houston-facts h3{color:#fff}
+.houston-facts-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:60px;margin-bottom:44px}
+.houston-facts-heading h2{font-size:clamp(2.1rem,3.6vw,2.9rem);max-width:17ch}
+.houston-facts-heading .lede{color:#ced5e8;font-size:1.02rem;max-width:50ch}
+.houston-facts-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:54px;align-items:start}
+.houston-facts-place{min-width:0;display:grid;gap:32px}
+.houston-city-photo{margin:0;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:14/9;background:#202d47}
+.houston-city-photo img{width:100%;height:100%;object-fit:cover}
+.houston-city-photo figcaption{position:absolute;inset:auto 0 0;padding:48px 22px 20px;background:linear-gradient(transparent,rgba(10,17,35,.95));display:grid;gap:6px}
+.houston-city-photo figcaption strong{font-size:.92rem;font-weight:600}
+.houston-city-photo figcaption > span{font-size:.64rem;color:#e3e9f8}
+.houston-city-photo a{color:#fff;text-underline-offset:3px}
+.houston-facts-list{display:grid;gap:0;margin:0}
+.houston-fact{display:grid;grid-template-columns:165px minmax(0,1fr);gap:18px;padding:25px 0;border-top:1px solid #3a435e}
+.houston-fact:first-child{padding-top:0;border-top:0}
+.houston-fact dt{display:grid;align-content:start;gap:8px}
+.houston-fact dt strong{font-size:2.1rem;line-height:1.15;letter-spacing:-.035em;color:#dcd9ff;font-weight:750;white-space:nowrap}
+.houston-fact dt > span{color:#c6d1e8;font-size:.71rem;line-height:1.6;max-width:19ch}
+.houston-fact dd{margin:0;min-width:0}
+.houston-fact h3{font-size:1.02rem;line-height:1.4;letter-spacing:-.015em}
+.houston-fact p{color:#c6d1e8;font-size:.84rem;line-height:1.7;margin-top:9px;max-width:48ch}
+.houston-fact dd > a{display:inline-flex;gap:7px;align-items:center;color:#c9c4ff;font-size:.69rem;line-height:1.6;margin-top:10px;text-underline-offset:4px}
+.houston-fact dd > a svg{width:13px;height:13px;flex-shrink:0}
+.houston-rain-chart{margin:0;position:relative}
+.houston-rain-chart h3{font-size:1.1rem;line-height:1.4}
+.houston-rain-chart figcaption p{font-size:.75rem;color:#c6d1e8;line-height:1.7;margin-top:8px;max-width:55ch}
+.rain-plot{display:grid;grid-template-columns:17px minmax(0,1fr);gap:6px;margin:27px 0 16px}
+.rain-bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:7px;padding:0;margin:0;list-style:none}
+.rain-bars li{display:grid;grid-template-rows:100px auto;gap:9px;min-width:0;text-align:center;color:#d6def1;font-size:.58rem}
+.rain-bar-track{display:flex;align-items:flex-end;background:#232c43}
+.rain-bar-track > span{display:block;width:100%;background:#a3b9ee}
+.rain-bars li:nth-child(6) .rain-bar-track > span{background:#d7d0ff}
+.rain-chart-scale{height:100px;display:flex;flex-direction:column;justify-content:space-between;color:#c6d1e8;font-size:.6rem}
+.rain-data{background:transparent;border:0;border-block:1px solid #3a435e;border-radius:0;box-shadow:none}
+.rain-data[open]{border-color:#69789c;box-shadow:none}
+.rain-data summary{font-size:.75rem;color:#fff;padding:13px 0;cursor:pointer}
+.rain-data summary svg{width:16px;height:16px;color:#c9c4ff}
+.rain-data table{border-collapse:collapse;width:100%;font-size:.75rem;line-height:1.6;margin-block:0 12px;color:#d6def1}
+.rain-data caption{font-size:.68rem;text-align:left;padding-bottom:12px;color:#c6d1e8}
+.rain-data th,.rain-data td{padding:7px 0;text-align:left;border-bottom:1px solid #303a53;font-weight:500}
+.rain-data th:last-child,.rain-data td:last-child{text-align:right}
+.rain-data thead th{color:#fff;font-weight:700}
+.rain-chart-source{display:inline-flex;align-items:center;gap:7px;color:#c9c4ff;font-size:.69rem;margin-top:15px;text-underline-offset:4px}
+.rain-chart-source svg{width:13px;height:13px;flex-shrink:0}
+.houston-facts-next{display:flex;align-items:center;justify-content:space-between;gap:50px;border-top:1px solid #3a435e;padding-top:28px;margin-top:33px}
+.houston-facts-next h3{font-size:1.12rem;line-height:1.4}
+.houston-facts-next p{color:#c6d1e8;font-size:.86rem;line-height:1.7;margin-top:10px;max-width:71ch}
+.houston-facts-next .btn{background:var(--home-blue);box-shadow:none;font-size:.85rem;flex-shrink:0;line-height:1.4}
+.houston-facts-next .btn:hover{background:var(--home-blue-hover)}
+@media(max-width:1100px){.houston-facts-layout{gap:34px;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.houston-fact{grid-template-columns:137px minmax(0,1fr);gap:15px}.houston-fact dt strong{font-size:1.85rem}.houston-facts-heading{gap:34px}.houston-facts-next{gap:30px}}
+@media(max-width:900px){.houston-facts-heading{display:grid;gap:22px;margin-bottom:34px}.houston-facts-heading .lede{max-width:62ch}.houston-facts-layout{grid-template-columns:1fr;gap:42px}.houston-facts-place{grid-template-columns:1fr 1fr;gap:28px;align-items:start}.houston-city-photo{aspect-ratio:4/5}.houston-rain-chart{padding-top:0}.houston-fact{grid-template-columns:180px minmax(0,1fr);gap:30px}.houston-fact dt strong{font-size:2.25rem}.houston-fact dt > span{max-width:none}.houston-fact p{max-width:65ch}.houston-facts-next{align-items:flex-start;flex-direction:column;gap:22px}}
+@media(max-width:600px){.houston-facts-heading h2{font-size:2.05rem}.houston-facts-heading .lede{font-size:.97rem}.houston-facts-layout{gap:32px}.houston-facts-place{display:contents}.houston-city-photo{aspect-ratio:4/3;order:1}.houston-facts-list{order:2}.houston-rain-chart{order:3}.houston-city-photo figcaption{padding:42px 18px 18px}.houston-city-photo figcaption strong{font-size:.85rem}.houston-city-photo figcaption > span{font-size:.61rem}.houston-rain-chart figcaption p{font-size:.76rem}.rain-bars{gap:6px}.rain-bars li{font-size:.58rem}.houston-fact{grid-template-columns:112px minmax(0,1fr);gap:17px;padding:25px 0}.houston-fact dt strong{font-size:1.62rem}.houston-fact dt > span{font-size:.68rem}.houston-fact h3{font-size:.97rem}.houston-fact p{font-size:.8rem;line-height:1.7}.houston-fact dd > a{font-size:.66rem}.houston-facts-next{margin-top:15px}.houston-facts-next .btn{white-space:normal;text-align:left;padding-inline:18px}.benefits-home figcaption strong{font-size:.87rem}.benefits-home figcaption > span{font-size:.63rem}}

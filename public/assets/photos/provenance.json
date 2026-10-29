@@ -20,5 +20,28 @@
     "licenseUrl": "https://unsplash.com/license",
     "retrieved": "2026-10-29",
     "use": "Illustrative residential photography; not represented as a Flood Mitigators project or a specific Houston property."
+  },
+  {
+    "id": "houston-heights-home",
+    "creator": "Ed Uthman",
+    "page": "https://commons.wikimedia.org/wiki/File:George_L._Burlingame_House,_1238_Harvard_St,_Houston_(HDR).jpg",
+    "width": 1200,
+    "height": 1000,
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "modifications": "Cropped, resized and converted to WebP. These image adaptations remain CC BY-SA 3.0.",
+    "use": "Documented Houston Heights residence, photographed in 2011. Illustrative local architecture; not a customer project or endorsement.",
+    "retrieved": "2026-10-29"
+  },
+  {
+    "id": "houston-bayou",
+    "creator": "Anvesh Uppunuthula",
+    "page": "https://unsplash.com/photos/a-city-skyline-with-a-river-running-through-it-VMwl7U2qeNg",
+    "width": 1400,
+    "height": 900,
+    "use": "Buffalo Bayou and the Houston skyline. Local context photography; not a drainage project.",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "retrieved": "2026-10-29"
   }
 ]
