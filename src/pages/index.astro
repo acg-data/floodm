@@ -17,6 +17,7 @@ import { areas, areaPath } from '../data/areas';
 import { guides, tools, guidePath } from '../data/resources';
 import { faqLd } from '../lib/schema';
 import { site } from '../data/site';
+import { houstonCoverage } from '../data/houston';
 import type { Faq as FaqItem } from '../data/types';
 
 const photoServices = services.filter((s) => s.photo);
@@ -36,40 +37,36 @@ const faqs: FaqItem[] = [
 ---
 
 <Base
-  title="Flood Mitigators | Houston's #1 Yard Drainage & Flood Mitigation"
+  title="Houston Yard Drainage & Flood Mitigation | Flood Mitigators"
   rawTitle
-  description="Houston's #1 flood assessment and drainage team. Free Flood Snapshot of your address, then a plan and a crew to fix it. Family-owned. (281) 849-1082."
+  description="Yard drainage and flood mitigation for Houston homes. French drains, grading, downspout lines and drain cleaning from Manny’s local team. Call (281) 849-1082."
   jsonLd={[faqLd(faqs)]}
 >
-  <section class="hero">
+  <section class="hero houston-hero">
     <div class="wrap">
       <div class="hero-copy">
-        <span class="eyebrow">Houston&rsquo;s #1 flood assessment &amp; drainage team</span>
-        <h1><span>Understand your risk.</span><span class="accent">Protect your property.</span></h1>
-        <p class="lede">Start with a free Flood Snapshot of your address. If the water needs somewhere better to go, we design the fix and our crew installs it.</p>
-        <SnapshotForm />
-        <div class="hero-links">
-          <button class="btn btn-ghost" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button>
-          <a class="link-arrow" href="#services">Explore our services <svg><use href="#i-arrow"/></svg></a>
+        <h1><span>Yard drainage &amp;</span><span>flood mitigation</span><span class="accent">in Houston.</span></h1>
+        <p class="lede">Soggy yard after every storm? Water against the slab? Manny&rsquo;s Houston team designs and installs drainage around your soil, your street and the way water moves across your lot.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-book="install">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button>
+          <a class="link-arrow" href={site.phone.href}><svg aria-hidden="true"><use href="#i-phone"/></svg>{site.phone.display}</a>
         </div>
+        <ul class="houston-hero-proof" aria-label="About our Houston team"><li>Family-owned in Houston</li><li>Our own installation crew</li><li>3-year limited warranty</li></ul>
+        <p class="houston-hero-note">Serving Houston, Katy, Cypress, Sugar Land, Pearland and the surrounding communities. <a href="#areas">Find your neighborhood</a></p>
       </div>
 
       <div class="hero-visual">
         <div class="hero-photo"><img src="/assets/img/hero-house.jpg" width="449" height="507" fetchpriority="high" alt="Two-story stone house in a Houston neighborhood with a landscaped front yard"></div>
-        <aside class="snapshot" aria-label="Sample Flood Snapshot">
-          <div class="snap-top"><span class="snap-tag">Flood Snapshot</span><span class="snap-sample">Sample report</span></div>
-          <div class="snap-addr">2218 Bayou Crest Dr<br>Houston, TX 77025</div>
+        <aside class="snapshot houston-plan" aria-label="Examples of yard drainage solutions">
+          <div class="snap-top"><span class="snap-tag">Designed for your lot</span><svg aria-hidden="true"><use href="#i-house"/></svg></div>
+          <h2>Give the water<br>a better way out.</h2>
           <dl class="snap-rows" style="margin:0">
-            <div><dt>FEMA flood zone</dt><dd>Zone X (shaded)</dd></div>
-            <div><dt>Nearest bayou</dt><dd>Brays · 0.7 mi</dd></div>
-            <div><dt>Lot grade</dt><dd>Slopes toward house</dd></div>
-            <div><dt>Roof runoff, 3″ storm</dt><dd>4,486 gal</dd></div>
+            <div><dt>Roof runoff</dt><dd>Downspout lines</dd></div>
+            <div><dt>Standing water</dt><dd>Drains &amp; catch basins</dd></div>
+            <div><dt>Low spots</dt><dd>Grading &amp; swales</dd></div>
           </dl>
-          <div class="meter">
-            <div class="meter-head"><span>Drainage risk</span><b>Elevated</b></div>
-            <div class="meter-bar"><span class="meter-pin"></span></div>
-            <div class="meter-scale"><span>Low</span><span>Moderate</span><span>High</span></div>
-          </div>
+          <p>Possible solutions. Your assessment determines what fits.</p>
+          <a class="link-arrow" href="/drainage-checkup/">Find your starting point <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </aside>
       </div>
     </div>
@@ -77,23 +74,11 @@ const faqs: FaqItem[] = [
 
   <Trust />
 
-  <section class="section reports" id="reports">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Start with answers</span>
-        <h2>Know where the water goes.</h2>
-        <p class="lede">Three ways to understand your property, from a quick free read to a plan from a mitigation specialist. Each step builds on the one before it.</p>
-      </div>
-      <Ladder />
-    </div>
-  </section>
-
   <section class="section services" id="services">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Our services</span>
-        <h2>A solution for every flow.</h2>
-        <p class="lede">Most yards need two or three of these working together. Your plan tells you which ones, and in what order.</p>
+        <h2>Drainage solutions for<br>Houston homes.</h2>
+        <p class="lede">French drains, downspout lines, grading and more. We look at where the water starts, where it collects and where it can go, then build a system that works together.</p>
       </div>
       <div class="svc-grid">
         {photoServices.map((s) => <ServiceCard service={s} />)}
@@ -107,43 +92,63 @@ const faqs: FaqItem[] = [
     </div>
   </section>
 
+  <Local />
+
+  <section class="section houston-areas" id="areas" aria-labelledby="areasH">
+    <div class="wrap">
+      <div class="houston-areas-intro">
+        <div class="section-head">
+          <h2 id="areasH">Houston is home.<br>Your neighborhood matters.</h2>
+          <p class="lede">A yard in the Heights has a different drainage story from a lot in Katy. Find your community for local concerns, nearby waterways and options for your property.</p>
+        </div>
+        <a class="link-arrow" href="/service-areas/">Explore Greater Houston coverage <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="houston-coverage">
+        {houstonCoverage.map((group) => (
+          <div class="houston-region">
+            <div><h3>{group.name}</h3><p>{group.description}</p></div>
+            <ul>{group.slugs.map((slug) => {
+              const area = areas.find((a) => a.slug === slug)!;
+              return <li><a href={areaPath(area)}>{area.name}<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>;
+            })}</ul>
+          </div>
+        ))}
+      </div>
+      <p class="houston-coverage-note">Don&rsquo;t see your street? <a href={site.phone.href}>Call or text {site.phone.display}</a> to check coverage.</p>
+    </div>
+  </section>
+
   <section class="section process" id="process">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Our process</span>
-        <h2>From standing water to a clear plan.</h2>
+        <h2>A clear plan.<br>A local crew to build it.</h2>
       </div>
       <Steps />
     </div>
   </section>
 
-  <Local />
-  <Runoff />
   <Crew />
   <Manny />
 
-  <section class="section areas" id="areas" aria-labelledby="areasH">
-    <div class="wrap areas-grid">
+  <section class="section reports" id="reports">
+    <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Where we work</span>
-        <h2 id="areasH">Greater Houston, street by street.</h2>
-        <p class="lede">Assessments work for any Houston-area address. Our crew installs across the metro. Not sure we reach your street? Call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
-        <a class="link-arrow" href="/service-areas/">See every area we serve <svg><use href="#i-arrow"/></svg></a>
+        <h2>Know more about<br>your Houston property.</h2>
+        <p class="lede">Planning ahead, buying a home or wondering what your flood zone means? Start with a free Snapshot, explore the full report or talk through a mitigation plan.</p>
       </div>
-      <ul class="area-list">
-        {areas.map((a) => <li><a href={areaPath(a)}><svg aria-hidden="true"><use href="#i-pin"/></svg>{a.name}</a></li>)}
-        <li class="more">and the communities around them</li>
-      </ul>
+      <Ladder />
+      <div class="houston-snapshot-form"><h3>Start with your Houston-area address.</h3><SnapshotForm /></div>
     </div>
   </section>
+
+  <Runoff />
 
   <section class="section faq" id="faq">
     <div class="wrap faq-grid">
       <div class="faq-side">
-        <span class="eyebrow">FAQ</span>
-        <h2>A few questions, answered.</h2>
+        <h2>Houston drainage questions, answered.</h2>
         <p>Something else on your mind? Tell us in the booking form and a specialist will reply, or call or text <a href={site.phone.href}>{site.phone.display}</a>.</p>
-        <div class="hero-actions"><button class="btn btn-primary" data-book="">Book an assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
+        <div class="hero-actions"><button class="btn btn-primary" data-book="install">Get a drainage assessment <svg><use href="#i-arrow"/></svg></button><a class="link-arrow" href="/faq/">All FAQs <svg><use href="#i-arrow"/></svg></a></div>
       </div>
       <Faq items={faqs} />
     </div>
@@ -152,8 +157,7 @@ const faqs: FaqItem[] = [
   <section class="section band-white" aria-labelledby="resH">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Guides &amp; tools</span>
-        <h2 id="resH">Learn how water works on your lot.</h2>
+        <h2 id="resH">A homeowner&rsquo;s guide<br>to Houston rain.</h2>
         <p class="lede">Plain-English guides and free tools for Houston homeowners. No sign-up.</p>
       </div>
       <div class="res-grid">
@@ -167,5 +171,5 @@ const faqs: FaqItem[] = [
     </div>
   </section>
 
-  <FinalCta />
+  <FinalCta title="Let’s get your Houston yard draining." body="Tell Manny’s team where the water collects. We’ll help you work out the next step." book="install" serviceFirst />
 </Base>

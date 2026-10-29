@@ -20,6 +20,7 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
 }
 const { title, description, rawTitle = false, image = '/assets/og.jpg', noindex = false, jsonLd = [] } = Astro.props;
+const excludeFromIndex = noindex || import.meta.env.PUBLIC_SITE_ENV === 'preview';
 const fullTitle = rawTitle ? title : `${title} | Flood Mitigators`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
@@ -57,7 +58,7 @@ const ld = (d: unknown) => JSON.stringify(d).replace(/</g, '\\u003c');
 <title>{fullTitle}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
-{noindex && <meta name="robots" content="noindex, follow">}
+{excludeFromIndex && <meta name="robots" content="noindex, follow">}
 <meta name="theme-color" content="#102F46">
 <meta name="format-detection" content="telephone=no">
 <link rel="icon" href="/assets/icons/favicon-32.png" sizes="32x32" type="image/png">

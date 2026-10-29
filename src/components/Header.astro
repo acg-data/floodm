@@ -10,7 +10,7 @@ const here = (href: string) => (path === href ? 'page' : undefined);
 
 <div class="topbar" role="region" aria-label="Contact and hours">
   <div class="wrap">
-    <span class="tb-left"><span>Houston&rsquo;s #1 drainage &amp; flood protection</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">Family-owned</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">3-year warranty</span><span class="tb-dot" aria-hidden="true"></span><a class="tb-hide-sm tb-em" href="/emergency/">24/7 emergency response</a></span>
+    <span class="tb-left"><span>Houston yard drainage &amp; flood mitigation</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">Family-owned</span><span class="tb-dot" aria-hidden="true"></span><span class="tb-hide-sm">3-year warranty</span><span class="tb-dot" aria-hidden="true"></span><a class="tb-hide-sm tb-em" href="/emergency/">24/7 emergency response</a></span>
     <span class="tb-right"><a class="tb-phone" href={site.phone.href}>Call or text {site.phone.display}</a><a class="tb-snap" href="/reports/flood-snapshot/">Free Flood Snapshot →</a></span>
   </div>
 </div>
@@ -23,19 +23,6 @@ const here = (href: string) => (path === href ? 'page' : undefined);
     </a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
     <nav class="nav" id="nav" aria-label="Primary">
-      <div class="nav-group">
-        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-reports">Reports <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
-        <div class="dd" id="dd-reports">
-          {reports.map((r) => (
-            <a href={reportPath(r)} aria-current={here(reportPath(r))}>
-              <svg aria-hidden="true"><use href={r.slug === 'flood-snapshot' ? '#i-doc' : r.slug === 'expert-mitigation-plan' ? '#i-video' : '#i-map'}/></svg>
-              <span><b>{r.name} <em>{r.price}</em></b><small>{r.summary.split(',')[0].replace(/\.$/, '')}.</small></span>
-            </a>
-          ))}
-          <a class="dd-all" href="/reports/">Compare all three <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-
       <div class="nav-group nav-group-wide">
         <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-services">Services <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
         <div class="dd dd-mega" id="dd-services">
@@ -65,7 +52,20 @@ const here = (href: string) => (path === href ? 'page' : undefined);
         </div>
       </div>
 
-      <a class="navlink" href="/service-areas/" aria-current={here('/service-areas/')}>Service areas</a>
+      <a class="navlink" href="/service-areas/" aria-current={here('/service-areas/')}>Houston areas</a>
+
+      <div class="nav-group">
+        <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-reports">Reports <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="dd" id="dd-reports">
+          {reports.map((r) => (
+            <a href={reportPath(r)} aria-current={here(reportPath(r))}>
+              <svg aria-hidden="true"><use href={r.slug === 'flood-snapshot' ? '#i-doc' : r.slug === 'expert-mitigation-plan' ? '#i-video' : '#i-map'}/></svg>
+              <span><b>{r.name} <em>{r.price}</em></b><small>{r.summary.split(',')[0].replace(/\.$/, '')}.</small></span>
+            </a>
+          ))}
+          <a class="dd-all" href="/reports/">Compare all three <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
 
       <div class="nav-group">
         <button class="navlink navtoggle" type="button" aria-expanded="false" aria-controls="dd-resources">Resources <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
@@ -99,7 +99,7 @@ const here = (href: string) => (path === href ? 'page' : undefined);
       <a class="navlink" href="/about/" aria-current={here('/about/')}>About</a>
       <a class="navlink nav-sm" href="/contact/" aria-current={here('/contact/')}>Contact</a>
       <a class="navlink nav-sm nav-em" href="/emergency/" aria-current={here('/emergency/')}>24/7 emergency</a>
-      <button class="btn btn-primary" data-book="">Book an assessment</button>
+      <button class="btn btn-primary" data-book="install">Get an assessment</button>
     </nav>
   </div>
 </header>

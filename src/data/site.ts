@@ -4,7 +4,7 @@ export const site = {
   name: 'Flood Mitigators',
   url: 'https://floodmitigators.com',
   description:
-    "Houston's #1 flood assessment and drainage team. Free Flood Snapshots, remote assessments and installed drainage systems backed by a 3-year parts & labor limited warranty.",
+    'Family-owned yard drainage and flood mitigation for Houston homes. French drains, grading, downspout lines, cleaning and property assessments from Manny’s local team.',
   phone: { display: '(281) 849-1082', href: 'tel:+12818491082', e164: '+12818491082' },
   sms: 'sms:+12818491082',
   email: 'info@floodmitigators.com',

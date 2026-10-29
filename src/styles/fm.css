@@ -136,6 +136,39 @@ p{margin:0}
 }
 
 /* Trust strip */
+.houston-hero h1{font-size:clamp(2.45rem,4.5vw,3.75rem);max-width:17ch}
+.houston-hero .hero-copy{gap:24px}
+.houston-hero .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px 22px}
+.houston-hero-proof{display:flex;gap:8px 18px;flex-wrap:wrap;list-style:none;padding:0;margin:0;font-size:.82rem;font-weight:600;color:var(--navy)}
+.houston-hero-proof li{display:flex;align-items:center;gap:7px}
+.houston-hero-proof li::before{content:"";width:5px;height:5px;background:var(--blue);border-radius:50%;flex-shrink:0}
+.houston-hero-note{font-size:.85rem;line-height:1.65;color:var(--muted);max-width:47ch}
+.houston-hero-note a{text-underline-offset:3px}
+.houston-plan h2{font-size:1.5rem;line-height:1.18}
+.houston-plan .snap-top > svg{width:24px;height:24px;color:var(--blue)}
+.houston-plan > p{font-size:.75rem;line-height:1.5;color:var(--muted)}
+.houston-plan > .link-arrow{font-size:.82rem}
+.houston-local-source{font-size:.8rem;color:var(--muted);line-height:1.65}
+.houston-local-source a{text-underline-offset:3px}
+.houston-areas{background:var(--white);scroll-margin-top:80px}
+.houston-areas-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding-bottom:40px}
+.houston-areas-intro .section-head{max-width:660px;margin-bottom:0}
+.houston-areas-intro > a{flex-shrink:0;max-width:220px;font-size:.9rem}
+.houston-coverage{border-top:1px solid var(--line-strong)}
+.houston-region{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:32px;padding-block:28px;border-bottom:1px solid var(--line)}
+.houston-region h3{font-size:1.25rem;margin-bottom:10px}
+.houston-region p{max-width:42ch;font-size:.93rem;line-height:1.65;color:var(--muted)}
+.houston-region ul{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;align-content:start;padding:0;margin:0;list-style:none}
+.houston-region a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:10px;color:var(--navy);font-size:.95rem;font-weight:600;text-decoration:none;min-height:44px}
+.houston-region a:hover{color:var(--blue);text-decoration:underline;text-underline-offset:4px}
+.houston-region a svg{width:16px;height:16px;color:var(--blue);flex-shrink:0}
+.houston-coverage-note{font-size:.93rem;color:var(--muted);margin-top:24px}
+.houston-snapshot-form{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:24px;align-items:center;margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.houston-snapshot-form h3{font-size:1.35rem;max-width:20ch;line-height:1.35}
+.houston-snapshot-form .snap-form{margin:0;max-width:none}
+@media (max-width:960px){.houston-areas-intro{display:grid;gap:22px}.houston-areas-intro > a{max-width:none}.houston-snapshot-form{grid-template-columns:1fr}.houston-snapshot-form h3{max-width:none}}
+@media (max-width:600px){.houston-hero h1{font-size:clamp(2.3rem,9.3vw,3rem);max-width:16ch}.houston-region{grid-template-columns:1fr;gap:14px}.houston-region ul{gap:2px 18px}.houston-region a{font-size:.88rem}.houston-hero .hero-actions{align-items:flex-start;flex-direction:column}.houston-hero .hero-actions .btn{white-space:normal;text-align:left}.houston-hero-proof{display:grid;gap:8px}}
+
 .trust{background:var(--navy);color:var(--on-navy)}
 .trust .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:28px}
 .trust-item{display:flex;align-items:center;gap:18px;justify-content:center;padding:6px 20px}

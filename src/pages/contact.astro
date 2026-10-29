@@ -9,8 +9,8 @@ import { breadcrumbLd } from '../lib/schema';
 const crumbs = [{ name: 'Contact', href: '/contact/' }];
 const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Contact Flood Mitigators', url: `${site.url}/contact/`, about: { '@id': `${site.url}/#business` } };
 ---
-<Base title="Contact Flood Mitigators" description={`Call or text ${site.phone.display}, email ${site.email}, or send a request. Houston flood assessments and drainage. Mon–Fri 6 am–6 pm, 24/7 emergency response.`} jsonLd={[contactLd, breadcrumbLd(crumbs)]}>
-  <PageHero crumbs={crumbs} eyebrow="Contact" headline={['Let’s get the water', 'off your property.']} lede="Send a request, call or text. If water is threatening your home right now, call — we offer 24/7 emergency response." />
+<Base title="Contact Our Houston Drainage Team" description={`Talk to Manny’s Houston drainage team. Call or text ${site.phone.display}, email ${site.email}, or request an assessment for your Houston-area home.`} jsonLd={[contactLd, breadcrumbLd(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Contact our Houston team" headline={['Let’s get your Houston yard', 'draining again.']} lede="Tell Manny’s team where the water collects. Send a request, call or text photos of your yard. If water is threatening your home right now, call for emergency help." />
   <section class="section band-ice">
     <div class="wrap two-col">
       <div class="contact-cards">
@@ -27,9 +27,9 @@ const contactLd = { '@context': 'https://schema.org', '@type': 'ContactPage', na
         <div class="dlg-head"><div><h2>Book an assessment</h2><p>Tell us about your property. A specialist replies with next steps.</p></div></div>
         <form class="dlg-body" id="contactForm" novalidate>
           <div class="opts" role="radiogroup" aria-label="What do you need?">
+            <div class="opt"><input type="radio" name="cneed" id="c-install" value="Drainage install quote" checked><label for="c-install"><b>Install quote</b><span>Drainage work</span></label></div>
             <div class="opt"><input type="radio" name="cneed" id="c-intel" value="Flood Intelligence report"><label for="c-intel"><b>Flood Intelligence</b><span>Full report</span></label></div>
-            <div class="opt"><input type="radio" name="cneed" id="c-expert" value="Expert Mitigation Plan" checked><label for="c-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
-            <div class="opt"><input type="radio" name="cneed" id="c-install" value="Drainage install quote"><label for="c-install"><b>Install quote</b><span>Drainage work</span></label></div>
+            <div class="opt"><input type="radio" name="cneed" id="c-expert" value="Expert Mitigation Plan"><label for="c-expert"><b>Expert Mitigation Plan</b><span>45-min video call</span></label></div>
           </div>
           <div class="f2">
             <div class="fld"><label for="cName">Name</label><input id="cName" name="name" autocomplete="name" required></div>

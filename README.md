@@ -46,6 +46,15 @@ npm run dev
 
 ## Deploy
 
+The mobile preview is hosted on Cloudflare Workers at https://floodmitigators-preview.justin-b75.workers.dev. Update it with:
+
+```sh
+npm run build:preview
+npx wrangler deploy --name floodmitigators-preview --assets ./dist --compatibility-date 2026-10-28
+```
+
+The preview build adds `noindex` to every page while retaining the approved floodmitigators.com canonicals. Use the normal `npm run build` for production. Publishing the preview is currently manual; pushing this branch does not deploy it automatically.
+
 **Cloudflare Pages:** Workers & Pages → Create → Pages → Connect to Git → `acg-data/floodm`. Framework preset Astro (build command `npm run build`, output directory `dist`). `_redirects` and `_headers` are picked up automatically, and every branch gets its own preview link.
 
 ## Check before you ship
