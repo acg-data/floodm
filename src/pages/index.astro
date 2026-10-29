@@ -26,6 +26,7 @@ import HomeHero from '../components/HomeHero.astro';
 import YardBenefits from '../components/YardBenefits.astro';
 import Reviews from '../components/Reviews.astro';
 import HoustonFacts from '../components/HoustonFacts.astro';
+import MiniCredentials from '../components/MiniCredentials.astro';
 
 const photoServices = services.filter((s) => s.photo);
 const otherServices = services.filter((s) => !s.photo);
@@ -51,10 +52,9 @@ const faqs: FaqItem[] = [
 >
   <HomeHero />
 
-  <Trust />
-  <div class="certified-strip"><div class="wrap"><img src="/assets/source/nds-certified.webp" width="600" height="611" alt="NDS Professional Drainage Certified Contractor" /><p><strong>NDS Professional Drainage Certified Contractor</strong><span>Careful design. Proven components. A Houston team that stands behind the work.</span></p><a href="#credentials">Our credentials <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
-
+  <MiniCredentials />
   <YardBenefits />
+  <Trust />
   <HoustonFacts />
   <Reviews />
 

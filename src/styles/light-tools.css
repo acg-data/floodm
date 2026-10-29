@@ -1,0 +1,41 @@
+/* Readable white and ice surfaces for calculators and the drainage checkup. */
+.runoff{background:var(--ice);color:var(--navy)}
+.runoff h1,.runoff h2{color:var(--navy)}
+.runoff .eyebrow{color:var(--blue)}
+.runoff .lede{color:var(--muted)}
+.calc-inputs{background:var(--white);border:0;box-shadow:var(--shadow)}
+.runoff .ctl output,.runoff .ctl .val{color:var(--blue)}
+.runoff .num-input{background:var(--ice);border-color:var(--line-strong)}
+.runoff .num-input:focus-within{border-color:var(--blue)}
+.runoff .num-input input{color:var(--navy)}
+.runoff .num-input span{color:var(--muted)}
+.runoff input[type=range]{background:linear-gradient(90deg,var(--blue) var(--p,20%),var(--line-strong) var(--p,20%))}
+.runoff input[type=range]::-webkit-slider-thumb{border-color:var(--blue)}
+.runoff input[type=range]::-moz-range-thumb{border-color:var(--blue)}
+.runoff .chip{background:var(--white);border-color:var(--line-strong);color:var(--navy)}
+.runoff .chip:hover{border-color:var(--blue)}
+.runoff .chip[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:var(--white)}
+.calc-out{background:var(--white);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow)}
+.runoff .big .n{color:var(--blue)}
+.runoff .big .u{color:var(--muted)}
+.runoff .big .u b{color:var(--navy)}
+.runoff .drums-more{color:var(--blue)}
+.runoff .drum.part{background:linear-gradient(180deg,#e1eef7 var(--e,50%),var(--sky) var(--e,50%),var(--blue))}
+.calc-stats{border-block:1px solid var(--line);padding-block:18px;gap:22px}
+.calc-stats .stat{background:transparent;border:0;border-radius:0;padding:0}
+.calc-stats .stat + .stat{border-left:1px solid var(--line);padding-left:22px}
+.calc-stats .stat .k,.calc-stats .stat .s,.calc-foot{color:var(--muted)}
+.calc-stats .stat .v{color:var(--navy)}
+.calc-cta .btn-on-navy{color:var(--blue)}
+.calc-cta .btn-on-navy:hover{color:var(--blue-press)}
+.cu-out{background:var(--ice);color:var(--navy);box-shadow:none}
+.cu-out h2{color:var(--navy)}
+.cu-empty,.cu-fine,.cu-recs small{color:var(--muted)}
+.cu-recs a{background:var(--white);border-color:var(--line-strong);color:var(--navy)}
+.cu-recs a:hover{background:#ddf1fb;border-color:var(--blue)}
+.cu-recs .rank{background:#ddf1fb;color:var(--blue)}
+.cu-recs li:first-child .rank{background:var(--blue);color:var(--white)}
+.cu-recs svg{color:var(--blue)}
+.cu-seg input:checked + span{background:var(--blue);border-color:var(--blue)}
+@media(max-width:600px){.calc-out{padding:22px}.calc-out .big .n{font-size:clamp(2.7rem,13vw,4.6rem)}}
+@media(max-width:420px){.calc-stats .stat + .stat{border-left:0;border-top:1px solid var(--line);padding:16px 0 0}}

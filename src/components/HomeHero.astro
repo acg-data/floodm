@@ -4,10 +4,7 @@ import Stars from './Stars.astro';
 import { reviewSummary } from '../data/reviews';
 ---
 <section class="home-hero" aria-labelledby="homeH">
-  <picture class="home-hero-background">
-    <source media="(max-width: 640px)" srcset="/assets/photos/neighborhood-mobile.webp">
-    <img src="/assets/photos/neighborhood-2000.webp" width="2000" height="1250" fetchpriority="high" alt="An aerial view of homes, gardens and tree-lined streets">
-  </picture>
+  <svg class="home-hero-wave" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50C260 150 510-25 790 52s410 40 650-10v108H0Z" fill="#DDF2FC"/><path d="M0 100c290 70 450-75 780-35s470 60 660 15v70H0Z" fill="#C7EAF9"/></svg>
   <div class="wrap home-hero-grid">
     <div class="home-hero-copy">
       <div class="home-hero-proof">

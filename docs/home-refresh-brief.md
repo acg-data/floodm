@@ -1,5 +1,7 @@
 # Home page refresh — October 29, 2026
 
+The later user-supplied brand board supersedes this brief's dark palette and aerial hero. Current color, logo and below-hero placement decisions are documented in `light-palette-refresh.md`; the source/content and functional requirements below still apply.
+
 The user supplied the Neal Roofing desktop screenshot (1789 × 873) and asked for a mixture of the earlier home imagery and the current site, with clearer benefits of moving water and healthy outdoor space. Remove the Houston-operated crew overlay. Include actual, researched reviews. Preserve all existing English and Spanish routes, tools, business content and project photography.
 
 ## Reference and content contract

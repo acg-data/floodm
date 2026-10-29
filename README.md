@@ -81,6 +81,8 @@ The home page uses the supplied Neal Roofing screenshot as a layout reference, w
 
 The Houston facts section adds IAH rainfall normals, a monthly chart with an accessible data table, Harvey rainfall and damage context, and the published cost warning for an inch of floodwater indoors. Sources, station/period definitions and photo licenses are documented in `docs/houston-facts-sources.md`. The Houston Heights residence and Buffalo Bayou photos illustrate the local setting.
 
+The latest brand-board pass restores the original navy/blue/sky/ice/white palette and alligator-and-water logo. Compact credentials sit immediately below the light hero, with the Houston home next. Facts, rainfall data, the calculator and drainage checkup share the light treatment. See `docs/light-palette-refresh.md` for scope and validation.
+
 ```sh
 npm test
 ```

@@ -21,6 +21,9 @@ try {
     await page.evaluate(async () => { await document.fonts.ready; for (const image of document.images) { image.loading = 'eager'; await image.decode().catch(() => {}); } });
     assert((await page.locator('.homeowner-review blockquote').allTextContents()).join('|') === '“John and Manny were incredibly helpful from day one”|“the communication was great. He was very knowledgeable.”|“their integrity and transparency”', 'Review excerpts changed in '+language);
     assert(!await page.getByText('Your local crew.', { exact: false }).count(), 'Removed crew overlay remains');
+    assert(await page.locator('.home-hero + .mini-credentials .credential-pop-row li').count()===4,'Compact credentials are not directly below the hero');
+    assert(await page.locator('.mini-credentials + .yard-benefits .benefits-home').count()===1,'Houston home is not the next feature below credentials');
+    assert((await page.locator('.header .brand .mark').getAttribute('src'))==='/assets/img/logo-mark.png','Original brand mark is missing');
     assert(await page.locator('.houston-fact').count()===4,'Houston facts missing');
     assert((await page.locator('.houston-facts-list').innerText()).includes('2017'),'Historical storm context missing');
     assert((await page.locator('.benefits-home a').last().getAttribute('href'))==='https://creativecommons.org/licenses/by-sa/3.0/','Houston home license attribution missing');
@@ -48,7 +51,7 @@ try {
     }
     for (const width of [1440,390]) {
       await page.setViewportSize({width,height:1000});
-      for (const selector of ['.yard-benefits', '#houston-facts', '.houston-facts-list', '#reviews', '#estimate']) {
+      for (const selector of ['.mini-credentials', '.yard-benefits', '#houston-facts', '.houston-facts-list', '#runoff', '#reviews', '#estimate']) {
         await page.locator(selector).scrollIntoViewIfNeeded();
         await page.locator(selector).evaluate(element => element.scrollIntoView({block:'start'}));
         const path = `${directory}/${selector.replace(/[.#]/g,'')}-${language}-${width}.png`;
@@ -64,6 +67,9 @@ try {
       await page.locator('.houston-rain-chart').screenshot({path:`${directory}/rainfall-expanded-${language}-${width}.png`});
       await rainSummary.click();await rainSummary.blur();
     }
+    await page.locator('#runoff [data-rain="10"]').click();
+    await page.waitForFunction(()=>document.querySelector('#gal').textContent==='14,952');
+    results.flows.push(`${language}: light runoff calculator preserves the 14,952-gallon example`);
     const submit = page.locator('#estimateForm button[type=submit]');
     await submit.click();
     assert((await page.locator('#estimateErr').innerText()).startsWith(language==='es'?'Elige':'Choose'), 'Service validation language');
